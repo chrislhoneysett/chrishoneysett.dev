@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# chrishoneysett.dev
 
-## Getting Started
+A personal site built with Next.js, React, TypeScript, and CSS Modules. Resume facts live in `src/domains/development/data/resume.ts`; the page selects and presents that data without duplicating project descriptions.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [localhost:3000](http://localhost:3000). Before sharing changes, run `npm run lint` and `npm run build`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Customize the theme
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Edit [`src/app/theme.css`](src/app/theme.css) to change the visual system. It defines:
 
-## Learn More
+- Type families, sizes, weights, line heights, and letter spacing
+- A spacing scale and responsive layout dimensions
+- Borders, radii, focus treatment, shadows, and motion
+- Semantic colors for the light and dark themes, section surfaces, controls, and artwork
 
-To learn more about Next.js, take a look at the following resources:
+The theme follows the visitor's operating system setting until they choose a mode with the switch in the header. An explicit choice is stored in `localStorage` and restored before the page is hydrated. `src/app/globals.css` contains only sitewide element defaults; `src/app/page.module.css` and `src/components/ThemeToggle.module.css` use theme tokens for their presentation.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To change the palette, update the light values in `:root` and the dark overrides in both dark selectors. To change the sitewide type scale or spacing, edit the corresponding foundation tokens. CSS custom properties cannot be used inside media query conditions, so the `1050px` and `760px` breakpoints are stated directly in the theme and component styles.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The geometric artwork uses local percentages and transforms for its composition. Its colors, sizes, and shadows are theme tokens. This keeps component geometry understandable while making the site's visual language customizable from one place.

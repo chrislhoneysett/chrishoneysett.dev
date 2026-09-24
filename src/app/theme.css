@@ -1,0 +1,231 @@
+/*
+ * Site theme
+ * ----------
+ * Change the foundations here to restyle the entire site. Components should
+ * consume semantic tokens, never a raw palette value. The default follows the
+ * visitor's system setting; data-theme is used only for an explicit choice.
+ *
+ * CSS custom properties cannot be used in media query conditions. The two
+ * viewport breakpoints at the bottom of this file are repeated in components.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Type families and roles */
+  --font-family-display: Georgia, "Times New Roman", serif;
+  --font-family-body: Arial, Helvetica, sans-serif;
+  --font-family-code: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --font-weight-heavy: 800;
+  --font-size-xs: 0.6rem;
+  --font-size-caption: 0.65rem;
+  --font-size-label: 0.72rem;
+  --font-size-small: 0.8rem;
+  --font-size-body: 0.9rem;
+  --font-size-lead: clamp(1.05rem, 1.4vw, 1.3rem);
+  --font-size-section-intro: 1.04rem;
+  --font-size-about-copy: 1.12rem;
+  --font-size-principle-title: 0.95rem;
+  --font-size-mark: 0.86rem;
+  --font-size-stat: 2.25rem;
+  --font-size-stat-suffix: 1.5rem;
+  --font-size-icon: 1.25rem;
+  --font-size-project-title: 1.85rem;
+  --font-size-role-title: 1.8rem;
+  --font-size-hero: clamp(5rem, 8.6vw, 9.7rem);
+  --font-size-section: clamp(3.5rem, 5.8vw, 6.5rem);
+  --font-size-statement: clamp(3.4rem, 5.7vw, 6.4rem);
+  --font-size-capabilities: clamp(3.2rem, 4.9vw, 5.6rem);
+  --font-size-about: clamp(3.7rem, 6vw, 7rem);
+  --font-size-footer: clamp(4rem, 7vw, 8rem);
+  --line-height-display: 0.98;
+  --line-height-hero: 0.82;
+  --line-height-heading: 1.05;
+  --line-height-body: 1.7;
+  --line-height-compact: 1.5;
+  --line-height-short: 1.6;
+  --line-height-copy: 1.65;
+  --line-height-relaxed: 1.8;
+  --line-height-single: 1;
+  --tracking-display: -0.055em;
+  --tracking-hero: -0.075em;
+  --tracking-label: 0.13em;
+  --tracking-meta: 0.08em;
+  --tracking-mark: -0.08em;
+
+  /* A 4px based spacing scale. Art geometry can use its own proportions. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-9: 2.25rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-28: 7rem;
+  --space-32: 8rem;
+
+  /* Layout and component dimensions */
+  --layout-max-width: 90rem;
+  --layout-gutter: 2rem;
+  --layout-section-space: var(--space-32);
+  --layout-band-space: var(--space-28);
+  --layout-column-gap: var(--space-12);
+  --layout-measure: 39rem;
+  --nav-height: 6rem;
+  --hero-min-height: 43rem;
+  --hero-art-height: 33rem;
+  --hero-stats-height: 8.5rem;
+  --project-art-height: 16rem;
+  --button-min-height: 3.7rem;
+  --art-grid-step: 2.4rem;
+  --art-ring-size: 25rem;
+  --art-orb-size: 16rem;
+  --project-art-shape-size: 12rem;
+  --project-art-number-size: 7rem;
+
+  /* Shape, borders, focus and motion */
+  --radius-round: 50%;
+  --radius-pill: 100vmax;
+  --border-thin: 1px;
+  --shadow-card: 0 1.2rem 2.3rem rgba(0, 0, 0, 0.11);
+  --shadow-art-ring:
+    0 0 0 3.7rem rgba(255, 255, 255, 0.035),
+    0 0 0 7.4rem rgba(255, 255, 255, 0.028);
+  --shadow-project-shape:
+    0 0 0 2.2rem rgba(255, 255, 255, 0.13),
+    0 0 0 4.4rem rgba(255, 255, 255, 0.07);
+  --focus-width: 3px;
+  --focus-offset: 4px;
+  --motion-fast: 200ms;
+  --motion-slow: 450ms;
+  --motion-ease: ease;
+
+  /* Light theme: semantic colors */
+  --color-canvas: #f3f0e9;
+  --color-surface: #faf8f2;
+  --color-text: #173037;
+  --color-text-muted: #52656a;
+  --color-border: #cbd0c9;
+  --color-accent: #a33e2b;
+  --color-accent-display: #b54934;
+  --color-highlight: #e3b448;
+  --color-highlight-strong: #9c5b19;
+  --color-focus: #9c5b19;
+  --color-selection: #eac45e;
+  --color-selection-text: #142c31;
+
+  /* Site sections and controls */
+  --color-hero: #e8e9df;
+  --color-hero-text: #173037;
+  --color-hero-muted: #52656a;
+  --color-hero-border: rgba(23, 48, 55, 0.25);
+  --color-button: #e3b448;
+  --color-button-hover: #f6d889;
+  --color-button-text: #173037;
+  --color-statement: #e77b5f;
+  --color-statement-text: #182e32;
+  --color-statement-muted: #28474b;
+  --color-statement-accent: #fff7ea;
+  --color-statement-border: rgba(23, 48, 55, 0.4);
+  --color-capabilities: #224b52;
+  --color-capabilities-text: #f7f3ea;
+  --color-capabilities-muted: #ccdad4;
+  --color-capabilities-border: rgba(255, 255, 255, 0.3);
+
+  /* Graphic treatments are themeable, but independent of page mode. */
+  --color-art-surface: #234650;
+  --color-art-text: #f7f3ea;
+  --color-art-grid: rgba(255, 255, 255, 0.35);
+  --color-art-line: rgba(255, 255, 255, 0.8);
+  --color-art-ring: rgba(255, 255, 255, 0.56);
+  --color-art-circle: #e77b5f;
+  --color-art-square: #e3b448;
+  --color-project-one: #234750;
+  --color-project-two: #e77b5f;
+  --color-project-three: #426a6a;
+}
+
+/* Explicit light choice overrides an operating system dark preference. */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-canvas: #0e2025;
+    --color-surface: #152b31;
+    --color-text: #f3f1e9;
+    --color-text-muted: #aabdb9;
+    --color-border: #385057;
+    --color-accent: #ff9174;
+    --color-accent-display: #f18b6c;
+    --color-highlight: #edc862;
+    --color-highlight-strong: #edc862;
+    --color-focus: #edc862;
+    --color-hero: #0a191e;
+    --color-hero-text: #f7f3ea;
+    --color-hero-muted: #b2c5c1;
+    --color-hero-border: rgba(255, 255, 255, 0.24);
+  }
+}
+
+/* Same dark palette when the visitor explicitly selects it. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-canvas: #0e2025;
+  --color-surface: #152b31;
+  --color-text: #f3f1e9;
+  --color-text-muted: #aabdb9;
+  --color-border: #385057;
+  --color-accent: #ff9174;
+  --color-accent-display: #f18b6c;
+  --color-highlight: #edc862;
+  --color-highlight-strong: #edc862;
+  --color-focus: #edc862;
+  --color-hero: #0a191e;
+  --color-hero-text: #f7f3ea;
+  --color-hero-muted: #b2c5c1;
+  --color-hero-border: rgba(255, 255, 255, 0.24);
+}
+
+@media (max-width: 1050px) {
+  :root {
+    --font-size-hero: clamp(5rem, 9vw, 8rem);
+    --hero-art-height: 28rem;
+  }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --layout-gutter: 1rem;
+    --layout-section-space: var(--space-20);
+    --layout-band-space: var(--space-20);
+    --layout-column-gap: var(--space-8);
+    --nav-height: 5.5rem;
+    --hero-min-height: 0;
+    --hero-art-height: 24rem;
+    --hero-stats-height: 7rem;
+    --art-ring-size: 19rem;
+    --art-orb-size: 11rem;
+    --font-size-stat: 1.75rem;
+    --font-size-hero: clamp(4.25rem, 16vw, 7rem);
+    --font-size-section: clamp(3.25rem, 11vw, 5rem);
+    --font-size-statement: clamp(3.2rem, 11vw, 5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+    --motion-slow: 0ms;
+  }
+}
