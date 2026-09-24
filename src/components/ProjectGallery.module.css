@@ -260,6 +260,13 @@
 .screenshotGrid figure { margin: 0; border: var(--border-thin) solid var(--color-border); background: var(--color-surface); }
 .screenshotGrid img { width: 100%; display: block; aspect-ratio: 16 / 10; object-fit: cover; background: var(--color-surface); }
 .screenshotGrid figcaption { padding: var(--space-3); color: var(--color-text-muted); font-size: var(--font-size-xs); line-height: var(--line-height-copy); }
+.confidentialityNote {
+  max-width: 56rem;
+  margin-top: var(--space-10);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-copy);
+}
 .dialogFooter { margin-top: var(--space-10); padding-top: var(--space-6); display: flex; justify-content: space-between; gap: var(--space-4); border-top: var(--border-thin) solid var(--color-border); }
 
 @media (max-width: 1050px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

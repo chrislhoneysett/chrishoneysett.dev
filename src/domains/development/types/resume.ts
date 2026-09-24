@@ -40,6 +40,8 @@ export interface ResumeProject {
   };
   /** Product-focused prose for website project cards. */
   description: string;
+  /** Quiet disclosure shown after the project details in the modal. */
+  confidentialityNote?: string;
   /** Expanded project story for the website's project detail modal. */
   modal?: {
     overview: string;

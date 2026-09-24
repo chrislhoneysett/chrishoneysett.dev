@@ -145,6 +145,9 @@ export function ProjectGallery({ projects }: { projects: readonly ProjectGallery
                 </div>
               </section>
             ) : null}
+            {activeProject.confidentialityNote ? (
+              <p className={styles.confidentialityNote}>{activeProject.confidentialityNote}</p>
+            ) : null}
             <div className={styles.dialogFooter}>
               {activeProject.modal?.liveUrl ? (
                 <a href={activeProject.modal.liveUrl} target='_blank' rel='noreferrer'>Visit live site <span aria-hidden='true'>↗</span></a>

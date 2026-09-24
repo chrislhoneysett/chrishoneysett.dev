@@ -9,7 +9,7 @@ import type { Resume } from '@/domains/development/types/resume'
  */
 export const resume: Resume = {
   name: 'Chris Honeysett',
-  headline: 'Senior Frontend Web & Mobile Software Engineer',
+  headline: 'Senior Frontend Engineer | React & Connected Mobile Apps',
   location: 'Kalamazoo, MI',
   email: 'chrislhoneysett@gmail.com',
   links: [
@@ -17,7 +17,7 @@ export const resume: Resume = {
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/chris-honeysett/' },
   ],
   summary:
-    'My path into software began in theatre and graphic design, where planning for an audience and working across disciplines were part of the job. Print and interactive media led to frontend engineering, then to mobile applications for connected devices. That range shapes how I approach new work: understand the people and constraints first, make deliberate technical choices, and leave code that another engineer can build on.',
+    'My path into software began in theatre and graphic design. As a theatrical technical director, I coordinated crews, schedules, and production needs; as a freelance designer and developer, I worked directly with clients to shape and deliver their projects. That experience taught me to lead a project by understanding its needs, aligning collaborators, and choosing a practical solution. Print and interactive media led to frontend engineering, and more recently to React Native applications for connected devices. My design background helps me work with designers, while my engineering experience helps me leave code another developer can build on.',
   skills: [
     {
       id: 'core',
@@ -40,6 +40,7 @@ export const resume: Resume = {
         'Cross-Platform application builds',
         'Bluetooth',
         'NFC',
+        'TypeScript APIs for device communication',
       ],
     },
     {
@@ -72,7 +73,16 @@ export const resume: Resume = {
     {
       id: 'collaboration',
       label: 'Delivery & Collaboration',
-      items: ['Agile', 'Scrum', 'Jira', 'Miro'],
+      items: [
+        'Client communication',
+        'Project leadership',
+        'Project planning',
+        'Designer collaboration',
+        'Agile',
+        'Scrum',
+        'Jira',
+        'Miro',
+      ],
     },
   ],
   experience: [
@@ -84,7 +94,7 @@ export const resume: Resume = {
       startDate: '2023',
       endDate: 'Present',
       summary:
-        'Own frontend development as the sole frontend engineer across websites, dashboards, and mobile applications, focusing on React and React Native. Deliver reusable UI components and applications that connect cloud data and Bluetooth-enabled hardware with user-facing interfaces.',
+        'As the sole frontend engineer, I own web interfaces and nearly all application engineering for two released React Native apps. I continue to iterate on both, contribute to their design, and collaborate with teammates responsible for specialized BLE and NFC security layers. I also build TypeScript APIs that let app developers work with connected devices without handling device-specific message formats directly.',
       projects: [
         {
           id: 'auris',
@@ -98,9 +108,9 @@ export const resume: Resume = {
           client: 'Twisthink',
           type: 'Component Library',
           description:
-            'A reusable React component library that gives designers and developers a shared foundation for custom interfaces. Atomic Design principles, private npm distribution, and a Storybook environment support component discovery, customization, and faster project setup.',
+            'An internal collection of interface building blocks that gives designers and developers a consistent starting point for custom client applications.',
           resumeHighlight:
-            'Created a reusable React component library with Storybook and private npm distribution to streamline project setup and support custom designs.',
+            'Defined the React component structure using Atomic Design, set up Storybook for discovery, and packaged the library for private npm distribution.',
           technologies: ['React', 'Storybook', 'npm'],
           tags: ['web', 'ui', 'design-system'],
         },
@@ -114,9 +124,9 @@ export const resume: Resume = {
           client: 'Charity Water',
           type: 'Web Application',
           description:
-            'A well-monitoring dashboard that helps technicians identify sensor-reported failures and support water access in remote African communities. The application uses AWS data and was rebuilt in React from its original Vue implementation.',
+            'A well-monitoring dashboard that brings sensor readings and reported failures together so technicians can identify problems affecting water access in remote African communities.',
           resumeHighlight:
-            'Rebuilt a Vue well-monitoring dashboard in React, using AWS sensor data to help technicians identify failures in remote communities.',
+            'Rebuilt the existing Vue dashboard in React and connected AWS sensor data to the technician-facing interface.',
           technologies: ['React', 'Vue', 'AWS'],
           tags: ['web', 'ui'],
         },
@@ -151,10 +161,12 @@ export const resume: Resume = {
           type: 'Mobile Application',
           platforms: ['iOS', 'Android'],
           description:
-            'An iOS and Android mobile application that combines Bluetooth and NFC communication with authentication, PIN entry, and permission checks to control access to physical locks. Authorized users can unlock devices and perform other lock operations.',
+            'A released iOS and Android app for limited commercial use in secure physical access. Authorized users can operate and program connected locks through Bluetooth, with authentication, PIN entry, and permission checks. Device audit logs record lock operations so activity is traceable. An NFC-based hardware version is in development.',
+          confidentialityNote:
+            'Project name and imagery are generalized, and identifying client and product details are omitted, to respect client confidentiality.',
           resumeHighlight:
-            'Implemented iOS and Android access-control workflows combining Bluetooth, NFC, authentication, PIN entry, and permissions for authorized lock operations.',
-          technologies: ['React Native', 'Bluetooth', 'NFC'],
+            'Own the app’s product behavior and nearly all application engineering, coordinating with backend, BLE firmware, and NFC engineers. Built a portable BLE abstraction for session handling, discovery, connection, and communication; now developing a reusable NFC library with the same architecture.',
+          technologies: ['React Native', 'TypeScript', 'Bluetooth', 'NFC'],
           tags: ['mobile', 'bluetooth'],
         },
         {
@@ -169,10 +181,12 @@ export const resume: Resume = {
           type: 'Mobile Application',
           platforms: ['iOS', 'Android'],
           description:
-            'A React Native application for iOS and Android that manages connected battery packs through Bluetooth and cloud services. The interface brings local device connectivity and cloud-based control into a single mobile experience.',
+            'A released iOS and Android app for upcoming consumer portable battery packs, from charging phones to powering a campsite. It is designed to let users manage a pack locally over Bluetooth or remotely when it connects over Wi-Fi, with AWS supporting user and device authentication.',
+          confidentialityNote:
+            'Project name and imagery are generalized, and identifying client and product details are omitted, to respect client confidentiality.',
           resumeHighlight:
-            'Built an iOS and Android React Native battery-management application integrating Bluetooth connectivity and cloud-based control.',
-          technologies: ['React Native', 'Bluetooth', 'AWS'],
+            'Own nearly all application engineering for a React Native battery app. Architected a shared TypeScript control API with the cloud-controls engineer, routing requests through my BLE implementation or the cloud implementation.',
+          technologies: ['React Native', 'TypeScript', 'Bluetooth', 'Wi-Fi', 'AWS'],
           tags: ['mobile', 'bluetooth'],
         },
         {
@@ -448,9 +462,9 @@ export const resume: Resume = {
           client: 'Michigan Senate',
           type: 'Web Application',
           description:
-            'A React financial portal that gives authenticated Drupal users access to office budgets. Permissions determine whether users can view their own office or additional offices.',
+            'An internal financial portal that lets authorized staff review office budgets. Access rules determine which offices each person can see.',
           resumeHighlight:
-            'Implemented a React budget portal with authenticated Drupal access and permission-based visibility across offices.',
+            'Implemented authenticated React views within Drupal and applied office-level permissions to the budget data each user could access.',
           technologies: ['React', 'Drupal'],
           tags: ['web', 'cms'],
         },
@@ -549,7 +563,7 @@ export const resume: Resume = {
           client: "Kellogg's",
           type: 'Website',
           description:
-            'A consumer rewards website and connected microsites supported by a shared frontend codebase. My work spanned more than six years of frontend leadership, ongoing maintenance, and a responsive redesign using Adobe AEM and Vue.',
+            'A consumer rewards website and connected microsites that needed a consistent experience across a long-running program.',
           resumeHighlight:
             'Directed frontend development for more than six years, including an Adobe AEM/Vue responsive redesign and a shared codebase across rewards microsites.',
           technologies: ['Adobe AEM', 'Vue'],
@@ -566,9 +580,9 @@ export const resume: Resume = {
           client: 'Walmart',
           type: 'Web Application',
           description:
-            'A Drupal and Vue planning tool used by managers across 2,500+ Walmart locations to prepare crowd-planning maps for Black Friday sales events. My responsibilities included development leadership and feature enhancements.',
+            'A planning tool used by managers across 2,500+ Walmart locations to prepare crowd-planning maps for Black Friday sales events.',
           resumeHighlight:
-            'Led development of a Drupal and Vue crowd-planning tool serving managers across 2,500+ Walmart locations.',
+            'Led frontend implementation and subsequent feature enhancements in Drupal and Vue.',
           technologies: ['Drupal', 'Vue'],
           tags: ['web', 'cms', 'leadership'],
         },
@@ -582,9 +596,9 @@ export const resume: Resume = {
           client: 'Ford',
           type: 'Web Application',
           description:
-            'A React store locator integrated with Adobe AEM that helps users find Ford QuickLane service centers near a specified address.',
+            'A store locator that helps drivers find Ford QuickLane service centers near an address they enter.',
           resumeHighlight:
-            'Integrated a React store locator with Adobe AEM to find nearby Ford QuickLane service centers.',
+            'Built the locator as a React experience embedded in Adobe AEM, connecting address searches to nearby service-center results.',
           technologies: ['React', 'Adobe AEM'],
           tags: ['web', 'cms'],
         },
@@ -612,7 +626,7 @@ export const resume: Resume = {
       startDate: '1998',
       endDate: '2020',
       summary:
-        'Developed responsive websites, marketing, and branding for educational and arts organizations, including the U.S. Department of Education and DePaul University.',
+        'Worked directly with clients to design and develop responsive websites, marketing, and branding for educational and arts organizations, including the U.S. Department of Education and DePaul University.',
       projects: [
         {
           id: 'midwest-rad-fest',
@@ -643,9 +657,9 @@ export const resume: Resume = {
           client: 'Farmers Alley Theatre',
           type: 'Website',
           description:
-            'Designed, built, and maintained the Drupal website for Farmers Alley Theatre, integrating Ludus for online ticketing.',
+            'A regional theatre website where audiences can explore productions and follow a path to online ticket purchases.',
           resumeHighlight:
-            'Designed and maintained Farmers Alley Theatre’s Drupal website, integrating Ludus for online ticket sales.',
+            'Designed and built the Drupal site, integrated Ludus ticketing, and maintained the experience over time.',
           technologies: ['Drupal', 'Ludus'],
           tags: ['web', 'cms', 'ui'],
         },

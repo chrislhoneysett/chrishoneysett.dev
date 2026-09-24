@@ -5,8 +5,8 @@ import "./theme.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: `${resume.name} — Senior Frontend & Mobile Engineer`,
-  description: "Senior frontend and mobile engineer with deep technical experience and a background in graphic design, theatre, and collaborative product work.",
+  title: `${resume.name} — ${resume.headline}`,
+  description: "Senior frontend engineer building React applications and connected mobile experiences with React Native, BLE, and NFC.",
   authors: [{ name: resume.name }],
 };
 

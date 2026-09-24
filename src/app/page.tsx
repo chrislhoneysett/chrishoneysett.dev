@@ -61,7 +61,7 @@ export default function Home() {
 
         <header className={styles.hero}>
           <div className={styles.heroTopline}>
-            <span>Senior frontend &amp; mobile engineer</span>
+            <span>{resume.headline}</span>
             <span>Kalamazoo, Michigan · Working across disciplines</span>
           </div>
           <div className={styles.heroMain}>
@@ -78,9 +78,10 @@ export default function Home() {
                 feel clear<span className={styles.period}>.</span>
               </h1>
               <p className={styles.heroLead}>
-                I build clear, maintainable web and mobile applications, drawing
-                on experience in graphic design, frontend systems, and connected
-                devices.
+                I build clear, maintainable React applications. My frontend
+                work now extends to React Native apps for connected devices,
+                where I make BLE and NFC communication easier for app developers
+                to use.
               </p>
               <div className={styles.heroActions}>
                 <a className={styles.primaryLink} href='#work'>
@@ -109,9 +110,9 @@ export default function Home() {
                 17<span>+</span>
               </strong>
               <small>
-                years leading
+                years guiding
                 <br />
-                frontend work
+                frontend projects
               </small>
             </div>
             <div>
@@ -141,7 +142,9 @@ export default function Home() {
             <p>
               Selected projects across frontend platforms, mobile applications,
               and interface systems. Each project includes the technical approach
-              and my contribution.
+              and my contribution. To respect client confidentiality, some
+              connected-product projects use general names, illustrations, and
+              limited product details.
             </p>
           </div>
         </div>
@@ -159,9 +162,9 @@ export default function Home() {
               <span>01</span>
               <h3>Print to interactive</h3>
               <p>
-                Theatre, graphic design, and print production formed the
-                foundation. As print changed, I learned Flash and ActionScript
-                and moved into interactive work.
+                As a theatrical technical director, I coordinated crews,
+                schedules, and production needs. Graphic design and print work
+                then led me to Flash, ActionScript, and interactive projects.
               </p>
             </article>
             <article>
@@ -177,8 +180,10 @@ export default function Home() {
               <span>03</span>
               <h3>Web to connected devices</h3>
               <p>
-                At Twisthink, the work expanded into mobile applications that
-                communicate with hardware through Bluetooth Low Energy and NFC.
+                At Twisthink, my frontend work expanded into React Native apps
+                for connected products. I built reusable TypeScript APIs that
+                translate app requests into device messages for native BLE and
+                NFC communication.
               </p>
             </article>
             <article>
@@ -207,9 +212,9 @@ export default function Home() {
               <em>Several reinventions.</em>
             </h2>
             <p>
-              The roles span frontend leadership, mobile development, connected
-              devices, and design, with collaboration across disciplines at each
-              stage.
+              Owning frontend delivery and helping clients and collaborators
+              choose the right approach have been constants. More recently,
+              that work has grown to include mobile apps for connected devices.
             </p>
           </div>
         </div>
