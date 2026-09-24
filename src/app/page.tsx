@@ -1,12 +1,33 @@
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { ProjectGallery } from '@/components/ProjectGallery'
+import { HeroShowcase } from '@/components/HeroShowcase'
+import { ContactDialog } from '@/components/ContactDialog'
 import { resume } from '@/domains/development/data/resume'
 import styles from './page.module.css'
 
 const projects = [...resume.experience, ...resume.additionalExperience]
   .flatMap((role) =>
-    role.projects.map((project) => ({ ...project, employer: role.company })),
+    role.projects
+      .filter((project) => !project.hidden)
+      .map((project) => ({ ...project, employer: role.company })),
   )
+
+const featuredProjects = [
+  'charity-water',
+  'auris',
+  'connected-battery-management',
+  'ford-quicklane',
+].map((id) => {
+  const project = projects.find((item) => item.id === id)
+  if (!project?.heroImage) throw new Error(`Missing featured project image: ${id}`)
+  return {
+    id: project.id,
+    name: project.name,
+    type: project.type,
+    image: project.heroImage,
+    technologies: project.technologies,
+  }
+})
 
 function Arrow() {
   return <span aria-hidden='true'>↗</span>
@@ -34,9 +55,7 @@ export default function Home() {
           </div>
           <div className={styles.navEnd}>
             <ThemeToggle />
-            <a className={styles.navContact} href={`mailto:${resume.email}`}>
-              Let&apos;s talk <Arrow />
-            </a>
+            <ContactDialog id='nav-contact' email={resume.email} className={styles.navContact} label="Let's talk" />
           </div>
         </nav>
 
@@ -59,33 +78,20 @@ export default function Home() {
                 feel clear<span className={styles.period}>.</span>
               </h1>
               <p className={styles.heroLead}>
-                I build web and mobile software, bringing experience across
-                print, interactive media, frontend, and connected devices. I
-                keep learning as the tools change—and bring the judgment to turn
-                new capabilities into clear, maintainable work.
+                I build clear, maintainable web and mobile applications, drawing
+                on experience in graphic design, frontend systems, and connected
+                devices.
               </p>
               <div className={styles.heroActions}>
                 <a className={styles.primaryLink} href='#work'>
-                  Explore my work <Arrow />
+                  View projects <Arrow />
                 </a>
                 <a className={styles.secondaryLink} href='#about'>
-                  A little about me <span aria-hidden='true'>↓</span>
+                  Career background <span aria-hidden='true'>↓</span>
                 </a>
               </div>
             </div>
-            <div className={styles.heroArt} aria-hidden='true'>
-              <span className={styles.artLabel}>
-                ENGINEERING / DESIGN-INFORMED
-              </span>
-              <div className={styles.artGrid} />
-              <div className={styles.artRing} />
-              <div className={styles.artCircle} />
-              <div className={styles.artSquare} />
-              <div className={styles.artLine} />
-              <span className={styles.artCaption}>
-                01 / DETAILS SUPPORT THE SYSTEM
-              </span>
-            </div>
+            <HeroShowcase slides={featuredProjects} />
           </div>
           <div className={styles.heroFooter}>
             <div>
@@ -128,13 +134,14 @@ export default function Home() {
           <p className={styles.sectionLabel}>01 / Selected work</p>
           <div>
             <h2 id='work-title'>
-              Built with purpose.
+              Web, mobile,
               <br />
-              <em>Made for people.</em>
+              <em>and systems work.</em>
             </h2>
             <p>
-              Good engineering makes complicated things feel natural. Explore
-              projects across systems, products, and platforms.
+              Selected projects across frontend platforms, mobile applications,
+              and interface systems. Each project includes the technical approach
+              and my contribution.
             </p>
           </div>
         </div>
@@ -142,18 +149,18 @@ export default function Home() {
       </section>
 
       <section className={styles.statement} aria-labelledby='statement-title'>
-        <p className={styles.sectionLabel}>02 / Reinvention</p>
+        <p className={styles.sectionLabel}>02 / Career path</p>
         <div>
           <h2 id='statement-title'>
-            When the medium changes, <em>I learn the next one.</em>
+            From design to <em>software engineering.</em>
           </h2>
           <div className={styles.principles}>
             <article>
               <span>01</span>
               <h3>Print to interactive</h3>
               <p>
-                I began in theatre, studied graphic design, and worked in print.
-                As that industry shifted, I taught myself Flash and ActionScript
+                Theatre, graphic design, and print production formed the
+                foundation. As print changed, I learned Flash and ActionScript
                 and moved into interactive work.
               </p>
             </article>
@@ -161,27 +168,25 @@ export default function Home() {
               <span>02</span>
               <h3>Interactive to the web</h3>
               <p>
-                When Flash began to fade, I moved into frontend development:
-                first static sites and CSS, then JavaScript and application
-                architectures like React and Vue.
+                As Flash faded, the work moved to frontend development: static
+                sites and CSS, then JavaScript applications built with React and
+                Vue.
               </p>
             </article>
             <article>
               <span>03</span>
               <h3>Web to connected devices</h3>
               <p>
-                At Twisthink, I expanded into full mobile development, building
-                applications that work with hardware through Bluetooth Low
-                Energy and NFC.
+                At Twisthink, the work expanded into mobile applications that
+                communicate with hardware through Bluetooth Low Energy and NFC.
               </p>
             </article>
             <article>
               <span>04</span>
-              <h3>Experience into the AI era</h3>
+              <h3>Engineering with new tools</h3>
               <p>
-                Now I use AI as part of the development workflow, applying years
-                of engineering judgment to guide it toward clean, organized
-                solutions built efficiently.
+                AI tools now support prototyping and implementation. Engineering
+                experience guides architecture, review, and maintainability.
               </p>
             </article>
           </div>
@@ -202,9 +207,9 @@ export default function Home() {
               <em>Several reinventions.</em>
             </h2>
             <p>
-              Each shift asked me to learn new tools and ways of working. The
-              accumulated experience helps me adapt without losing sight of the
-              people, constraints, and craft behind the work.
+              The roles span frontend leadership, mobile development, connected
+              devices, and design, with collaboration across disciplines at each
+              stage.
             </p>
           </div>
         </div>
@@ -233,9 +238,9 @@ export default function Home() {
         <p className={styles.sectionLabel}>04 / Capabilities</p>
         <div>
           <h2 id='capabilities-title'>
-            What I bring
+            Technical
             <br />
-            <em>to the table.</em>
+            <em>strengths.</em>
           </h2>
         </div>
         <div className={styles.skillList}>
@@ -289,17 +294,15 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <p className={styles.sectionLabel}>
-          Let&apos;s make something meaningful
+          Open to the next opportunity
         </p>
         <h2>
-          Have a challenge?
+          Interested in working together?
           <br />
-          <em>Let&apos;s talk.</em>
+          <em>Get in touch.</em>
         </h2>
         <div className={styles.footerLinks}>
-          <a href={`mailto:${resume.email}`}>
-            {resume.email} <Arrow />
-          </a>
+          <ContactDialog id='footer-contact' email={resume.email} className={styles.footerContact} label='Contact me' />
           <a
             href='https://www.linkedin.com/in/chris-honeysett/'
             target='_blank'

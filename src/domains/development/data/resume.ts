@@ -17,7 +17,7 @@ export const resume: Resume = {
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/chris-honeysett/' },
   ],
   summary:
-    'My career has moved from theatre and print into interactive media, frontend engineering, and mobile applications for connected devices. Each time the medium changed, I learned the tools and carried forward what I had learned before—from graphic design and print production to Flash and ActionScript, then CSS, JavaScript, React, Vue, Bluetooth, and NFC. Today I bring that accumulated experience to AI-assisted development: guiding the tools with clear direction and engineering judgment to build organized, maintainable software efficiently. Across every transition, I focus on listening, understanding constraints, and making useful things for the people who rely on them.',
+    'My path into software began in theatre and graphic design, where planning for an audience and working across disciplines were part of the job. Print and interactive media led to frontend engineering, then to mobile applications for connected devices. That range shapes how I approach new work: understand the people and constraints first, make deliberate technical choices, and leave code that another engineer can build on.',
   skills: [
     {
       id: 'core',
@@ -129,6 +129,7 @@ export const resume: Resume = {
             kind: 'illustration',
           },
           name: 'Industrial Motor Control',
+          hidden: true,
           type: 'Mobile Application',
           platforms: ['iOS', 'Android'],
           description:
@@ -153,7 +154,7 @@ export const resume: Resume = {
             'An iOS and Android mobile application that combines Bluetooth and NFC communication with authentication, PIN entry, and permission checks to control access to physical locks. Authorized users can unlock devices and perform other lock operations.',
           resumeHighlight:
             'Implemented iOS and Android access-control workflows combining Bluetooth, NFC, authentication, PIN entry, and permissions for authorized lock operations.',
-          technologies: ['Bluetooth', 'NFC'],
+          technologies: ['React Native', 'Bluetooth', 'NFC'],
           tags: ['mobile', 'bluetooth'],
         },
         {
@@ -183,6 +184,7 @@ export const resume: Resume = {
             kind: 'illustration',
           },
           name: 'Nordic Thingy Demo',
+          hidden: true,
           client: 'Twisthink',
           type: 'Mobile Application',
           platforms: ['iOS', 'Android'],
@@ -190,7 +192,7 @@ export const resume: Resume = {
             'An evolving iOS and Android mobile demo that uses NFC to identify a Nordic Thingy device before connecting over Bluetooth. Onboard sensor readings feed g-force and temperature charts, alongside controls for generating tones. Further development is planned for connected-device and sensor-visualization demonstrations.',
           resumeHighlight:
             'Created an iOS and Android Nordic Thingy demo with NFC identification, Bluetooth connectivity, sensor charts, and tone controls.',
-          technologies: ['NFC', 'Bluetooth', 'Nordic Thingy'],
+          technologies: ['React Native', 'Bluetooth', 'NFC', 'Nordic Thingy'],
           tags: ['mobile', 'ui'],
         },
       ],
@@ -252,7 +254,7 @@ export const resume: Resume = {
           id: 'ihsaa',
           projectOrigin: 'Greenfield',
           heroImage: {
-            src: '/projects/ihsaa.jpeg',
+            src: '/projects/ihsaa.png',
             alt: 'Indiana High School Athletic Association homepage',
           },
           name: 'Indiana High School Athletic Association',
@@ -308,12 +310,12 @@ export const resume: Resume = {
               'Made practical visit information easy to find, including accessibility, directions, and parking.',
             ],
             screenshots: [
-              {
-                src: '/projects/millerauditorium.jpeg',
-                alt: 'Screenshot preview of the Miller Auditorium homepage',
-                caption:
-                  'Featured shows and upcoming performances on the Miller Auditorium homepage.',
-              },
+              // {
+              //   src: '/projects/millerauditorium.jpeg',
+              //   alt: 'Screenshot preview of the Miller Auditorium homepage',
+              //   caption:
+              //     'Featured shows and upcoming performances on the Miller Auditorium homepage.',
+              // },
             ],
             liveUrl: 'https://www.millerauditorium.com/',
           },
@@ -330,6 +332,7 @@ export const resume: Resume = {
             alt: 'Fly Lansing airport homepage',
           },
           name: 'Lansing Airport',
+          hidden: true,
           client: 'Lansing Airport',
           type: 'Website',
           description:
@@ -367,6 +370,7 @@ export const resume: Resume = {
             alt: 'Williamston Theatre homepage',
           },
           name: 'Williamston Theatre',
+          hidden: true,
           client: 'Williamston Theatre',
           type: 'Website',
           description:
@@ -403,6 +407,7 @@ export const resume: Resume = {
             alt: 'Michigan Potatoes public website',
           },
           name: 'Michigan Potato Growers Conference Registration',
+          hidden: true,
           client: 'Michigan Potato Growers',
           type: 'Web Application',
           description:
@@ -456,6 +461,7 @@ export const resume: Resume = {
             alt: 'MSU Graduate Manage Your Aid page',
           },
           name: 'MSU Graduate Financial Aid',
+          hidden: true,
           client: 'Michigan State University',
           type: 'Website',
           description:
@@ -504,6 +510,7 @@ export const resume: Resume = {
             alt: 'Northern Trust website homepage featuring an asset management study',
           },
           name: 'Northern Trust',
+          hidden: true,
           client: 'Northern Trust',
           type: 'Website',
           description:
@@ -521,6 +528,7 @@ export const resume: Resume = {
           },
           projectOrigin: 'Greenfield',
           name: 'Forever Strong Foundation',
+          hidden: true,
           client: 'Forever Strong Foundation',
           type: 'Website',
           description:
@@ -614,6 +622,7 @@ export const resume: Resume = {
             alt: 'Midwest RAD Fest logo, designed by Chris Honeysett',
           },
           name: 'Wellspring Cori Terry & Dancers',
+          hidden: true,
           client: 'Wellspring Cori Terry & Dancers',
           type: 'Website',
           description:

@@ -66,14 +66,21 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
   font-size: var(--font-size-label);
   font-weight: var(--font-weight-bold);
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .navContact span {
   font-size: var(--font-size-icon);
 }
+
+.navContact:hover { color: var(--color-highlight-strong); }
 
 .heroTopline {
   padding-block: var(--space-6);
@@ -195,88 +202,12 @@
   margin-left: var(--space-3);
 }
 
-/* The geometric illustration is CSS, so its proportions remain local. */
-.heroArt {
-  position: relative;
-  height: var(--hero-art-height);
-  overflow: hidden;
-  border: var(--border-thin) solid var(--color-hero-border);
-  color: var(--color-art-text);
-  background: var(--color-art-surface);
-}
-
-.artGrid,
 .projectVisual::before {
   position: absolute;
   inset: 0;
   background-image:
     linear-gradient(var(--color-art-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--color-art-grid) 1px, transparent 1px);
-}
-
-.artGrid {
-  opacity: 0.23;
-  background-size: var(--art-grid-step) var(--art-grid-step);
-}
-
-.artLabel,
-.artCaption {
-  position: absolute;
-  z-index: 4;
-  left: var(--space-6);
-  font-family: var(--font-family-code);
-  font-size: var(--font-size-xs);
-  letter-spacing: var(--tracking-meta);
-}
-
-.artLabel { top: var(--space-6); }
-.artCaption { bottom: var(--space-6); }
-
-.artRing {
-  position: absolute;
-  z-index: 1;
-  width: var(--art-ring-size);
-  aspect-ratio: 1;
-  top: 47%;
-  left: 47%;
-  transform: translate(-50%, -50%);
-  border: var(--border-thin) solid var(--color-art-ring);
-  border-radius: var(--radius-round);
-  box-shadow: var(--shadow-art-ring);
-}
-
-.artCircle {
-  position: absolute;
-  z-index: 2;
-  width: var(--art-orb-size);
-  aspect-ratio: 1;
-  top: 20%;
-  left: 8%;
-  border-radius: var(--radius-round);
-  background: var(--color-art-circle);
-  mix-blend-mode: screen;
-}
-
-.artSquare {
-  position: absolute;
-  z-index: 3;
-  width: var(--art-orb-size);
-  aspect-ratio: 1;
-  top: 39%;
-  right: 8%;
-  transform: rotate(-15deg);
-  border: var(--space-8) solid var(--color-art-square);
-}
-
-.artLine {
-  position: absolute;
-  z-index: 3;
-  width: 100%;
-  height: var(--border-thin);
-  top: 54%;
-  left: 0;
-  transform: rotate(-31deg);
-  background: var(--color-art-line);
 }
 
 .heroFooter {
@@ -638,6 +569,8 @@
 
 .footerLinks a { display: flex; align-items: center; gap: var(--space-4); font-size: var(--font-size-body); }
 .footerLinks a:hover { color: var(--color-highlight-strong); }
+.footerContact { display: flex; align-items: center; gap: var(--space-4); padding: 0; border: 0; color: inherit; background: transparent; font-size: var(--font-size-body); cursor: pointer; }
+.footerContact:hover { color: var(--color-highlight-strong); }
 
 .copyright {
   margin-top: var(--space-8);

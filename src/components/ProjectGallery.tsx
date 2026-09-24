@@ -8,14 +8,21 @@ type ProjectGalleryItem = ResumeProject & { employer: string }
 
 export function ProjectGallery({ projects }: { projects: readonly ProjectGalleryItem[] }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const dialogContentRef = useRef<HTMLDivElement>(null)
   const [activeProject, setActiveProject] = useState<ProjectGalleryItem | null>(null)
+  const activeIndex = activeProject ? projects.findIndex((project) => project.id === activeProject.id) : -1
 
   useEffect(() => {
     const dialog = dialogRef.current
     if (!dialog) return
 
-    if (activeProject && !dialog.open) dialog.showModal()
-    if (!activeProject && dialog.open) dialog.close()
+    if (activeProject) {
+      if (!dialog.open) dialog.showModal()
+      dialog.scrollTop = 0
+      if (dialogContentRef.current) dialogContentRef.current.scrollTop = 0
+    } else if (dialog.open) {
+      dialog.close()
+    }
   }, [activeProject])
 
   function closeDialog() {
@@ -23,11 +30,16 @@ export function ProjectGallery({ projects }: { projects: readonly ProjectGallery
     setActiveProject(null)
   }
 
+  function showRelativeProject(offset: number) {
+    if (activeIndex < 0 || projects.length < 2) return
+    setActiveProject(projects[(activeIndex + offset + projects.length) % projects.length])
+  }
+
   return (
     <>
       <div className={styles.grid}>
         {projects.map((project, index) => (
-          <article className={styles.card} key={project.id}>
+          <article className={styles.card} id={`project-${project.id}`} key={project.id}>
             <div
               className={`${styles.visual} ${styles[`visual${(index % 3) + 1}`]} ${project.heroImage?.kind === 'illustration' ? styles.withIllustration : project.heroImage ? styles.withScreenshot : ''}`}
               aria-hidden='true'
@@ -65,12 +77,30 @@ export function ProjectGallery({ projects }: { projects: readonly ProjectGallery
         onClick={(event) => {
           if (event.target === event.currentTarget) closeDialog()
         }}
+        onKeyDown={(event) => {
+          if (event.altKey || event.ctrlKey || event.metaKey) return
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault()
+            showRelativeProject(event.key === 'ArrowLeft' ? -1 : 1)
+          }
+        }}
       >
         {activeProject && (
-          <div className={styles.dialogContent}>
+          <div className={styles.dialogContent} ref={dialogContentRef}>
             <button className={styles.closeButton} type='button' onClick={closeDialog} aria-label='Close project details'>
               ×
             </button>
+            {projects.length > 1 ? (
+              <nav className={styles.dialogNavigation} aria-label='Project navigation'>
+                <button type='button' onClick={() => showRelativeProject(-1)} aria-label={`Previous project: ${projects[(activeIndex - 1 + projects.length) % projects.length].name}`}>
+                  <span aria-hidden='true'>←</span> Previous
+                </button>
+                <span aria-live='polite'>Project {activeIndex + 1} of {projects.length}</span>
+                <button type='button' onClick={() => showRelativeProject(1)} aria-label={`Next project: ${projects[(activeIndex + 1) % projects.length].name}`}>
+                  Next <span aria-hidden='true'>→</span>
+                </button>
+              </nav>
+            ) : null}
             <p className={styles.dialogEyebrow}>
               {activeProject.employer} · {activeProject.type}
             </p>

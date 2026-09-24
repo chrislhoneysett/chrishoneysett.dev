@@ -24,6 +24,8 @@ export type ResumeTag =
 export interface ResumeProject {
   id: string;
   name: string;
+  /** Omit from the website's selected work while retaining the project record. */
+  hidden?: boolean;
   /** When omitted, render the label "Client Work". */
   client?: string;
   type: "Web Application" | "Mobile Application" | "Component Library" | "Website";
@@ -90,7 +92,7 @@ export interface Resume {
   headline: string;
   location: string;
   email: string;
-  phone: string;
+  phone?: string;
   links: ResumeLink[];
   summary: string;
   skills: SkillGroup[];

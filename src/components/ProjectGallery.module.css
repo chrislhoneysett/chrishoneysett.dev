@@ -15,8 +15,6 @@
 }
 
 .card:hover { transform: translateY(-0.3rem); box-shadow: var(--shadow-card); }
-.card:hover .visual::after,
-.card:focus-within .visual::after { opacity: 0; }
 
 .visual {
   position: relative;
@@ -38,24 +36,6 @@
 .visual3 { background: var(--color-project-three); }
 .withScreenshot { background: var(--color-project-one); }
 .withScreenshot::before { opacity: 0; }
-.withScreenshot::after,
-.withIllustration::after {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  content: '';
-  pointer-events: none;
-  mix-blend-mode: color;
-  transition: opacity var(--motion-slow) var(--motion-ease);
-}
-.visual1.withScreenshot::after,
-.visual3.withScreenshot::after,
-.visual1.withIllustration::after,
-.visual3.withIllustration::after { background: #5b7f7e; }
-.visual2.withScreenshot::after {
-  background: #d98b78;
-}
-.visual2.withIllustration::after { background: #d98b78; }
 .withIllustration { background: var(--color-project-one); }
 .withIllustration::before { display: none; }
 .withIllustration .visualType,
@@ -67,11 +47,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  filter: grayscale(1) brightness(1.2) contrast(0.9);
-  transition: filter var(--motion-slow) var(--motion-ease);
 }
-.card:hover .heroScreenshot,
-.card:focus-within .heroScreenshot { filter: none; }
 .heroIllustration {
   position: absolute;
   inset: 0;
@@ -174,6 +150,7 @@
 }
 
 .openButton,
+.dialogNavigation button,
 .dialogFooter button,
 .dialogFooter a {
   min-height: var(--button-min-height);
@@ -191,6 +168,7 @@
 
 .openButton { margin-top: var(--space-6); }
 .openButton:hover,
+.dialogNavigation button:hover,
 .dialogFooter button:hover,
 .dialogFooter a:hover { border-color: var(--color-accent); color: var(--color-accent); }
 
@@ -221,6 +199,20 @@
   font-size: 1.7rem;
   line-height: 1;
   cursor: pointer;
+}
+
+.dialogNavigation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.dialogNavigation span[aria-live] {
+  color: var(--color-text-muted);
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
 }
 
 .dialogEyebrow {
@@ -276,4 +268,12 @@
   .detailGrid,
   .screenshotGrid { grid-template-columns: 1fr; }
   .dialogFooter { flex-direction: column; }
+  .dialogNavigation {
+    clear: both;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+  .dialogNavigation span[aria-live] { grid-column: 1 / -1; grid-row: 1; text-align: center; }
+  .dialogNavigation button { justify-content: center; }
 }
