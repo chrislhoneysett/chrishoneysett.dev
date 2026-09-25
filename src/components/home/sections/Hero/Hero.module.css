@@ -26,16 +26,49 @@
   font-size: var(--font-size-xs);
   letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
+  line-height: 1;
+
+  & > :first-child {
+    min-width: 0;
+  }
 
   @media (max-width: 760px) {
-    & span:last-child {
-      display: none;
+    flex-direction: row;
+    align-items: flex-start;
+
+    & > :last-child {
+      flex: 0 0 auto;
+      text-align: right;
     }
   }
 }
 
-.noWrap {
-  white-space: nowrap;
+.profileHeadline {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: normal;
+}
+
+.mobileHeadlineBreak {
+  display: none;
+}
+
+.headlineSeparator {
+  @media (min-width: 1051px) {
+    &::before {
+      content: ' | ';
+    }
+  }
+}
+
+@media (max-width: 1050px) {
+  .mobileHeadlineBreak {
+    display: block;
+  }
+
+  .profileHeadline > span {
+    display: block;
+  }
 }
 
 .heroMain {

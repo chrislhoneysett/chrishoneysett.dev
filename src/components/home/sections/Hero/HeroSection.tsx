@@ -10,10 +10,13 @@ export function HeroSection() {
   return (
     <header className={styles.hero}>
       <div className={styles.heroTopline}>
-        <span>
-          {role} | <span className={styles.noWrap}>{focus}</span>
-        </span>
-        <span>Kalamazoo, Michigan · Working across disciplines</span>
+        <div className={styles.profileHeadline}>
+          <span>{role}</span>
+          <span className={styles.headlineSeparator} aria-hidden='true' />
+          <br className={styles.mobileHeadlineBreak} />
+          <span>{focus}</span>
+        </div>
+        <span>{profile.location}</span>
       </div>
       <div className={styles.heroMain}>
         <div className={styles.heroCopy}>
