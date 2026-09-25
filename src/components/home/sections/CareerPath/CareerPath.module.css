@@ -1,0 +1,61 @@
+.sectionLabel {
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-label);
+  line-height: var(--line-height-compact);
+  text-transform: uppercase;
+}
+
+.statement {
+  padding-inline: max(var(--layout-gutter), calc((100vw - var(--layout-max-width)) / 2));
+}
+
+.sectionLabel { color: var(--color-accent); }
+
+.statement h2 {
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--line-height-display);
+}
+
+.statement {
+  padding-block: var(--layout-band-space);
+  display: grid;
+  grid-template-columns: 0.65fr 1.35fr;
+  gap: var(--layout-column-gap);
+  color: var(--color-statement-text);
+  background: var(--color-statement);
+}
+
+.statement .sectionLabel { color: var(--color-statement-text); }
+.statement h2 { max-width: 60rem; font-size: var(--font-size-statement); }
+.statement h2 em { color: var(--color-statement-accent); font-weight: var(--font-weight-regular); }
+.statementIntro {
+  max-width: var(--layout-measure);
+  margin-top: var(--space-7);
+  color: var(--color-statement-muted);
+  font-size: var(--font-size-section-intro);
+  line-height: var(--line-height-body);
+}
+.principles { margin-top: var(--space-16); border-top: var(--border-thin) solid var(--color-statement-border); }
+
+.principles article {
+  padding-block: var(--space-6);
+  display: grid;
+  grid-template-columns: 2.5rem 0.9fr 1.1fr;
+  gap: var(--space-6);
+  border-bottom: var(--border-thin) solid var(--color-statement-border);
+}
+
+.principles span { font-family: var(--font-family-code); font-size: var(--font-size-caption); }
+.principles h3 { font-size: var(--font-size-principle-title); }
+.principles p { color: var(--color-statement-muted); font-size: var(--font-size-body); line-height: var(--line-height-body); }
+
+@media (max-width: 760px) {
+  .statement { grid-template-columns: 1fr; }
+  .principles { margin-top: var(--space-12); }
+  .principles article { grid-template-columns: var(--space-8) 1fr; gap: var(--space-3); }
+  .principles p { grid-column: 2; }
+}

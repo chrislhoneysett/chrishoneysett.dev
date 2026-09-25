@@ -1,0 +1,69 @@
+.sectionLabel {
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-label);
+  line-height: var(--line-height-compact);
+  text-transform: uppercase;
+}
+
+.footer h2 em {
+  color: var(--color-accent-display);
+  font-weight: var(--font-weight-regular);
+}
+
+.footer {
+  padding-inline: max(var(--layout-gutter), calc((100vw - var(--layout-max-width)) / 2));
+}
+
+.sectionLabel { color: var(--color-accent); }
+
+.footer h2 {
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--line-height-display);
+}
+
+.footer {
+  padding-block: var(--layout-band-space) var(--space-8);
+  color: var(--color-hero-text);
+  background: var(--color-hero);
+}
+
+.footer .sectionLabel { color: var(--color-highlight-strong); }
+.footer h2 { margin-top: var(--space-8); font-size: var(--font-size-footer); }
+.footerIntro {
+  max-width: 40rem;
+  margin-top: var(--space-8);
+  color: var(--color-hero-muted);
+  font-size: var(--font-size-section-intro);
+  line-height: var(--line-height-copy);
+}
+
+.footerLinks {
+  margin-top: var(--space-20);
+  padding-block: var(--space-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8) var(--space-12);
+  border-block: var(--border-thin) solid var(--color-hero-border);
+}
+
+.footerLinks a { display: flex; align-items: center; gap: var(--space-4); font-size: var(--font-size-body); }
+.footerLinks a:hover { color: var(--color-highlight-strong); }
+.footerContact { display: flex; align-items: center; gap: var(--space-4); padding: 0; border: 0; color: inherit; background: transparent; font-size: var(--font-size-body); cursor: pointer; }
+.footerContact:hover { color: var(--color-highlight-strong); }
+
+.copyright {
+  margin-top: var(--space-8);
+  color: var(--color-hero-muted);
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .footerLinks { flex-direction: column; gap: var(--space-6); }
+}

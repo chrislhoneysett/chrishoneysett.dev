@@ -1,0 +1,58 @@
+.sectionLabel {
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-label);
+  line-height: var(--line-height-compact);
+  text-transform: uppercase;
+}
+
+.work {
+  padding-inline: max(var(--layout-gutter), calc((100vw - var(--layout-max-width)) / 2));
+}
+
+.work {
+  padding-block: var(--layout-section-space);
+}
+
+.sectionLabel { color: var(--color-accent); }
+
+.sectionHeader {
+  display: grid;
+  grid-template-columns: 0.65fr 1.35fr;
+  gap: var(--layout-column-gap);
+}
+
+.sectionHeader h2 {
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--line-height-display);
+}
+
+.sectionHeader h2 { font-size: var(--font-size-section); }
+
+.sectionHeader h2 em {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-regular);
+}
+
+.sectionHeader > div > p {
+  max-width: var(--layout-measure);
+  margin-top: var(--space-7);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-section-intro);
+  line-height: var(--line-height-body);
+}
+
+.sectionHeader > div > .workNote {
+  margin-top: var(--space-4);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-short);
+}
+
+.work { background: var(--color-canvas); }
+
+@media (max-width: 760px) {
+  .sectionHeader { grid-template-columns: 1fr; }
+}

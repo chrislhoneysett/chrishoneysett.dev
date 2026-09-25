@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
 import Script from "next/script";
-import { resume } from "@/domains/development/data/resume";
+import type { Metadata } from "next";
+import { profile } from "@/data/profile";
 import "./theme.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: `${resume.name} — ${resume.headline}`,
+  title: `${profile.name} — ${profile.headline}`,
   description: "Senior frontend engineer building React applications and connected mobile experiences with React Native, BLE, and NFC.",
-  authors: [{ name: resume.name }],
+  authors: [{ name: profile.name }],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

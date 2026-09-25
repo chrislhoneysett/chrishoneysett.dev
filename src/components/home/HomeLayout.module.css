@@ -1,0 +1,4 @@
+.shell {
+  color: var(--color-hero-text);
+  background: var(--color-hero);
+}

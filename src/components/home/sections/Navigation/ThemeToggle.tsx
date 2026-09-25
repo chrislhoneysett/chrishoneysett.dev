@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
+import DarkModeIcon from '@mui/icons-material/DarkMode'
+import LightModeIcon from '@mui/icons-material/LightMode'
 import styles from "./ThemeToggle.module.css";
 
 type Theme = "light" | "dark";
@@ -60,7 +62,7 @@ export function ThemeToggle() {
 
   return (
     <button type="button" className={styles.toggle} onClick={toggleTheme} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`} title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}>
-      <span className={styles.icon} aria-hidden="true">{theme === "dark" ? "☀" : "◐"}</span>
+      <span className={styles.icon} aria-hidden="true">{theme === "dark" ? <LightModeIcon fontSize='inherit' /> : <DarkModeIcon fontSize='inherit' />}</span>
       <span className={styles.label}>{theme === "dark" ? "Light" : "Dark"}</span>
     </button>
   );

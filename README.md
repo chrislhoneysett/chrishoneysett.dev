@@ -1,6 +1,6 @@
 # chrishoneysett.dev
 
-A personal site built with Next.js, React, TypeScript, and CSS Modules. Resume facts live in `src/domains/development/data/resume.ts`; the page selects and presents that data without duplicating project descriptions.
+A personal site built with Next.js, React, TypeScript, and CSS Modules. The route in `src/app/page.tsx` assembles the homepage regions. Components used by one region and their styles live under that region in `src/components/home/sections`; resume-specific components live in `src/components/resume`. Reusable resume facts and their types live in focused files under `src/data`, with `resume.ts` combining them for other outputs.
 
 ## Run locally
 
@@ -20,7 +20,7 @@ Edit [`src/app/theme.css`](src/app/theme.css) to change the visual system. It de
 - Borders, radii, focus treatment, shadows, and motion
 - Semantic colors for the light and dark themes, section surfaces, controls, and artwork
 
-The theme follows the visitor's operating system setting until they choose a mode with the switch in the header. An explicit choice is stored in `localStorage` and restored before the page is hydrated. `src/app/globals.css` contains only sitewide element defaults; `src/app/page.module.css` and `src/components/ThemeToggle.module.css` use theme tokens for their presentation.
+The theme follows the visitor's operating system setting until they choose a mode with the switch in the header. An explicit choice is stored in `localStorage` and restored before the page is hydrated. `src/app/globals.css` contains only sitewide element defaults; `src/components/home/HomeLayout.module.css` and the CSS modules beside each homepage section use theme tokens for their presentation.
 
 To change the palette, update the light values in `:root` and the dark overrides in both dark selectors. To change the sitewide type scale or spacing, edit the corresponding foundation tokens. CSS custom properties cannot be used inside media query conditions, so the `1050px` and `760px` breakpoints are stated directly in the theme and component styles.
 

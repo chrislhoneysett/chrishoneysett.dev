@@ -2,9 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import styles from './HeroShowcase.module.css'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import PauseIcon from '@mui/icons-material/Pause'
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import { Arrow } from '../../Arrow'
+import styles from './HeroProjectCarousel.module.css'
 
-export interface HeroSlide {
+export interface HeroProjectSlide {
   id: string
   name: string
   type: string
@@ -15,7 +20,7 @@ export interface HeroSlide {
   technologies: string[]
 }
 
-export function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
+export function HeroProjectCarousel({ slides }: { slides: HeroProjectSlide[] }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [paused, setPaused] = useState(false)
   const [interacting, setInteracting] = useState(false)
@@ -63,7 +68,7 @@ export function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
             aria-label='Previous project'
             onClick={() => showRelativeSlide(-1)}
           >
-            ←
+            <ArrowBackIcon fontSize='inherit' />
           </button>
           <button
             type='button'
@@ -73,14 +78,14 @@ export function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
               setPaused((value) => !value)
             }}
           >
-            {paused ? '▶' : 'Ⅱ'}
+            {paused ? <PlayArrowIcon fontSize='inherit' /> : <PauseIcon fontSize='inherit' />}
           </button>
           <button
             type='button'
             aria-label='Next project'
             onClick={() => showRelativeSlide(1)}
           >
-            →
+            <ArrowForwardIcon fontSize='inherit' />
           </button>
         </div>
       </div>
@@ -122,7 +127,7 @@ export function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
                   {slide.type} · {slide.technologies.slice(0, 3).join(' · ')}
                 </small>
               </span>
-              <span className={styles.arrow} aria-hidden='true'>↗</span>
+              <span className={styles.arrow}><Arrow /></span>
             </span>
           ))}
         </span>

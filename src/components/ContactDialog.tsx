@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, KeyboardEvent } from 'react'
+import CloseIcon from '@mui/icons-material/Close'
+import { Arrow } from './home/Arrow'
 import styles from './ContactDialog.module.css'
 
 const accessKey = '1bb07ad5-702b-489a-951b-dfe12c94290a'
@@ -179,7 +181,7 @@ export function ContactDialog({ id, email, className, label }: ContactDialogProp
   return (
     <>
       <button ref={triggerRef} className={className} type='button' onClick={openDialog}>
-        {label} <span aria-hidden='true'>↗</span>
+        {label} <Arrow />
       </button>
       <div className={styles.overlay} hidden={!isOpen}>
         <div className={styles.backdrop} onClick={closeDialog} aria-hidden='true' />
@@ -192,10 +194,10 @@ export function ContactDialog({ id, email, className, label }: ContactDialogProp
           onKeyDown={trapTab}
         >
           <div className={styles.content}>
-            <button className={styles.close} type='button' onClick={closeDialog} aria-label='Close contact form'>×</button>
+            <button className={styles.close} type='button' onClick={closeDialog} aria-label='Close contact form'><CloseIcon fontSize='inherit' /></button>
             <p className={styles.eyebrow}>Contact</p>
             <h2 id={`${id}-title`}>Let&apos;s talk.</h2>
-            <p className={styles.intro}>Tell me a little about what you have in mind.</p>
+            <p className={styles.intro}>Tell me about your team and the role you would like to discuss.</p>
             <p className={styles.success} role='status' hidden={status !== 'success'}>Thanks for reaching out. Your message has been sent.</p>
             <form className={styles.form} onSubmit={onSubmit} hidden={status === 'success'}>
               <label htmlFor={`${id}-name`}>Name</label>
@@ -209,7 +211,7 @@ export function ContactDialog({ id, email, className, label }: ContactDialogProp
               {captchaError && <p className={styles.error} role='alert'>Verification could not load. Please email me instead.</p>}
               {status === 'error' && <p className={styles.error} role='alert'>Your message could not be sent. Please try again or email me directly.</p>}
               <button className={styles.submit} type='submit' disabled={!captchaReady || status === 'verifying' || status === 'sending'}>
-                {status === 'verifying' ? 'Checking…' : status === 'sending' ? 'Sending…' : 'Send message'} <span aria-hidden='true'>↗</span>
+                {status === 'verifying' ? 'Checking…' : status === 'sending' ? 'Sending…' : 'Send message'} <Arrow />
               </button>
               <p className={styles.captchaNotice}>Protected by hCaptcha. <a href='https://www.hcaptcha.com/privacy' target='_blank' rel='noopener noreferrer'>Privacy</a> · <a href='https://www.hcaptcha.com/terms' target='_blank' rel='noopener noreferrer'>Terms</a></p>
             </form>

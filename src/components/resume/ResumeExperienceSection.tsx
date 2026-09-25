@@ -1,6 +1,6 @@
-import { ProjectCard, type ProjectCardData } from "./ProjectCard";
+import { ResumeProjectCard, type ResumeProjectCardData } from "./ResumeProjectCard";
 
-export interface ExperienceEntryData {
+export interface ResumeExperienceEntryData {
   id: string;
   company: string;
   title: string;
@@ -8,13 +8,13 @@ export interface ExperienceEntryData {
   startDate: string;
   endDate: string;
   summary: string;
-  projects: readonly ProjectCardData[];
+  projects: readonly ResumeProjectCardData[];
 }
 
-export function ExperienceSection({ id, title, entries }: {
+export function ResumeExperienceSection({ id, title, entries }: {
   id: string;
   title: string;
-  entries: readonly ExperienceEntryData[];
+  entries: readonly ResumeExperienceEntryData[];
 }) {
   return (
     <section aria-labelledby={id}>
@@ -26,7 +26,7 @@ export function ExperienceSection({ id, title, entries }: {
           <p>{entry.startDate}–{entry.endDate} · {entry.location}</p>
           <p>{entry.summary}</p>
           {entry.projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ResumeProjectCard key={project.id} project={project} />
           ))}
         </article>
       ))}
