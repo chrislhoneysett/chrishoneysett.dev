@@ -93,6 +93,7 @@ export const resume: Resume = {
       location: 'Grand Rapids, MI',
       startDate: '2023',
       endDate: 'Present',
+      tenureLabel: '3 years',
       summary:
         'As the sole frontend engineer, I own web interfaces and nearly all application engineering for two released React Native apps. I continue to iterate on both, contribute to their design, and collaborate with teammates responsible for specialized BLE and NFC security layers. I also build TypeScript APIs that let app developers work with connected devices without handling device-specific message formats directly.',
       projects: [
@@ -218,6 +219,7 @@ export const resume: Resume = {
       location: 'Lansing, MI',
       startDate: '2020',
       endDate: '2023',
+      tenureLabel: '3 years',
       summary:
         'Led development of Drupal websites and embedded React applications for education, athletics, arts, and public-sector organizations. Built shared site structures and integrated external data, ticketing, registration, and permission-controlled financial workflows.',
       projects: [
@@ -514,6 +516,7 @@ export const resume: Resume = {
       location: 'Kalamazoo, MI',
       startDate: '2009',
       endDate: '2020',
+      tenureLabel: '11 years',
       summary:
         'Led frontend development for major consumer brands, including Ford, Kellogg’s, Cottonelle, and Walmart, as well as pro bono projects for nonprofit organizations. Delivered responsive websites and application features using React, Vue, Adobe AEM, and Drupal.',
       projects: [
@@ -614,6 +617,7 @@ export const resume: Resume = {
       location: 'Portage, MI',
       startDate: '2002',
       endDate: '2009',
+      tenureLabel: '7 years',
       summary:
         'Managed graphic design, image manipulation, print preparation, and digital press operations.',
       projects: [],
@@ -621,12 +625,12 @@ export const resume: Resume = {
     {
       id: 'honeysett-design',
       company: 'Honeysett Design',
-      title: 'Freelance Designer / Developer',
+      title: 'Freelance Designer, Developer & Theatre Technical Director',
       location: 'Kalamazoo, MI',
       startDate: '1998',
-      endDate: '2020',
+      endDate: '2024',
       summary:
-        'Worked directly with clients to design and develop responsive websites, marketing, and branding for educational and arts organizations, including the U.S. Department of Education and DePaul University.',
+        'Much of my graphic design work supported theatrical productions, alongside my work as a theatre technical director coordinating crews, schedules, and production needs. I also worked directly with arts and education clients on responsive websites, marketing, and branding, including the U.S. Department of Education and DePaul University.',
       projects: [
         {
           id: 'midwest-rad-fest',

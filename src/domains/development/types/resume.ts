@@ -69,6 +69,8 @@ export interface Experience {
   /** Year precision matches the source resume; no month is implied. */
   startDate: string;
   endDate: string;
+  /** Approximate tenure shown below the year range when useful. */
+  tenureLabel?: string;
   summary: string;
   projects: ResumeProject[];
 }

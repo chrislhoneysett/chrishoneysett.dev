@@ -78,10 +78,11 @@ export default function Home() {
                 feel clear<span className={styles.period}>.</span>
               </h1>
               <p className={styles.heroLead}>
-                I build clear, maintainable React applications. My frontend
-                work now extends to React Native apps for connected devices,
-                where I make BLE and NFC communication easier for app developers
-                to use.
+                I build web and mobile products with React and React Native,
+                taking responsibility from early planning through release and
+                the improvements that follow. I work closely with clients,
+                designers, and engineers to turn complex needs into software
+                that is clear, useful, and maintainable.
               </p>
               <div className={styles.heroActions}>
                 <a className={styles.primaryLink} href='#work'>
@@ -140,11 +141,14 @@ export default function Home() {
               <em>and systems work.</em>
             </h2>
             <p>
-              Selected projects across frontend platforms, mobile applications,
-              and interface systems. Each project includes the technical approach
-              and my contribution. To respect client confidentiality, some
-              connected-product projects use general names, illustrations, and
-              limited product details.
+              Every project has its own people, constraints, and moving parts.
+              I work with clients and teammates to understand what matters,
+              connect the pieces, and shape an experience that feels clear to
+              the people using it.
+            </p>
+            <p className={styles.workNote}>
+              Some project names, imagery, and details are kept general to
+              respect client confidentiality.
             </p>
           </div>
         </div>
@@ -155,43 +159,53 @@ export default function Home() {
         <p className={styles.sectionLabel}>02 / Career path</p>
         <div>
           <h2 id='statement-title'>
-            From design to <em>software engineering.</em>
+            Each step builds <em>on the last.</em>
           </h2>
           <div className={styles.principles}>
             <article>
               <span>01</span>
-              <h3>Print to interactive</h3>
+              <h3>Print</h3>
               <p>
-                As a theatrical technical director, I coordinated crews,
-                schedules, and production needs. Graphic design and print work
-                then led me to Flash, ActionScript, and interactive projects.
+                I began in print production and graphic design. As the print
+                business declined, I recognized that digital work was where I
+                needed to go next.
               </p>
             </article>
             <article>
               <span>02</span>
-              <h3>Interactive to the web</h3>
+              <h3>Flash</h3>
               <p>
-                As Flash faded, the work moved to frontend development: static
-                sites and CSS, then JavaScript applications built with React and
-                Vue.
+                I learned Flash and ActionScript and started building
+                interactive experiences, bringing my design background into a
+                new medium.
               </p>
             </article>
             <article>
               <span>03</span>
-              <h3>Web to connected devices</h3>
+              <h3>Web</h3>
               <p>
-                At Twisthink, my frontend work expanded into React Native apps
-                for connected products. I built reusable TypeScript APIs that
-                translate app requests into device messages for native BLE and
-                NFC communication.
+                When Flash faded, I moved into web development, first with HTML
+                and CSS, then with JavaScript applications built in React and
+                Vue.
               </p>
             </article>
             <article>
               <span>04</span>
-              <h3>Engineering with new tools</h3>
+              <h3>Mobile Apps</h3>
               <p>
-                AI tools now support prototyping and implementation. Engineering
-                experience guides architecture, review, and maintainability.
+                At Twisthink, I moved into React Native apps for connected
+                products, owning the mobile experience and coordinating work
+                across hardware, cloud services, and design.
+              </p>
+            </article>
+            <article>
+              <span>05</span>
+              <h3>AI</h3>
+              <p>
+                AI is now part of how I develop: I use it to explore options,
+                prototype, and implement features. I remain responsible for the
+                technical decisions, reviewing the code, and the quality of
+                what ships.
               </p>
             </article>
           </div>
@@ -209,12 +223,13 @@ export default function Home() {
             <h2 id='experience-title'>
               One career.
               <br />
-              <em>Several reinventions.</em>
+              <em>Several iterations.</em>
             </h2>
             <p>
-              Owning frontend delivery and helping clients and collaborators
-              choose the right approach have been constants. More recently,
-              that work has grown to include mobile apps for connected devices.
+              Each stage has built on the one before it. Design informs how I
+              shape interfaces, frontend engineering carries into mobile apps,
+              and working with clients and collaborators remains part of how I
+              find the right approach.
             </p>
           </div>
         </div>
@@ -224,6 +239,9 @@ export default function Home() {
               <article className={styles.role} key={role.id}>
                 <p className={styles.roleDate}>
                   {role.startDate} — {role.endDate}
+                  {role.tenureLabel ? (
+                    <span className={styles.roleTenure}>{role.tenureLabel}</span>
+                  ) : null}
                 </p>
                 <div>
                   <h3>{role.company}</h3>
