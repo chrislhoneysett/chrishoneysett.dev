@@ -1,20 +1,8 @@
-import { HeroProjectCarousel } from './HeroProjectCarousel'
-import { selectedProjects } from '@/data/selectedProjects'
+import Image from 'next/image'
 import { profile } from '@/data/profile'
+import { assetPath } from '@/lib/assetPath'
 import { Arrow } from '../../Arrow'
 import styles from './Hero.module.css'
-
-const featuredProjects = selectedProjects.map((project) => {
-  if (!project.heroImage)
-    throw new Error(`Missing featured project image: ${project.id}`)
-  return {
-    id: project.id,
-    name: project.name,
-    type: project.type,
-    image: project.heroImage,
-    technologies: project.technologies,
-  }
-})
 
 export function HeroSection() {
   return (
@@ -52,7 +40,19 @@ export function HeroSection() {
             </a>
           </div>
         </div>
-        <HeroProjectCarousel slides={featuredProjects} />
+        <a
+          className={styles.heroIllustration}
+          href='#work'
+          aria-label='Explore selected web, mobile, and connected projects'
+        >
+          <Image
+            src={assetPath('/hero-device-collage.svg')}
+            alt='Outline illustration of a laptop and phone linked by Bluetooth and NFC signals'
+            fill
+            sizes='(max-width: 760px) 100vw, (max-width: 1050px) 45vw, 40vw'
+            priority
+          />
+        </a>
       </div>
       <div className={styles.heroFooter}>
         <div>

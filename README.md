@@ -11,6 +11,22 @@ npm run dev
 
 Open [localhost:3000](http://localhost:3000). Before sharing changes, run `npm run lint` and `npm run build`.
 
+## Publish on GitHub Pages
+
+The site exports static files to `out/` with `npm run build`. The workflow in `.github/workflows/pages.yml` builds and deploys them on every push to `main`.
+
+1. On GitHub, open **Settings → Pages** for the `chrislhoneysett/chrishoneysett.dev` repository and set **Build and deployment → Source** to **GitHub Actions**.
+2. Push this configuration to `main` (or run the workflow manually from **Actions**).
+3. When the workflow finishes, open [chrislhoneysett.github.io/chrishoneysett.dev](https://chrislhoneysett.github.io/chrishoneysett.dev/).
+
+To verify the GitHub Pages version locally, run:
+
+```bash
+NEXT_PUBLIC_BASE_PATH=/chrishoneysett.dev npm run build -- --webpack
+```
+
+The `NEXT_PUBLIC_BASE_PATH` value is the repository name. It prefixes page assets for the GitHub Pages URL. For a root domain deployment, leave it unset and rebuild. The contact form submits from the browser to Web3Forms; configure that service and hCaptcha to allow the GitHub Pages hostname if needed.
+
 ## Customize the theme
 
 Edit [`src/app/theme.css`](src/app/theme.css) to change the visual system. It defines:

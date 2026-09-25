@@ -98,6 +98,25 @@
   gap: var(--space-7);
 }
 
+.heroIllustration {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 720 / 620;
+  min-width: 0;
+  overflow: hidden;
+  border: var(--border-thin) solid var(--color-hero-border);
+  background: var(--color-art-surface);
+
+  & img {
+    object-fit: contain;
+  }
+
+  @media (max-width: 760px) {
+    margin-bottom: var(--space-12);
+  }
+}
+
 .primaryLink {
   min-height: var(--button-min-height);
   padding-inline: var(--space-5);

@@ -7,6 +7,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import PauseIcon from '@mui/icons-material/Pause'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import { Arrow } from '../../Arrow'
+import { assetPath } from '@/lib/assetPath'
 import styles from './HeroProjectCarousel.module.css'
 
 export interface HeroProjectSlide {
@@ -103,7 +104,7 @@ export function HeroProjectCarousel({ slides }: { slides: HeroProjectSlide[] }) 
               key={slide.id}
             >
               <Image
-                src={slide.image.src}
+                src={assetPath(slide.image.src)}
                 alt=''
                 fill
                 sizes='(max-width: 760px) 100vw, (max-width: 1050px) 45vw, 40vw'

@@ -2,6 +2,7 @@ import type { ResumeProject } from '@/data/projects'
 import styles from './WorkProjectGallery.module.css'
 import Image from 'next/image'
 import { Arrow } from '../../Arrow'
+import { assetPath } from '@/lib/assetPath'
 
 type WorkProject = ResumeProject & { employer: string }
 
@@ -26,7 +27,7 @@ export const WorkProjectCard = ({
               ? styles.heroIllustration
               : styles.heroScreenshot
           }
-          src={project.heroImage.src}
+          src={assetPath(project.heroImage.src)}
           alt=''
           unoptimized={project.heroImage.src.endsWith('-card.webp')}
           width={500}

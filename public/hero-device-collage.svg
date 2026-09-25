@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Web, mobile, and connected experiences</title>
+  <desc id="desc">An outlined laptop and phone connected by Bluetooth and NFC signals.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" stroke="#F7F3EA" stroke-opacity=".065"/>
+    </pattern>
+    <linearGradient id="panel" x1="36" y1="0" x2="665" y2="620" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2C5660"/>
+      <stop offset="1" stop-color="#193A43"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="130" y1="233" x2="497" y2="474" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#325D62"/>
+      <stop offset="1" stop-color="#24434C"/>
+    </linearGradient>
+  </defs>
+
+  <path fill="url(#panel)" d="M0 0h720v620H0z"/>
+  <path fill="url(#grid)" d="M0 0h720v620H0z"/>
+
+  <!-- An open orbit ties the separate devices into one composition. -->
+  <circle cx="371" cy="312" r="238" stroke="#F7F3EA" stroke-opacity=".13"/>
+  <circle cx="371" cy="312" r="184" stroke="#F7F3EA" stroke-opacity=".08"/>
+  <path d="M112 127c93-81 221-91 325-38" stroke="#E3B448" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9"/>
+  <circle cx="112" cy="127" r="5" fill="#E3B448"/>
+  <circle cx="438" cy="89" r="5" fill="#E3B448"/>
+
+  <!-- Connected-device route behind the laptop and phone. -->
+  <path d="M102 493v43c0 19 15 34 34 34h338c18 0 32-14 32-32v-30" stroke="#E3B448" stroke-opacity=".76" stroke-width="2" stroke-dasharray="3 8" stroke-linecap="round"/>
+  <circle cx="102" cy="493" r="4" fill="#E3B448"/>
+  <circle cx="506" cy="508" r="4" fill="#E3B448"/>
+
+  <!-- Laptop. -->
+  <g stroke-linejoin="round">
+    <rect x="63" y="191" width="477" height="287" rx="12" fill="#193B44" stroke="#F7F3EA" stroke-width="2.5"/>
+    <rect x="78" y="206" width="447" height="256" rx="5" fill="url(#screen)" stroke="#F7F3EA" stroke-opacity=".48"/>
+    <path d="M78 239h447" stroke="#F7F3EA" stroke-opacity=".46"/>
+    <circle cx="96" cy="223" r="3" fill="#E77B5F"/>
+    <circle cx="109" cy="223" r="3" fill="#E3B448"/>
+    <circle cx="122" cy="223" r="3" fill="#F7F3EA" fill-opacity=".66"/>
+    <path d="M183 223h91m172 0h21m12 0h23" stroke="#F7F3EA" stroke-opacity=".54" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- An abstract product interface, rather than a screenshot. -->
+    <path d="M101 264h74m-74 19h52m-52 19h63m-63 19h43" stroke="#F7F3EA" stroke-opacity=".42" stroke-width="5" stroke-linecap="round"/>
+    <path d="M189 252v194" stroke="#F7F3EA" stroke-opacity=".25"/>
+    <rect x="210" y="261" width="174" height="78" rx="5" fill="#E3B448" fill-opacity=".16" stroke="#E3B448" stroke-opacity=".82"/>
+    <circle cx="239" cy="289" r="11" stroke="#E3B448" stroke-width="2"/>
+    <path d="M260 283h92m-92 15h62" stroke="#F7F3EA" stroke-opacity=".76" stroke-width="5" stroke-linecap="round"/>
+    <rect x="400" y="261" width="103" height="78" rx="5" stroke="#F7F3EA" stroke-opacity=".5"/>
+    <path d="M416 286h67m-67 15h48" stroke="#F7F3EA" stroke-opacity=".55" stroke-width="5" stroke-linecap="round"/>
+    <rect x="210" y="354" width="293" height="86" rx="5" stroke="#F7F3EA" stroke-opacity=".5"/>
+    <path d="M231 413v-19l30-18 31 21 29-12 29 16 33-29 33 17 38-12 30 16" stroke="#E77B5F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M231 423h249" stroke="#F7F3EA" stroke-opacity=".26"/>
+    <circle cx="383" cy="372" r="4" fill="#E3B448"/>
+
+    <path d="M40 480h522l-31 23a22 22 0 0 1-13 4H84a22 22 0 0 1-13-4l-31-23Z" fill="#193B44" stroke="#F7F3EA" stroke-width="2.5"/>
+    <path d="M262 480h78l-7 12h-64l-7-12Z" fill="#E3B448" fill-opacity=".55"/>
+  </g>
+
+  <!-- Phone overlaps the laptop so the two screens read as a pair. -->
+  <g stroke-linejoin="round">
+    <rect x="451" y="244" width="178" height="309" rx="25" fill="#17363F" stroke="#F7F3EA" stroke-width="3"/>
+    <rect x="463" y="260" width="154" height="276" rx="15" fill="#315B60" stroke="#F7F3EA" stroke-opacity=".38"/>
+    <path d="M512 258h56v10a9 9 0 0 1-9 9h-38a9 9 0 0 1-9-9v-10Z" fill="#17363F"/>
+    <circle cx="540" cy="522" r="3" fill="#F7F3EA" fill-opacity=".75"/>
+    <path d="M483 301h53m-53 15h91" stroke="#F7F3EA" stroke-opacity=".75" stroke-width="5" stroke-linecap="round"/>
+    <rect x="481" y="342" width="118" height="90" rx="7" fill="#E3B448" fill-opacity=".16" stroke="#E3B448" stroke-opacity=".88"/>
+    <path d="M499 398c11-18 23-26 38-26 13 0 23 8 32 20l13-11" stroke="#E3B448" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="500" cy="397" r="4" fill="#E3B448"/>
+    <circle cx="583" cy="381" r="4" fill="#E3B448"/>
+    <path d="M484 456h111m-111 16h91m-91 16h62" stroke="#F7F3EA" stroke-opacity=".54" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Bluetooth badge. -->
+  <circle cx="573" cy="123" r="48" fill="#234650" stroke="#E3B448" stroke-width="2"/>
+  <circle cx="573" cy="123" r="37" stroke="#F7F3EA" stroke-opacity=".24"/>
+  <path d="M572 94v58l22-17-42-32m0 39 42-32-22-16" stroke="#F7F3EA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M573 173v31" stroke="#E3B448" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round"/>
+  <circle cx="573" cy="207" r="4" fill="#E3B448"/>
+
+  <!-- NFC badge, drawn as a chip and short-range radio waves. -->
+  <circle cx="130" cy="104" r="43" fill="#234650" stroke="#E77B5F" stroke-width="2"/>
+  <rect x="103" y="99" width="19" height="19" rx="3" stroke="#F7F3EA" stroke-width="2.5"/>
+  <path d="M130 104c9 5 9 15 0 20m8-29c16 10 16 28 0 38m8-46c23 15 23 40 0 55" stroke="#F7F3EA" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M130 148v26" stroke="#E77B5F" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round"/>
+  <circle cx="130" cy="178" r="4" fill="#E77B5F"/>
+
+  <path d="M650 308h29m-14-14v29M69 557h29m-14-14v29" stroke="#F7F3EA" stroke-opacity=".38" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

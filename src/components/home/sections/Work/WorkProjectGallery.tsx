@@ -9,6 +9,7 @@ import { Arrow } from '../../Arrow'
 import type { ResumeProject } from '@/data/projects'
 import styles from './WorkProjectGallery.module.css'
 import { WorkProjectCard } from './WorkProjectCard'
+import { assetPath } from '@/lib/assetPath'
 
 type WorkProjectGalleryItem = ResumeProject & { employer: string }
 
@@ -209,7 +210,7 @@ export function WorkProjectGallery({
                 <div className={styles.screenshotGrid}>
                   {activeProject.modal.screenshots.map((screenshot) => (
                     <figure key={screenshot.src}>
-                      <img src={screenshot.src} alt={screenshot.alt} />
+                      <img src={assetPath(screenshot.src)} alt={screenshot.alt} />
                       <figcaption>{screenshot.caption}</figcaption>
                     </figure>
                   ))}
