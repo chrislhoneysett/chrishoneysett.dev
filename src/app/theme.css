@@ -75,26 +75,18 @@
   --hero-stats-height: 8.5rem;
   --project-art-height: 16rem;
   --button-min-height: 3.7rem;
-  --art-grid-step: 2.4rem;
-  --art-ring-size: 25rem;
-  --art-orb-size: 16rem;
   --project-art-shape-size: 12rem;
-  --project-art-number-size: 7rem;
 
   /* Shape, borders, focus and motion */
   --radius-round: 50%;
   --radius-pill: 100vmax;
   --border-thin: 1px;
   --shadow-card: 0 1.2rem 2.3rem rgba(0, 0, 0, 0.11);
-  --shadow-art-ring:
-    0 0 0 3.7rem rgba(255, 255, 255, 0.035),
-    0 0 0 7.4rem rgba(255, 255, 255, 0.028);
   --shadow-project-shape:
     0 0 0 2.2rem rgba(255, 255, 255, 0.13),
     0 0 0 4.4rem rgba(255, 255, 255, 0.07);
   --focus-width: 3px;
   --focus-offset: 4px;
-  --motion-fast: 200ms;
   --motion-slow: 450ms;
   --motion-ease: ease;
 
@@ -135,9 +127,6 @@
   --color-art-text: #f7f3ea;
   --color-art-grid: rgba(255, 255, 255, 0.35);
   --color-art-line: rgba(255, 255, 255, 0.8);
-  --color-art-ring: rgba(255, 255, 255, 0.56);
-  --color-art-circle: #e77b5f;
-  --color-art-square: #e3b448;
   --color-project-one: #234750;
   --color-project-two: #e77b5f;
   --color-project-three: #426a6a;
@@ -204,8 +193,6 @@
     --hero-min-height: 0;
     --hero-art-height: 24rem;
     --hero-stats-height: 7rem;
-    --art-ring-size: 19rem;
-    --art-orb-size: 11rem;
     --font-size-hero: clamp(4.25rem, 16vw, 7rem);
     --font-size-display: clamp(3.25rem, 11vw, 5rem);
     --font-size-display-lg: clamp(3.7rem, 11vw, 5.5rem);
@@ -214,7 +201,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --motion-fast: 0ms;
     --motion-slow: 0ms;
   }
 }
