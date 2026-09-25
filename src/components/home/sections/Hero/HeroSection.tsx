@@ -5,10 +5,14 @@ import { Arrow } from '../../Arrow'
 import styles from './Hero.module.css'
 
 export function HeroSection() {
+  const [role, focus] = profile.headline.split(' | ')
+
   return (
     <header className={styles.hero}>
       <div className={styles.heroTopline}>
-        <span>{profile.headline}</span>
+        <span>
+          {role} | <span className={styles.noWrap}>{focus}</span>
+        </span>
         <span>Kalamazoo, Michigan · Working across disciplines</span>
       </div>
       <div className={styles.heroMain}>

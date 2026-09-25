@@ -34,6 +34,10 @@
   }
 }
 
+.noWrap {
+  white-space: nowrap;
+}
+
 .heroMain {
   min-height: var(--hero-min-height);
   display: grid;
