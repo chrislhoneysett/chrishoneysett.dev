@@ -11,8 +11,8 @@ import styles from '@/components/home/HomeLayout.module.css'
 export default function Home() {
   return (
     <main id='top'>
+      <SiteNav />
       <div className={styles.shell}>
-        <SiteNav />
         <HeroSection />
       </div>
       <WorkSection />
