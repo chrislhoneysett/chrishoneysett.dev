@@ -74,14 +74,11 @@
   <!-- Bluetooth badge. -->
   <circle cx="573" cy="123" r="48" fill="#234650" stroke="#E3B448" stroke-width="2"/>
   <circle cx="573" cy="123" r="37" stroke="#F7F3EA" stroke-opacity=".24"/>
-  <path d="M572 94v58l22-17-42-32m0 39 42-32-22-16" stroke="#F7F3EA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M573 173v31" stroke="#E3B448" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round"/>
   <circle cx="573" cy="207" r="4" fill="#E3B448"/>
 
-  <!-- NFC badge, drawn as a chip and short-range radio waves. -->
+  <!-- NFC badge. -->
   <circle cx="130" cy="104" r="43" fill="#234650" stroke="#E77B5F" stroke-width="2"/>
-  <rect x="103" y="99" width="19" height="19" rx="3" stroke="#F7F3EA" stroke-width="2.5"/>
-  <path d="M130 104c9 5 9 15 0 20m8-29c16 10 16 28 0 38m8-46c23 15 23 40 0 55" stroke="#F7F3EA" stroke-width="2.5" stroke-linecap="round"/>
   <path d="M130 148v26" stroke="#E77B5F" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round"/>
   <circle cx="130" cy="178" r="4" fill="#E77B5F"/>
 

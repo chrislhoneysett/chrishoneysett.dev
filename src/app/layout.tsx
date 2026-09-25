@@ -8,6 +8,17 @@ export const metadata: Metadata = {
   title: `${profile.name} — ${profile.headline}`,
   description: "Senior frontend engineer building React applications and connected mobile experiences with React Native, BLE, and NFC.",
   authors: [{ name: profile.name }],
+  openGraph: {
+    title: `${profile.name} — ${profile.headline}`,
+    description: "Senior frontend engineer building React applications and connected mobile experiences with React Native, BLE, and NFC.",
+    images: [{ url: "/collage.png", alt: "Illustration of connected web, mobile, and device projects" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${profile.name} — ${profile.headline}`,
+    description: "Senior frontend engineer building React applications and connected mobile experiences with React Native, BLE, and NFC.",
+    images: ["/collage.png"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
