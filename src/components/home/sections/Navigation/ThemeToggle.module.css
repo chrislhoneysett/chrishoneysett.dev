@@ -9,22 +9,21 @@
   background: transparent;
   cursor: pointer;
   font-family: var(--font-family-code);
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-xs);
   letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
-}
-
-.toggle:hover {
-  background: var(--color-hero-border);
+  &:hover {
+    background: var(--color-hero-border);
+  }
 }
 
 .icon {
-  font-size: var(--font-size-icon);
+  font-size: var(--font-size-xl);
   line-height: var(--line-height-single);
 }
 
-@media (max-width: 760px) {
-  .label {
+.label {
+  @media (max-width: 760px) {
     display: none;
   }
 }

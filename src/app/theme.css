@@ -12,33 +12,24 @@
 :root {
   color-scheme: light;
 
-  /* Type families and roles */
+  /* Type families and a compact size scale */
   --font-family-display: Georgia, "Times New Roman", serif;
   --font-family-body: Arial, Helvetica, sans-serif;
   --font-family-code: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --font-weight-regular: 400;
   --font-weight-bold: 700;
   --font-weight-heavy: 800;
-  --font-size-xs: 0.6rem;
-  --font-size-caption: 0.65rem;
-  --font-size-label: 0.72rem;
-  --font-size-small: 0.8rem;
-  --font-size-body: 0.9rem;
-  --font-size-lead: clamp(1.05rem, 1.4vw, 1.3rem);
-  --font-size-section-intro: 1.04rem;
-  --font-size-principle-title: 0.95rem;
-  --font-size-mark: 0.86rem;
-  --font-size-stat: 2.25rem;
-  --font-size-stat-suffix: 1.5rem;
-  --font-size-icon: 1.25rem;
-  --font-size-project-title: 1.85rem;
-  --font-size-role-title: 1.8rem;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.75rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-display: clamp(3.25rem, 5.8vw, 6.5rem);
+  --font-size-display-lg: clamp(4rem, 7vw, 8rem);
   --font-size-hero: clamp(5rem, 8.6vw, 9.7rem);
-  --font-size-section: clamp(3.5rem, 5.8vw, 6.5rem);
-  --font-size-statement: clamp(3.4rem, 5.7vw, 6.4rem);
-  --font-size-capabilities: clamp(3.2rem, 4.9vw, 5.6rem);
-  --font-size-about: clamp(3.7rem, 6vw, 7rem);
-  --font-size-footer: clamp(4rem, 7vw, 8rem);
   --line-height-display: 0.98;
   --line-height-hero: 0.82;
   --line-height-heading: 1.05;
@@ -215,10 +206,9 @@
     --hero-stats-height: 7rem;
     --art-ring-size: 19rem;
     --art-orb-size: 11rem;
-    --font-size-stat: 1.75rem;
     --font-size-hero: clamp(4.25rem, 16vw, 7rem);
-    --font-size-section: clamp(3.25rem, 11vw, 5rem);
-    --font-size-statement: clamp(3.2rem, 11vw, 5rem);
+    --font-size-display: clamp(3.25rem, 11vw, 5rem);
+    --font-size-display-lg: clamp(3.7rem, 11vw, 5.5rem);
   }
 }
 

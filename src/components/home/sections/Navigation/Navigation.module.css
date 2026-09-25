@@ -1,22 +1,23 @@
 .nav {
   width: min(calc(100% - 2 * var(--layout-gutter)), var(--layout-max-width));
   margin-inline: auto;
-}
-
-.nav {
   min-height: var(--nav-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-8);
   border-bottom: var(--border-thin) solid var(--color-hero-border);
+
+  & a:hover {
+    color: var(--color-highlight-strong);
+  }
 }
 
 .wordmark {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  font-size: var(--font-size-label);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   white-space: nowrap;
 }
@@ -28,13 +29,12 @@
   place-items: center;
   border: var(--border-thin) solid var(--color-hero-border);
   border-radius: var(--radius-round);
-  font-size: var(--font-size-mark);
+  font-size: var(--font-size-sm);
   letter-spacing: var(--tracking-mark);
-}
 
-.mark span,
-.nav a:hover {
-  color: var(--color-highlight-strong);
+  & span {
+    color: var(--color-highlight-strong);
+  }
 }
 
 .navLinks,
@@ -45,10 +45,14 @@
 }
 
 .navLinks {
-  font-size: var(--font-size-label);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
+
+  @media (max-width: 760px) {
+    display: none;
+  }
 }
 
 .navEnd {
@@ -63,19 +67,18 @@
   border: 0;
   color: inherit;
   background: transparent;
-  font-size: var(--font-size-label);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   white-space: nowrap;
   cursor: pointer;
-}
+  & span {
+    font-size: var(--font-size-xl);
+  }
+  &:hover {
+    color: var(--color-highlight-strong);
+  }
 
-.navContact span {
-  font-size: var(--font-size-icon);
-}
-
-.navContact:hover { color: var(--color-highlight-strong); }
-
-@media (max-width: 760px) {
-  .navLinks,
-.navContact { display: none; }
+  @media (max-width: 760px) {
+    display: none;
+  }
 }

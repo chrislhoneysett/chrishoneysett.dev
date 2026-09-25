@@ -1,52 +1,53 @@
 .sectionLabel {
   font-family: var(--font-family-code);
-  font-size: var(--font-size-label);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--tracking-label);
   line-height: var(--line-height-compact);
   text-transform: uppercase;
+  color: var(--color-accent);
 }
 
 .experience {
   padding-inline: max(var(--layout-gutter), calc((100vw - var(--layout-max-width)) / 2));
-}
-
-.experience {
   padding-block: var(--layout-section-space);
+  background: var(--color-surface);
 }
-
-.sectionLabel { color: var(--color-accent); }
 
 .sectionHeader {
   display: grid;
   grid-template-columns: 0.65fr 1.35fr;
   gap: var(--layout-column-gap);
+  & h2 {
+    font-family: var(--font-family-display);
+    font-weight: var(--font-weight-regular);
+    letter-spacing: var(--tracking-display);
+    line-height: var(--line-height-display);
+    font-size: var(--font-size-display);
+  }
+  & h2 em {
+    color: var(--color-accent);
+    font-weight: var(--font-weight-regular);
+  }
+  & > div > p {
+    max-width: var(--layout-measure);
+    margin-top: var(--space-7);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-body);
+  }
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
 }
 
-.sectionHeader h2 {
-  font-family: var(--font-family-display);
-  font-weight: var(--font-weight-regular);
-  letter-spacing: var(--tracking-display);
-  line-height: var(--line-height-display);
+.timeline {
+  margin-top: var(--space-20);
+  border-top: var(--border-thin) solid var(--color-border);
+  @media (max-width: 760px) {
+    margin-top: var(--space-12);
+  }
 }
-
-.sectionHeader h2 { font-size: var(--font-size-section); }
-
-.sectionHeader h2 em {
-  color: var(--color-accent);
-  font-weight: var(--font-weight-regular);
-}
-
-.sectionHeader > div > p {
-  max-width: var(--layout-measure);
-  margin-top: var(--space-7);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-section-intro);
-  line-height: var(--line-height-body);
-}
-
-.experience { background: var(--color-surface); }
-.timeline { margin-top: var(--space-20); border-top: var(--border-thin) solid var(--color-border); }
 
 .role {
   padding-block: var(--space-8);
@@ -54,12 +55,22 @@
   grid-template-columns: 0.65fr 0.9fr 1.45fr;
   gap: var(--layout-column-gap);
   border-bottom: var(--border-thin) solid var(--color-border);
+  & h3 {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-heading);
+  }
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
 }
 
 .roleDate {
   color: var(--color-accent);
   font-family: var(--font-family-code);
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
@@ -69,24 +80,20 @@
   display: block;
   margin-top: var(--space-2);
   color: var(--color-text-muted);
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
   letter-spacing: 0;
   text-transform: none;
 }
 
-.role h3 {
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-role-title);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-heading);
+.roleTitle {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
 }
 
-.roleTitle { margin-top: var(--space-2); color: var(--color-text-muted); font-size: var(--font-size-small); }
-.roleSummary { color: var(--color-text-muted); font-size: var(--font-size-body); line-height: var(--line-height-body); }
-
-@media (max-width: 760px) {
-  .sectionHeader { grid-template-columns: 1fr; }
-  .timeline { margin-top: var(--space-12); }
-  .role { grid-template-columns: 1fr; gap: var(--space-3); }
+.roleSummary {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-body);
 }

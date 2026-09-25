@@ -30,38 +30,62 @@ export function HeroSection() {
             graphic design
           </p>
           <h1>
-            Making<br />
-            <em>complex</em><br />
+            Making
+            <br />
+            <em>complex</em>
+            <br />
             feel clear<span className={styles.period}>.</span>
           </h1>
           <p className={styles.heroLead}>
-            I build web and mobile products with React and React Native,
-            taking responsibility from early planning through release and
-            the improvements that follow. I work closely with clients,
-            designers, and engineers to turn complex needs into software
-            that is clear, useful, and maintainable.
+            I build web and mobile products with React and React Native, taking
+            responsibility from early planning through release and the
+            improvements that follow. I work closely with clients, designers,
+            and engineers to turn complex needs into software that is clear,
+            useful, and maintainable.
           </p>
           <div className={styles.heroActions}>
-            <a className={styles.primaryLink} href='#work'>View projects <Arrow /></a>
-            <a className={styles.secondaryLink} href='#about'>Career background <span aria-hidden='true'>↓</span></a>
+            <a className={styles.primaryLink} href='#work'>
+              View projects <Arrow />
+            </a>
+            <a className={styles.secondaryLink} href='#experience'>
+              Career background <span aria-hidden='true'>↓</span>
+            </a>
           </div>
         </div>
         <HeroProjectCarousel slides={featuredProjects} />
       </div>
       <div className={styles.heroFooter}>
         <div>
-          <strong>28<span>+</span></strong>
-          <small>years across graphic design<br />&amp; software development</small>
+          <strong>
+            28<span>+</span>
+          </strong>
+          <small>
+            years across graphic design
+            <br />
+            &amp; software development
+          </small>
         </div>
         <div>
-          <strong>17<span>+</span></strong>
-          <small>years guiding<br />frontend projects</small>
+          <strong>
+            17<span>+</span>
+          </strong>
+          <small>
+            years guiding
+            <br />
+            frontend projects
+          </small>
         </div>
         <div>
           <strong>Web / Mobile</strong>
-          <small>from interface systems<br />to connected devices</small>
+          <small>
+            from interface systems
+            <br />
+            to connected devices
+          </small>
         </div>
-        <a href='#work'>Scroll to explore <span aria-hidden='true'>↓</span></a>
+        <a href='#work'>
+          Scroll to explore <span aria-hidden='true'>↓</span>
+        </a>
       </div>
     </header>
   )
