@@ -26,8 +26,6 @@ jobs:
       - uses: actions/configure-pages@v5
       - run: npm ci
       - run: npm run build -- --webpack
-        env:
-          NEXT_PUBLIC_BASE_PATH: /chrishoneysett.dev
       - uses: actions/upload-pages-artifact@v4
         with:
           path: ./out
