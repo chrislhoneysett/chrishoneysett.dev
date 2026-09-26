@@ -21,7 +21,7 @@ export function SiteNav() {
   }, [])
 
   useEffect(() => {
-    const sections = ['work', 'experience', 'about']
+    const sections = ['work', 'experience', 'about', 'resume']
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null)
     const navHeight = document
@@ -40,7 +40,9 @@ export function SiteNav() {
         }
       },
       {
-        rootMargin: `-${activeOffset}px 0px -68% 0px`,
+        // IntersectionObserver resolves percentage margins against width.
+        // Use viewport height so the active region stays usable on wide screens.
+        rootMargin: `-${activeOffset}px 0px -${Math.round(window.innerHeight * 0.68)}px 0px`,
         threshold: 0,
       },
     )
@@ -94,6 +96,13 @@ export function SiteNav() {
           aria-current={activeSection === 'about' ? 'location' : undefined}
         >
           About
+        </a>
+        <a
+          className={activeSection === 'resume' ? styles.activeLink : undefined}
+          href='#resume'
+          aria-current={activeSection === 'resume' ? 'location' : undefined}
+        >
+          Resume
         </a>
       </div>
     </nav>

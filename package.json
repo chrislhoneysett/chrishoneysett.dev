@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "npm run resume -- --publish",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "resume": "node --import tsx scripts/generate-resume.mts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -24,6 +26,8 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "playwright": "^1.63.0",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

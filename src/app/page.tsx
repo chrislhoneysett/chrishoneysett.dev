@@ -7,6 +7,7 @@ import { CapabilitiesSection } from '@/components/home/sections/Capabilities/Cap
 import { AboutSection } from '@/components/home/sections/About/AboutSection'
 import { ShareCardSection } from '@/components/home/sections/ShareCard/ShareCardSection'
 import { ContactFooter } from '@/components/home/sections/Contact/ContactFooter'
+import { ResumeSection } from '@/components/home/sections/Resume/ResumeSection'
 import styles from '@/components/home/HomeLayout.module.css'
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
       <CapabilitiesSection />
       <AboutSection />
       <ShareCardSection />
+      <ResumeSection />
       <ContactFooter />
     </main>
   )

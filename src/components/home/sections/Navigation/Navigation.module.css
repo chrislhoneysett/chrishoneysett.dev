@@ -111,6 +111,11 @@
     transform: scaleX(1);
   }
 
+  @media (min-width: 761px) and (max-width: 1050px) {
+    gap: var(--space-4);
+    font-size: var(--font-size-xs);
+  }
+
   @media (max-width: 760px) {
     position: static;
     display: flex;
@@ -119,7 +124,7 @@
     width: 100%;
     visibility: visible;
     justify-content: center;
-    gap: clamp(var(--space-5), 8vw, var(--space-8));
+    gap: clamp(var(--space-3), 4vw, var(--space-5));
     padding: 0;
     font-size: 0.6875rem;
     transform: none;

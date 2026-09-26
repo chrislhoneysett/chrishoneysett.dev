@@ -1,0 +1,38 @@
+/* Print geometry only. The site's theme.css supplies fonts and colors. */
+@page { size: Letter; margin: 0; }
+* { box-sizing: border-box; }
+html { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+body { margin: 0; color: var(--color-text); background: var(--color-canvas); font-family: var(--font-family-body); font-size: 9pt; line-height: 1.38; }
+.sheet { width: 8.5in; height: 11in; padding: 0.42in 0.5in; position: relative; break-after: page; }
+.sheet:last-child { break-after: auto; }
+h1, h2, h3, p { margin: 0; }
+header { border-bottom: 2px solid var(--color-highlight); padding-bottom: 11px; margin-bottom: 12px; }
+.kicker, h2, .meta, footer { font-family: var(--font-family-body); }
+.kicker { text-transform: uppercase; letter-spacing: var(--tracking-label); font-size: 8pt; color: var(--color-highlight-strong); margin-bottom: 5px; }
+h1 { font-family: var(--font-family-display); font-weight: var(--font-weight-regular); letter-spacing: var(--tracking-display); font-size: 38pt; line-height: var(--line-height-heading); }
+.period { color: var(--color-highlight-strong); }
+em { color: var(--color-accent-display); font-weight: var(--font-weight-regular); }
+.headline { font-weight: var(--font-weight-bold); font-size: 10pt; margin-top: 7px; }
+.contact { display: flex; gap: 9px; color: var(--color-text-muted); font-size: 8.5pt; margin-top: 5px; }
+a { color: inherit; text-decoration: none; }
+.summary { margin-bottom: 12px; }
+section { margin-bottom: 11px; }
+h2 { color: var(--color-accent); font-size: 8pt; font-weight: var(--font-weight-bold); text-transform: uppercase; letter-spacing: var(--tracking-label); border-top: 1px solid var(--color-border); padding-top: 7px; margin-bottom: 7px; }
+.role, .additional-role, .project { break-inside: avoid; margin-bottom: 9px; }
+.role-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+h3 { font-size: 10pt; font-weight: var(--font-weight-bold); }
+.meta { white-space: nowrap; font-size: 8pt; color: var(--color-text-muted); }
+.role-title { font-weight: var(--font-weight-bold); font-size: 8.5pt; margin: 1px 0 3px; }
+.muted { color: var(--color-text-muted); font-weight: var(--font-weight-regular); }
+.additional-role { margin-bottom: 6px; }
+.additional-role h3 { font-size: 9pt; }
+.skill-group { margin-bottom: 3px; font-size: 8.5pt; }
+.skill-group strong { color: var(--color-accent); margin-right: 4px; }
+footer { position: absolute; bottom: 0.28in; left: 0.5in; right: 0.5in; display: flex; justify-content: space-between; border-top: 1px solid var(--color-border); padding-top: 6px; color: var(--color-text-muted); font-size: 7pt; }
+.project-sheet header { margin-bottom: 20px; }
+.project-sheet h1 { font-size: 34pt; }
+.project-sheet { font-size: 9.5pt; line-height: 1.38; }
+.project-group { margin-bottom: 14px; }
+.project { margin-bottom: 10px; }
+.project h3 { margin-bottom: 3px; }
+.technologies { font-family: var(--font-family-body); color: var(--color-text-muted); font-size: 8pt; margin-top: 3px; }

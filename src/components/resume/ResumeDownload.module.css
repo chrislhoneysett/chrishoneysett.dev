@@ -1,0 +1,12 @@
+.content { max-width: var(--layout-measure); }
+.kicker { color: var(--color-highlight-strong); text-transform: uppercase; font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-label); }
+.title { margin-top: var(--space-6); font-family: var(--font-family-display); font-size: var(--font-size-display); font-weight: var(--font-weight-regular); line-height: var(--line-height-display); letter-spacing: var(--tracking-display); }
+.title em { color: var(--color-accent-display); }
+.headline { margin-top: var(--space-8); font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); line-height: var(--line-height-compact); }
+.description { margin-top: var(--space-4); color: var(--color-text-muted); line-height: var(--line-height-body); }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-7); margin-top: var(--space-8); }
+.download { display: inline-flex; align-items: center; gap: var(--space-6); min-height: var(--button-min-height); padding-inline: var(--space-5); background: var(--color-button); color: var(--color-button-text); font-size: var(--font-size-xs); font-weight: var(--font-weight-heavy); letter-spacing: var(--tracking-meta); text-transform: uppercase; }
+.download:hover { background: var(--color-button-hover); }
+.download span { font-size: var(--font-size-xl); }
+.view { padding-block: var(--space-3); border-bottom: var(--border-thin) solid var(--color-border); font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); }
+.detail { margin-top: var(--space-4); color: var(--color-text-muted); font-size: var(--font-size-xs); }

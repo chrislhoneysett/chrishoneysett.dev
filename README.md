@@ -11,7 +11,69 @@ npm run dev
 
 Open [localhost:3000](http://localhost:3000). Before sharing changes, run `npm run lint` and `npm run build`.
 
+## Generate a resume PDF locally
+
+The generator imports the same `src/data/resume.ts` record as the site and reads
+`src/app/theme.css` directly. Updating those files updates the next export too.
+`scripts/resume.css` adds Letter-page dimensions and print spacing while reusing
+the site's light-theme colors, serif display headings, and sans-serif text.
+
+Install dependencies and Chromium once:
+
+```bash
+npm install
+npx playwright install chromium
+```
+
+Generate a one-page resume, or add a second page of selected project highlights:
+
+```bash
+npm run resume
+npm run resume -- --two-pages
+```
+
+Outputs are `output/pdf/chris-honeysett-resume.pdf` and
+`output/pdf/chris-honeysett-resume-two-pages.pdf`, with matching HTML previews.
+These generated files are ignored by Git. No running site or Next.js build is
+needed. Text remains selectable and contact links are clickable.
+
+If Google Chrome is already installed, you can use it without downloading Chromium:
+
+```bash
+RESUME_BROWSER_CHANNEL=chrome npm run resume
+RESUME_BROWSER_CHANNEL=chrome npm run resume -- --two-pages
+```
+
+The one-page version includes all role summaries, skill groups, and education.
+The second page draws its contribution text from `resumeHighlight` in
+`src/data/projects.ts`; edit the project ID selection in
+`scripts/generate-resume.mts` to choose different highlights. The generator fails
+if content would overlap the footer or spill beyond the requested page count,
+so expanding the data won't silently produce a clipped resume. Review the PDF
+after changing content or theme fonts.
+
 ## Publish on GitHub Pages
+
+Every `npm run build` first generates the two-page resume into
+`public/downloads/chris-honeysett-resume.pdf`. Next.js includes it in the static
+export, and `/resume/` provides download and viewing links. The same content also
+appears near the bottom of the homepage, linked by the Resume navigation item.
+Use `https://chrishoneysett.dev/#resume` to link directly to that section.
+The PDF is regenerated from current site data and theme on
+every deployment; it is not committed separately. The GitHub Actions workflow
+installs Chromium before building.
+
+For a local build with your installed Chrome:
+
+```bash
+RESUME_BROWSER_CHANNEL=chrome npm run build -- --webpack
+```
+
+To prepare the download while running the development server:
+
+```bash
+RESUME_BROWSER_CHANNEL=chrome npm run resume -- --publish
+```
 
 The site exports static files to `out/` with `npm run build`. The workflow in `.github/workflows/pages.yml` builds and deploys them on every push to `main`.
 

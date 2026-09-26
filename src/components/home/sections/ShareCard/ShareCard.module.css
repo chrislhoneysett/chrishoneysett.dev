@@ -1,4 +1,5 @@
 .shareSection {
+  display: none;
   padding-inline: max(var(--layout-gutter), calc((100vw - var(--layout-max-width)) / 2));
   padding-block: var(--layout-section-space);
   background: var(--color-canvas);
