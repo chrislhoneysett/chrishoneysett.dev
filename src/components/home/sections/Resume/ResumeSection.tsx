@@ -4,7 +4,7 @@ import styles from './Resume.module.css'
 export function ResumeSection() {
   return (
     <section className={styles.section} id='resume' aria-labelledby='resume-title'>
-      <ResumeDownload />
+      <ResumeDownload twoColumns />
     </section>
   )
 }

@@ -1,6 +1,11 @@
 .section {
-  width: min(calc(100% - 2 * var(--layout-gutter)), var(--layout-max-width));
-  margin-inline: auto;
+  --color-text: var(--color-capabilities-text);
+  --color-text-muted: var(--color-capabilities-muted);
+  --color-border: var(--color-capabilities-border);
+  --color-highlight-strong: var(--color-highlight);
+  --color-accent-display: var(--color-statement);
+  padding-inline: max(var(--layout-gutter), calc((100vw - var(--layout-max-width)) / 2));
   padding-block: var(--layout-section-space);
-  border-top: var(--border-thin) solid var(--color-border);
+  color: var(--color-text);
+  background: var(--color-capabilities);
 }

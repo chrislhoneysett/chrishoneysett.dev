@@ -75,13 +75,13 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         highlights: [
           'Built small atomic components that combine into larger, reusable interface components.',
           'Wrapped selected third-party components so developers could fully customize them through Auris’s design language without needing to work with the underlying components directly.',
-          'Created a ready-made starting point so teams can get new projects running quickly.',
+          'Used Auris to scaffold a new project within an hour, including user authentication, a full theme, and the component library.',
           'Used a common component language to keep design and development aligned.',
         ],
         screenshots: [],
       },
       resumeHighlight:
-        'Built a Material Design-based React component starter using Atomic Design, Storybook, and private npm distribution, giving designers and developers a shared vocabulary.',
+        'Built a Material Design-based React starter with Atomic Design, Storybook, and private npm distribution. Used it to scaffold a new project within an hour, including user authentication, a full theme, and the component library.',
       technologies: ['React', 'Storybook', 'npm'],
       tags: ['web', 'ui', 'design-system'],
     },
@@ -100,17 +100,18 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         overview:
           'A well-monitoring dashboard that brings sensor readings and reported failures together so technicians can identify problems affecting water access in remote African communities.',
         contribution:
-          'This was the first project I inherited at Twisthink. I first finalized the existing dashboard and got it running, then made the case for rebuilding it from Vue in React with the Auris Component Library I had created.',
+          'This was the first project I inherited at Twisthink. I first finalized the existing dashboard and got it running. The codebase was fragile enough that changes and additions carried substantial risk, so I made the case for rebuilding it from Vue in React with the Auris Component Library I had created. The rebuild established a more maintainable architecture that made ongoing changes easier.',
         highlights: [
           'Prioritized getting the inherited dashboard finalized and operational before undertaking the rebuild.',
-          'Rebuilt the interface in React using Auris components, substantially improving performance and consistency across the project.',
+          'Rebuilt the interface in React using Auris components and a more maintainable architecture, making changes and additions easier and less risky.',
+          'Completed a redesign of part of the dashboard within one week; I estimate the same work would have taken roughly a month in the previous codebase.',
           'Broke up oversized files that handled too many responsibilities into smaller, focused components and modules, making the project easier to navigate.',
           'Connected AWS sensor data to the technician-facing interface.',
         ],
         screenshots: [],
       },
       resumeHighlight:
-        'Finalized an inherited Vue dashboard, then rebuilt it in React with the Auris Component Library, improving performance, consistency, and code structure while connecting AWS sensor data.',
+        'Rebuilt a fragile Vue dashboard in React with Auris components and a maintainable architecture. Completed a dashboard section redesign within one week, versus an estimated month in the previous codebase.',
       technologies: ['React', 'Vue', 'AWS'],
       tags: ['web', 'ui'],
     },
@@ -152,7 +153,8 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         contribution:
           'I own the app’s product behavior and nearly all application engineering, working with backend, BLE firmware, and NFC engineers. I built a portable BLE abstraction for discovery, connection, session handling, and communication, and am developing a reusable NFC library with the same architecture.',
         highlights: [
-          'Replaced an in-memory JSON object with SQLite after testing showed poor performance with more than 10,000 blocks of lock codes. Populating the database in stages kept the larger data set manageable.',
+          'Replaced an in-memory JSON object with SQLite after testing showed poor performance with data for more than 10,000 locks. Populating the database in stages kept the larger data set manageable.',
+          'Drove backend documentation efforts and authored consistently structured BLE firmware documentation, consolidating scattered information into a reference for application integration.',
           'Anchored the app’s clock to a server timestamp received during bootstrap, then advanced it using the device’s monotonic uptime clock. This keeps access decisions independent of changes to the phone’s wall clock.',
           'Verified a user-entered PIN by using it to seed decryption of an encrypted wrapper supplied by the backend. Successful decryption confirms the PIN without the app needing to know or store the expected value.',
           'Chunked larger data transfers, including firmware images, to work within the bandwidth limits of BLE and NFC.',
@@ -164,7 +166,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       confidentialityNote:
         'Project name and imagery are generalized, and identifying client and product details are omitted, to respect client confidentiality.',
       resumeHighlight:
-        'Own the app’s product behavior and nearly all application engineering, coordinating with backend, BLE firmware, and NFC engineers. Built a portable BLE abstraction for session handling, discovery, connection, and communication; now developing a reusable NFC library with the same architecture.',
+        'Own product behavior and nearly all application engineering, collaborating across backend and firmware teams. Built a portable BLE library and am developing a reusable NFC library. Replaced in-memory lock-code storage with SQLite after testing exposed performance issues with data for more than 10,000 locks. Drove backend documentation efforts and authored consistently structured BLE firmware documentation.',
       technologies: [
         'React Native',
         'TypeScript',
@@ -191,18 +193,19 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         overview:
           'A released iOS and Android app for upcoming consumer portable battery packs, from charging phones to powering a campsite. Users can manage a pack locally over Bluetooth or remotely when it connects over Wi-Fi, with AWS supporting user and device authentication.',
         contribution:
-          'I own nearly all application engineering for the React Native app. I architected a shared TypeScript control API with the cloud-controls engineer, routing requests through the BLE library I created for Secure Physical Access or the cloud implementation.',
+          'I own nearly all application engineering for the React Native app. I architected a shared TypeScript control API with the cloud-controls engineer, routing requests through the BLE library I created for Secure Physical Access or the cloud implementation. The common API let me advance the app’s BLE functionality while another developer built the cloud implementation in parallel.',
         highlights: [
           'Designed the app interface to mirror the product’s physical display, giving users a familiar way to understand and control the battery pack.',
-          'Used native interface components wherever possible so the app feels familiar and easy to use on iOS and Android.',
-          'Integrated the reusable BLE library I had created for Secure Physical Access to handle local device communication.',
+          'With limited budget for dedicated UI/UX design, used familiar iOS and Android interface conventions and native components wherever possible to give users recognizable controls and interactions.',
+          'Reused the BLE library I had created for Secure Physical Access, saving an estimated 1–2 weeks of development and carrying forward solutions to scanning and connection issues from earlier projects.',
+          'Used a common TypeScript control API so BLE app development and cloud implementation could proceed in parallel without requiring separate UI integrations.',
         ],
         screenshots: [],
       },
       confidentialityNote:
         'Project name and imagery are generalized, and identifying client and product details are omitted, to respect client confidentiality.',
       resumeHighlight:
-        'Own nearly all application engineering for a React Native battery app. Designed an interface based on the product display and architected a shared TypeScript control API that reuses my Secure Physical Access BLE library alongside cloud controls.',
+        'Own nearly all application engineering for a released iOS and Android React Native battery app. Reused a BLE library, saving an estimated 1-2 weeks of development. Architected a shared TypeScript control API enabling BLE app work and cloud development to proceed in parallel. Used familiar OS interface conventions to deliver the UI within a limited design budget.',
       technologies: ['React Native', 'TypeScript', 'Bluetooth', 'Wi-Fi', 'AWS'],
       tags: ['mobile', 'bluetooth', 'ui'],
     },

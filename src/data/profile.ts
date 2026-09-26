@@ -19,6 +19,7 @@ export const profile: Profile = {
   location: 'Kalamazoo, MI',
   links: [
     { label: 'chrishoneysett.dev', url: 'https://chrishoneysett.dev' },
+    { label: 'chrislhoneysett@gmail.com', url: 'mailto:chrislhoneysett@gmail.com' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/chris-honeysett/' },
   ],
   summary: 'While studying theatre technology at DePaul, I discovered graphic design. That became the starting point for my career in print and interactive media, then frontend engineering and mobile apps. I continued theatre technical direction as side work, where production planning and crew coordination strengthened skills I still use with clients and teams. Today I draw on all of it to connect goals, design, and engineering and to carry products through release and improvement.'

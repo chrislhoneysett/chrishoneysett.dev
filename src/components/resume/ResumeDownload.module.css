@@ -1,4 +1,11 @@
 .content { max-width: var(--layout-measure); }
+.twoColumns { max-width: none; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); align-items: center; gap: var(--layout-column-gap); }
+.twoColumns .details { padding-left: var(--space-12); border-left: var(--border-thin) solid var(--color-border); }
+.twoColumns .headline { margin-top: 0; }
+@media (max-width: 760px) {
+  .twoColumns { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+  .twoColumns .details { padding-left: 0; padding-top: var(--space-6); border-left: 0; border-top: var(--border-thin) solid var(--color-border); }
+}
 .kicker { color: var(--color-highlight-strong); text-transform: uppercase; font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-label); }
 .title { margin-top: var(--space-6); font-family: var(--font-family-display); font-size: var(--font-size-display); font-weight: var(--font-weight-regular); line-height: var(--line-height-display); letter-spacing: var(--tracking-display); }
 .title em { color: var(--color-accent-display); }

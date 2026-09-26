@@ -23,10 +23,9 @@ export const skills: SkillGroup[] = [
       label: 'Mobile',
       items: [
         'Expo / EAS',
-        'Cross-Platform application builds',
+        'iOS & Android delivery',
         'Bluetooth',
         'NFC',
-        'TypeScript APIs for device communication',
       ],
     },
     {
@@ -39,7 +38,15 @@ export const skills: SkillGroup[] = [
         'Accessibility',
         'Responsive UI',
         'Figma-to-code implementation',
-        'Responsive prototyping',
+      ],
+    },
+    {
+      id: 'architecture',
+      label: 'Architecture',
+      items: [
+        'Reusable device communication libraries',
+        'TypeScript device APIs',
+        'Shared BLE / cloud control interfaces',
       ],
     },
     {
@@ -47,6 +54,7 @@ export const skills: SkillGroup[] = [
       label: 'Platforms & Tools',
       items: [
         'AWS',
+        'Git',
         'GitHub Actions',
         'CI/CD pipelines',
         'npm',
