@@ -1,0 +1,182 @@
+.shareSection {
+  padding-inline: max(var(--layout-gutter), calc((100vw - var(--layout-max-width)) / 2));
+  padding-block: var(--layout-section-space);
+  background: var(--color-canvas);
+}
+
+.sectionLabel {
+  margin-bottom: var(--space-8);
+  color: var(--color-accent);
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-label);
+  line-height: var(--line-height-compact);
+  text-transform: uppercase;
+}
+
+.shareCard {
+  position: relative;
+  width: 100%;
+  max-width: 90rem;
+  min-height: 34rem;
+  margin-inline: auto;
+  padding: clamp(var(--space-6), 5vw, var(--space-16));
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(15rem, 1fr);
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  column-gap: var(--layout-column-gap);
+  aspect-ratio: 1200 / 630;
+  color: var(--color-hero-text);
+  background: var(--color-hero);
+  border: var(--border-thin) solid var(--color-hero-border);
+}
+
+.cardMain {
+  min-width: 0;
+}
+
+.cardKicker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-highlight-strong);
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-label);
+  line-height: var(--line-height-compact);
+  text-transform: uppercase;
+
+  & span {
+    flex: 0 0 auto;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: var(--radius-round);
+    background: currentColor;
+  }
+}
+
+.cardMain h2 {
+  margin-top: var(--space-8);
+  font-family: var(--font-family-display);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--tracking-hero);
+  line-height: var(--line-height-hero);
+
+  & em {
+    color: var(--color-accent-display);
+    font-weight: var(--font-weight-regular);
+  }
+
+  & span {
+    color: var(--color-highlight-strong);
+  }
+}
+
+.cardDetails {
+  position: relative;
+  min-width: 0;
+  min-height: 20rem;
+  padding-inline-start: var(--space-12);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &::before {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(-1 * var(--space-6));
+    border-inline-start: var(--border-thin) solid var(--color-hero-border);
+    content: '';
+  }
+}
+
+.cardName {
+  font-family: var(--font-family-display);
+  font-size: clamp(var(--font-size-2xl), 3vw, var(--font-size-4xl));
+  letter-spacing: var(--tracking-display);
+  line-height: var(--line-height-heading);
+}
+
+.cardRole,
+.cardLocation,
+.cardUrl,
+.cardFooter {
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+}
+
+.cardRole {
+  margin-top: var(--space-4);
+  color: var(--color-highlight-strong);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-compact);
+}
+
+.cardRule {
+  width: 4rem;
+  height: 3px;
+  margin-block: var(--space-8);
+  background: var(--color-accent-display);
+}
+
+.cardFocus {
+  max-width: 18rem;
+  color: var(--color-hero-muted);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-short);
+}
+
+.cardLocation {
+  margin-top: var(--space-4);
+  color: var(--color-hero-muted);
+}
+
+.cardUrl {
+  margin-top: var(--space-8);
+  padding-top: var(--space-4);
+  border-top: var(--border-thin) solid var(--color-hero-border);
+  color: var(--color-hero-text);
+  font-weight: var(--font-weight-bold);
+}
+
+.cardFooter {
+  grid-column: 1 / -1;
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: var(--border-thin) solid var(--color-hero-border);
+  color: var(--color-hero-muted);
+}
+
+@media (max-width: 760px) {
+  .shareCard {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    aspect-ratio: auto;
+  }
+
+  .cardMain h2 {
+    font-size: clamp(3rem, 14vw, 5rem);
+  }
+
+  .cardDetails {
+    min-height: 0;
+    margin-top: var(--space-8);
+    padding: var(--space-6) 0 0;
+    border-top: var(--border-thin) solid var(--color-hero-border);
+
+    &::before {
+      content: none;
+    }
+  }
+
+  .cardUrl {
+    margin-top: var(--space-6);
+  }
+}

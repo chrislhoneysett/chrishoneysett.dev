@@ -1,6 +1,4 @@
-import Image from 'next/image'
 import { profile } from '@/data/profile'
-import { assetPath } from '@/lib/assetPath'
 import { Arrow } from '../../Arrow'
 import styles from './Hero.module.css'
 
@@ -31,6 +29,8 @@ export function HeroSection() {
             <br />
             feel clear<span className={styles.period}>.</span>
           </h1>
+        </div>
+        <div className={styles.heroSupport}>
           <p className={styles.heroLead}>
             I build web and mobile products with React and React Native, taking
             responsibility from early planning through release and the
@@ -47,19 +47,6 @@ export function HeroSection() {
             </a>
           </div>
         </div>
-        <a
-          className={styles.heroIllustration}
-          href='#work'
-          aria-label='Explore selected web, mobile, and connected projects'
-        >
-          <Image
-            src={assetPath('/hero-device-collage.svg')}
-            alt='Outline illustration of a laptop and phone linked by Bluetooth and NFC signals'
-            fill
-            sizes='(max-width: 760px) 100vw, (max-width: 1050px) 45vw, 40vw'
-            priority
-          />
-        </a>
       </div>
       <div className={styles.heroFooter}>
         <div>

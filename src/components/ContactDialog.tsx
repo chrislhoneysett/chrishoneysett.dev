@@ -31,12 +31,11 @@ declare global {
 
 type ContactDialogProps = {
   id: string
-  email: string
   className?: string
   label: string
 }
 
-export function ContactDialog({ id, email, className, label }: ContactDialogProps) {
+export function ContactDialog({ id, className, label }: ContactDialogProps) {
   const triggerRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
   const nameRef = useRef<HTMLInputElement>(null)
@@ -208,14 +207,13 @@ export function ContactDialog({ id, email, className, label }: ContactDialogProp
               <textarea id={`${id}-message`} name='message' rows={5} required />
               <input className={styles.honeypot} type='checkbox' name='botcheck' tabIndex={-1} autoComplete='off' aria-hidden='true' />
               <div className={styles.captcha} ref={captchaRef} />
-              {captchaError && <p className={styles.error} role='alert'>Verification could not load. Please email me instead.</p>}
-              {status === 'error' && <p className={styles.error} role='alert'>Your message could not be sent. Please try again or email me directly.</p>}
+              {captchaError && <p className={styles.error} role='alert'>Verification could not load. Please try again later.</p>}
+              {status === 'error' && <p className={styles.error} role='alert'>Your message could not be sent. Please try again later.</p>}
               <button className={styles.submit} type='submit' disabled={!captchaReady || status === 'verifying' || status === 'sending'}>
                 {status === 'verifying' ? 'Checking…' : status === 'sending' ? 'Sending…' : 'Send message'} <Arrow />
               </button>
               <p className={styles.captchaNotice}>Protected by hCaptcha. <a href='https://www.hcaptcha.com/privacy' target='_blank' rel='noopener noreferrer'>Privacy</a> · <a href='https://www.hcaptcha.com/terms' target='_blank' rel='noopener noreferrer'>Terms</a></p>
             </form>
-            <p className={styles.fallback}>Prefer email? <a href={`mailto:${email}`}>{email}</a></p>
           </div>
         </div>
       </div>

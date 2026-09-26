@@ -11,11 +11,12 @@ export function ContactFooter() {
       <p className={styles.sectionLabel}>Contact</p>
       <h2>Let&apos;s stay<br /><em>connected.</em></h2>
       <p className={styles.footerIntro}>
-        If you&apos;re hiring for a full-time senior frontend role and think
-        my experience could fit your team, I&apos;d be glad to talk.
+        Always happy to connect with people building thoughtful products and
+        websites. If my experience seems like a fit for something you&apos;re
+        working on, let&apos;s talk!
       </p>
       <div className={styles.footerLinks}>
-        <ContactDialog id='footer-contact' email={profile.email} className={styles.footerContact} label='Contact me' />
+        <ContactDialog id='footer-contact' className={styles.footerContact} label='Contact me' />
         {linkedIn ? <a href={linkedIn.url} target='_blank' rel='noopener noreferrer'>{linkedIn.label} <Arrow /></a> : null}
       </div>
       <p className={styles.copyright}>© {new Date().getFullYear()} {profile.name}</p>

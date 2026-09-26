@@ -8,7 +8,6 @@ export interface Profile {
   name: string;
   headline: string;
   location: string;
-  email: string;
   phone?: string;
   links: ResumeLink[];
   summary: string;
@@ -18,7 +17,6 @@ export const profile: Profile = {
   name: 'Chris Honeysett',
   headline: 'Senior Frontend Engineer | React & Connected Mobile Apps',
   location: 'Kalamazoo, MI',
-  email: 'chrislhoneysett@gmail.com',
   links: [
     { label: 'chrishoneysett.dev', url: 'https://chrishoneysett.dev' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/chris-honeysett/' },

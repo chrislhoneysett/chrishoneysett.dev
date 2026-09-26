@@ -68,7 +68,6 @@ export function SiteNav() {
           <ThemeToggle />
           <ContactDialog
             id='nav-contact'
-            email={profile.email}
             className={styles.navContact}
             label="Let's talk"
           />

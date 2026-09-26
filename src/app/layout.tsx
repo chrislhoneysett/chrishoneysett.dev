@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${profile.name} — ${profile.headline}`,
     description: "Senior frontend engineer building React applications and connected mobile experiences with React Native, BLE, and NFC.",
-    images: [{ url: "/collage.png", alt: "Illustration of connected web, mobile, and device projects" }],
+    images: [{ url: "/shareImage.png", alt: "Chris Honeysett — Making complex feel clear" }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${profile.name} — ${profile.headline}`,
     description: "Senior frontend engineer building React applications and connected mobile experiences with React Native, BLE, and NFC.",
-    images: ["/collage.png"],
+    images: ["/shareImage.png"],
   },
 };
 

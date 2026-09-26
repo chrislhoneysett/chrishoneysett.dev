@@ -5,6 +5,7 @@ import { CareerPathSection } from '@/components/home/sections/CareerPath/CareerP
 import { ExperienceSection } from '@/components/home/sections/Experience/ExperienceSection'
 import { CapabilitiesSection } from '@/components/home/sections/Capabilities/CapabilitiesSection'
 import { AboutSection } from '@/components/home/sections/About/AboutSection'
+import { ShareCardSection } from '@/components/home/sections/ShareCard/ShareCardSection'
 import { ContactFooter } from '@/components/home/sections/Contact/ContactFooter'
 import styles from '@/components/home/HomeLayout.module.css'
 
@@ -20,6 +21,7 @@ export default function Home() {
       <ExperienceSection />
       <CapabilitiesSection />
       <AboutSection />
+      <ShareCardSection />
       <ContactFooter />
     </main>
   )
