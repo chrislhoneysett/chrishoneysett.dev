@@ -90,25 +90,25 @@
   --motion-slow: 450ms;
   --motion-ease: ease;
 
-  /* Light theme: semantic colors */
-  --color-canvas: #f3f0e9;
-  --color-surface: #faf8f2;
-  --color-text: #173037;
-  --color-text-muted: #52656a;
-  --color-border: #cbd0c9;
-  --color-accent: #a33e2b;
-  --color-accent-display: #b54934;
-  --color-highlight: #e3b448;
-  --color-highlight-strong: #9c5b19;
-  --color-focus: #9c5b19;
+  /* Theme colors: light and dark values share each semantic role. */
+  --color-canvas: light-dark(#f3f0e9, #0e2025);
+  --color-surface: light-dark(#faf8f2, #152b31);
+  --color-text: light-dark(#173037, #f3f1e9);
+  --color-text-muted: light-dark(#52656a, #aabdb9);
+  --color-border: light-dark(#cbd0c9, #385057);
+  --color-accent: light-dark(#a33e2b, #ff9174);
+  --color-accent-display: light-dark(#b54934, #f18b6c);
+  --color-highlight: light-dark(#e3b448, #edc862);
+  --color-highlight-strong: light-dark(#9c5b19, #edc862);
+  --color-focus: light-dark(#9c5b19, #edc862);
   --color-selection: #eac45e;
   --color-selection-text: #142c31;
 
   /* Site sections and controls */
-  --color-hero: #e8e9df;
-  --color-hero-text: #173037;
-  --color-hero-muted: #52656a;
-  --color-hero-border: rgba(23, 48, 55, 0.25);
+  --color-hero: light-dark(#e8e9df, #0a191e);
+  --color-hero-text: light-dark(#173037, #f7f3ea);
+  --color-hero-muted: light-dark(#52656a, #b2c5c1);
+  --color-hero-border: light-dark(rgba(23, 48, 55, 0.25), rgba(255, 255, 255, 0.24));
   --color-button: #e3b448;
   --color-button-hover: #f6d889;
   --color-button-text: #173037;
@@ -140,40 +140,12 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --color-canvas: #0e2025;
-    --color-surface: #152b31;
-    --color-text: #f3f1e9;
-    --color-text-muted: #aabdb9;
-    --color-border: #385057;
-    --color-accent: #ff9174;
-    --color-accent-display: #f18b6c;
-    --color-highlight: #edc862;
-    --color-highlight-strong: #edc862;
-    --color-focus: #edc862;
-    --color-hero: #0a191e;
-    --color-hero-text: #f7f3ea;
-    --color-hero-muted: #b2c5c1;
-    --color-hero-border: rgba(255, 255, 255, 0.24);
   }
 }
 
-/* Same dark palette when the visitor explicitly selects it. */
+/* An explicit dark choice overrides an operating system light preference. */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-canvas: #0e2025;
-  --color-surface: #152b31;
-  --color-text: #f3f1e9;
-  --color-text-muted: #aabdb9;
-  --color-border: #385057;
-  --color-accent: #ff9174;
-  --color-accent-display: #f18b6c;
-  --color-highlight: #edc862;
-  --color-highlight-strong: #edc862;
-  --color-focus: #edc862;
-  --color-hero: #0a191e;
-  --color-hero-text: #f7f3ea;
-  --color-hero-muted: #b2c5c1;
-  --color-hero-border: rgba(255, 255, 255, 0.24);
 }
 
 @media (max-width: 1050px) {
