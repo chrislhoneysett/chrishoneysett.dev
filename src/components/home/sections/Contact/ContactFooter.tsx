@@ -1,6 +1,6 @@
 import { ContactDialog } from '@/components/ContactDialog'
 import { profile } from '@/data/profile'
-import { Arrow } from '../../Arrow'
+import { Icon } from '@/components/Icon'
 import styles from './Contact.module.css'
 
 export function ContactFooter() {
@@ -17,7 +17,7 @@ export function ContactFooter() {
       </p>
       <div className={styles.footerLinks}>
         <ContactDialog id='footer-contact' className={styles.footerContact} label='Contact me' />
-        {linkedIn ? <a href={linkedIn.url} target='_blank' rel='noopener noreferrer'>{linkedIn.label} <Arrow /></a> : null}
+        {linkedIn ? <a href={linkedIn.url} target='_blank' rel='noopener noreferrer'>{linkedIn.label} <Icon name='north-east' /></a> : null}
       </div>
       <p className={styles.copyright}>© {new Date().getFullYear()} {profile.name}</p>
     </footer>

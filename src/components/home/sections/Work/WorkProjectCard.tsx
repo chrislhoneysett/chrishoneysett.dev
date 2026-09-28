@@ -1,7 +1,7 @@
 import type { ResumeProject } from '@/data/projects'
 import styles from './WorkProjectGallery.module.css'
 import Image from 'next/image'
-import { Arrow } from '../../Arrow'
+import { Icon } from '@/components/Icon'
 import { assetPath } from '@/lib/assetPath'
 
 type WorkProject = ResumeProject & { employer: string }
@@ -53,7 +53,7 @@ export const WorkProjectCard = ({
         ))}
       </ul>
       <button className={styles.openButton} type='button' onClick={onClick}>
-        View project <Arrow />
+        View project <Icon name='north-east' />
       </button>
     </div>
   </article>

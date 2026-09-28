@@ -2,11 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import PauseIcon from '@mui/icons-material/Pause'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import { Arrow } from '../../Arrow'
+import { Icon } from '@/components/Icon'
 import { assetPath } from '@/lib/assetPath'
 import styles from './HeroProjectCarousel.module.css'
 
@@ -69,7 +65,7 @@ export function HeroProjectCarousel({ slides }: { slides: HeroProjectSlide[] }) 
             aria-label='Previous project'
             onClick={() => showRelativeSlide(-1)}
           >
-            <ArrowBackIcon fontSize='inherit' />
+            <Icon name='arrow-back' />
           </button>
           <button
             type='button'
@@ -79,14 +75,14 @@ export function HeroProjectCarousel({ slides }: { slides: HeroProjectSlide[] }) 
               setPaused((value) => !value)
             }}
           >
-            {paused ? <PlayArrowIcon fontSize='inherit' /> : <PauseIcon fontSize='inherit' />}
+            <Icon name={paused ? 'play-arrow' : 'pause'} />
           </button>
           <button
             type='button'
             aria-label='Next project'
             onClick={() => showRelativeSlide(1)}
           >
-            <ArrowForwardIcon fontSize='inherit' />
+            <Icon name='arrow-forward' />
           </button>
         </div>
       </div>
@@ -128,7 +124,7 @@ export function HeroProjectCarousel({ slides }: { slides: HeroProjectSlide[] }) 
                   {slide.type} · {slide.technologies.slice(0, 3).join(' · ')}
                 </small>
               </span>
-              <span className={styles.arrow}><Arrow /></span>
+              <Icon name='north-east' className={styles.arrow} />
             </span>
           ))}
         </span>

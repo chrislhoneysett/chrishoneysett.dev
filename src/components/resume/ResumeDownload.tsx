@@ -1,3 +1,4 @@
+import { Icon } from '@/components/Icon'
 import { profile } from '@/data/profile'
 import { assetPath } from '@/lib/assetPath'
 import styles from './ResumeDownload.module.css'
@@ -18,8 +19,8 @@ export function ResumeDownload({ headingLevel = 'h2', twoColumns = false }: { he
           My experience, capabilities, education, and selected project highlights in a two-page PDF.
         </p>
         <div className={styles.actions}>
-          <a className={styles.download} href={pdf} download='Chris-Honeysett-Resume.pdf'>Download resume <span aria-hidden='true'>↓</span></a>
-          <a className={styles.view} href={pdf} target='_blank' rel='noopener noreferrer'>View PDF <span aria-hidden='true'>↗</span></a>
+          <a className={styles.download} href={pdf} download='Chris-Honeysett-Resume.pdf'>Download resume <Icon name='arrow-downward' /></a>
+          <a className={styles.view} href={pdf} target='_blank' rel='noopener noreferrer'>View PDF <Icon name='north-east' /></a>
         </div>
         <p className={styles.detail}>PDF / 2 pages</p>
       </div>

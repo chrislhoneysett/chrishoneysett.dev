@@ -1,5 +1,5 @@
 import { profile } from '@/data/profile'
-import { Arrow } from '../../Arrow'
+import { Icon } from '@/components/Icon'
 import styles from './Hero.module.css'
 
 export function HeroSection() {
@@ -40,7 +40,7 @@ export function HeroSection() {
           </p>
           <div className={styles.heroActions}>
             <a className={styles.primaryLink} href='#work'>
-              View projects <Arrow />
+              View projects <Icon name='north-east' />
             </a>
             <a className={styles.secondaryLink} href='#experience'>
               Career background <span aria-hidden='true'>↓</span>

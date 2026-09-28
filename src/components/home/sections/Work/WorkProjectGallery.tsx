@@ -1,11 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import CloseIcon from '@mui/icons-material/Close'
-import { Arrow } from '../../Arrow'
+import { Icon } from '@/components/Icon'
 import type { ResumeProject } from '@/data/projects'
 import styles from './WorkProjectGallery.module.css'
 import { WorkProjectCard } from './WorkProjectCard'
@@ -81,7 +77,7 @@ export function WorkProjectGallery({
               onClick={() => setShowMore((value) => !value)}
             >
               {showMore ? 'Less' : 'More'}
-              <span className={`${styles.moreChevron} ${showMore ? styles.moreChevronUp : ''}`} aria-hidden='true'><ArrowDownwardIcon fontSize='inherit' /></span>
+              <Icon name='arrow-downward' className={`${styles.moreChevron} ${showMore ? styles.moreChevronUp : ''}`} />
             </button>
           </div>
           <div
@@ -130,7 +126,7 @@ export function WorkProjectGallery({
               onClick={closeDialog}
               aria-label='Close project details'
             >
-              <CloseIcon fontSize='inherit' />
+              <Icon name='close' />
             </button>
             {visibleProjects.length > 1 ? (
               <nav
@@ -142,7 +138,7 @@ export function WorkProjectGallery({
                   onClick={() => showRelativeProject(-1)}
                   aria-label={`Previous project: ${visibleProjects[(activeIndex - 1 + visibleProjects.length) % visibleProjects.length].name}`}
                 >
-                  <span aria-hidden='true'><ArrowBackIcon fontSize='inherit' /></span> Previous
+                  <Icon name='arrow-back' /> Previous
                 </button>
                 <span aria-live='polite'>
                   Project {activeIndex + 1} of {visibleProjects.length}
@@ -152,7 +148,7 @@ export function WorkProjectGallery({
                   onClick={() => showRelativeProject(1)}
                   aria-label={`Next project: ${visibleProjects[(activeIndex + 1) % visibleProjects.length].name}`}
                 >
-                  Next <span aria-hidden='true'><ArrowForwardIcon fontSize='inherit' /></span>
+                  Next <Icon name='arrow-forward' />
                 </button>
               </nav>
             ) : null}
@@ -229,7 +225,7 @@ export function WorkProjectGallery({
                   target='_blank'
                   rel='noreferrer'
                 >
-                  Visit live site <Arrow />
+                  Visit live site <Icon name='north-east' />
                 </a>
               ) : null}
               <button type='button' onClick={closeDialog}>

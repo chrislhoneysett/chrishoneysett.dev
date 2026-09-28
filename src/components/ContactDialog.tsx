@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, KeyboardEvent } from 'react'
-import CloseIcon from '@mui/icons-material/Close'
-import { Arrow } from './home/Arrow'
+import { Icon } from './Icon'
 import styles from './ContactDialog.module.css'
 
 const accessKey = '1bb07ad5-702b-489a-951b-dfe12c94290a'
@@ -180,7 +179,7 @@ export function ContactDialog({ id, className, label }: ContactDialogProps) {
   return (
     <>
       <button ref={triggerRef} className={className} type='button' onClick={openDialog}>
-        {label} <Arrow />
+        {label} <Icon name='north-east' />
       </button>
       <div className={styles.overlay} hidden={!isOpen}>
         <div className={styles.backdrop} onClick={closeDialog} aria-hidden='true' />
@@ -193,7 +192,7 @@ export function ContactDialog({ id, className, label }: ContactDialogProps) {
           onKeyDown={trapTab}
         >
           <div className={styles.content}>
-            <button className={styles.close} type='button' onClick={closeDialog} aria-label='Close contact form'><CloseIcon fontSize='inherit' /></button>
+            <button className={styles.close} type='button' onClick={closeDialog} aria-label='Close contact form'><Icon name='close' /></button>
             <p className={styles.eyebrow}>Contact</p>
             <h2 id={`${id}-title`}>Let&apos;s talk.</h2>
             <p className={styles.intro}>Tell me about your team and the role you would like to discuss.</p>
@@ -210,7 +209,7 @@ export function ContactDialog({ id, className, label }: ContactDialogProps) {
               {captchaError && <p className={styles.error} role='alert'>Verification could not load. Please try again later.</p>}
               {status === 'error' && <p className={styles.error} role='alert'>Your message could not be sent. Please try again later.</p>}
               <button className={styles.submit} type='submit' disabled={!captchaReady || status === 'verifying' || status === 'sending'}>
-                {status === 'verifying' ? 'Checking…' : status === 'sending' ? 'Sending…' : 'Send message'} <Arrow />
+                {status === 'verifying' ? 'Checking…' : status === 'sending' ? 'Sending…' : 'Send message'} <Icon name='north-east' />
               </button>
               <p className={styles.captchaNotice}>Protected by hCaptcha. <a href='https://www.hcaptcha.com/privacy' target='_blank' rel='noopener noreferrer'>Privacy</a> · <a href='https://www.hcaptcha.com/terms' target='_blank' rel='noopener noreferrer'>Terms</a></p>
             </form>
