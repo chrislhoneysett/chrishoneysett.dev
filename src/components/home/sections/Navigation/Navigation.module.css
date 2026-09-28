@@ -57,20 +57,9 @@
 .mark {
   width: 2.75rem;
   height: 2.75rem;
-  display: inline-grid;
-  place-items: center;
-  border: var(--border-thin) solid var(--color-hero-border);
+  display: block;
+  flex: none;
   border-radius: var(--radius-round);
-  font-size: var(--font-size-sm);
-  letter-spacing: var(--tracking-mark);
-}
-
-.markInitials {
-  white-space: nowrap;
-}
-
-.markPeriod {
-  color: var(--color-highlight-strong);
 }
 
 .navLinks,

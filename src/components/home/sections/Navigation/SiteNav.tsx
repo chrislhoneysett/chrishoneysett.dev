@@ -1,9 +1,11 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { ThemeToggle } from './ThemeToggle'
 import { ContactDialog } from '@/components/ContactDialog'
 import { profile } from '@/data/profile'
+import { assetPath } from '@/lib/assetPath'
 import styles from './Navigation.module.css'
 
 export function SiteNav() {
@@ -59,11 +61,14 @@ export function SiteNav() {
           href='#top'
           aria-label={`${profile.name}, top of page`}
         >
-          <span className={styles.mark} aria-hidden='true'>
-            <span className={styles.markInitials}>
-              CH<span className={styles.markPeriod}>.</span>
-            </span>
-          </span>
+          <Image
+            className={styles.mark}
+            src={assetPath('/nav-mark.svg')}
+            alt=''
+            width={44}
+            height={44}
+            loading='eager'
+          />
           <span>{profile.name}</span>
         </a>
         <div className={styles.navEnd}>
