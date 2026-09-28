@@ -25,26 +25,24 @@ npm install
 npx playwright install chromium
 ```
 
-Generate a one-page resume, or add a second page of selected project highlights:
+Generate the two-page resume, with Project Highlights on page two:
 
 ```bash
 npm run resume
-npm run resume -- --two-pages
 ```
 
-Outputs are `output/pdf/chris-honeysett-resume.pdf` and
-`output/pdf/chris-honeysett-resume-two-pages.pdf`, with matching HTML previews.
-These generated files are ignored by Git. No running site or Next.js build is
-needed. Text remains selectable and contact links are clickable.
+The command writes `output/pdf/chris-honeysett-resume.pdf` and a matching HTML
+preview, then updates `public/downloads/chris-honeysett-resume.pdf` for the
+site. These generated files are ignored by Git. No running site or Next.js
+build is needed. Text remains selectable and contact links are clickable.
 
 If Google Chrome is already installed, you can use it without downloading Chromium:
 
 ```bash
 RESUME_BROWSER_CHANNEL=chrome npm run resume
-RESUME_BROWSER_CHANNEL=chrome npm run resume -- --two-pages
 ```
 
-The one-page version includes all role summaries, skill groups, and education.
+The first page includes all role summaries, skill groups, and education.
 The second page draws its contribution text from `resumeHighlight` in
 `src/data/projects.ts`; edit the project ID selection in
 `scripts/generate-resume.mts` to choose different highlights. The generator fails
@@ -54,7 +52,7 @@ after changing content or theme fonts.
 
 ## Publish on GitHub Pages
 
-Every `npm run build` first generates the two-page resume into
+Every `npm run build` first regenerates the two-page resume into
 `public/downloads/chris-honeysett-resume.pdf`. Next.js includes it in the static
 export, and `/resume/` provides download and viewing links. The same content also
 appears near the bottom of the homepage, linked by the Resume navigation item.
@@ -69,11 +67,8 @@ For a local build with your installed Chrome:
 RESUME_BROWSER_CHANNEL=chrome npm run build -- --webpack
 ```
 
-To prepare the download while running the development server:
-
-```bash
-RESUME_BROWSER_CHANNEL=chrome npm run resume -- --publish
-```
+To refresh the download while running the development server, run
+`npm run resume`.
 
 The site exports static files to `out/` with `npm run build`. The workflow in `.github/workflows/pages.yml` builds and deploys them on every push to `main`.
 

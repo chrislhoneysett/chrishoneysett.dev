@@ -5,12 +5,9 @@ import { chromium } from 'playwright'
 import { resume } from '../src/data/resume'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
-const args = process.argv.slice(2)
-if (args.some((arg) => !['--two-pages', '--publish'].includes(arg))) {
-  throw new Error('Usage: npm run resume -- [--two-pages] [--publish]')
+if (process.argv.length > 2) {
+  throw new Error('Usage: npm run resume')
 }
-const publish = args.includes('--publish')
-const twoPages = publish || args.includes('--two-pages')
 const escape = (value: string) =>
   value.replace(
     /[&<>"']/g,
@@ -24,6 +21,7 @@ const escape = (value: string) =>
       })[char]!,
   )
 const heading = (label: string) => `<h2>${escape(label)}</h2>`
+const [firstName, ...lastName] = resume.name.split(' ')
 const roles = resume.experience
   .map(
     (role) => `<article class="role">
@@ -78,18 +76,18 @@ const [theme, printStyles] = await Promise.all([
   readFile(path.join(root, 'scripts/resume.css'), 'utf8'),
 ])
 const html = `<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8"><title>${escape(resume.name)} - Resume</title><style>${theme}\n${printStyles}</style></head><body>
-<main class="sheet"><header><div class="kicker">${escape(resume.location)}</div><h1>${escape(resume.name)}<span class="period">.</span></h1><p class="headline">${escape(resume.headline)}</p><div class="contact">${resume.links.map((link) => `<a href="${escape(link.url)}">${escape(link.label)}</a>`).join('<span> / </span>')}${resume.phone ? `<span> / </span><a href="tel:${escape(resume.phone)}">${escape(resume.phone)}</a>` : ''}</div></header>
+<main class="sheet"><header><div class="kicker">${escape(resume.location)}</div><h1>${escape(firstName)} <em>${escape(lastName.join(' '))}</em><span class="period">.</span></h1><p class="headline">${escape(resume.headline)}</p><div class="contact">${resume.links.map((link) => `<a href="${escape(link.url)}">${escape(link.label)}</a>`).join('<span> / </span>')}${resume.phone ? `<span> / </span><a href="tel:${escape(resume.phone)}">${escape(resume.phone)}</a>` : ''}</div></header>
 <section class="summary"><p>${escape(resume.summary)}</p></section>
 <section>${heading('Experience')}${roles}</section>
 <section>${heading('Additional experience')}${extraRoles}</section>
 <section>${heading('Capabilities')}${skills}</section>
 <section>${heading('Education')}${education}</section>
 <footer>${escape(resume.name)}<span>Resume / 01</span></footer></main>
-${twoPages ? `<main class="sheet project-sheet"><header><div class="kicker">${escape(resume.name)} / Selected work</div><h1>Project <em>highlights</em><span class="period">.</span></h1><p class="headline">${escape(resume.headline)}</p></header>${projects}<footer>${escape(resume.links[0]?.label ?? resume.name)}<span>Resume / 02</span></footer></main>` : ''}
+<main class="sheet project-sheet"><header><div class="kicker">${escape(resume.name)} / Selected work</div><h1>Project <em>highlights</em><span class="period">.</span></h1><p class="headline">${escape(resume.headline)}</p></header>${projects}<footer>${escape(resume.links[0]?.label ?? resume.name)}<span>Resume / 02</span></footer></main>
 </body></html>`
 const outputDir = path.join(root, 'output/pdf')
 await mkdir(outputDir, { recursive: true })
-const basename = `chris-honeysett-resume${twoPages ? '-two-pages' : ''}`
+const basename = 'chris-honeysett-resume'
 const browser = await chromium.launch({
   channel: process.env.RESUME_BROWSER_CHANNEL || undefined,
 })
@@ -125,17 +123,13 @@ try {
     printBackground: true,
     tagged: true,
   })
-  if (publish) {
-    const publicDir = path.join(root, 'public/downloads')
-    await mkdir(publicDir, { recursive: true })
-    await copyFile(
-      path.join(outputDir, `${basename}.pdf`),
-      path.join(publicDir, 'chris-honeysett-resume.pdf'),
-    )
-  }
-  console.log(
-    `Generated ${path.join(outputDir, `${basename}.pdf`)} (${twoPages ? 2 : 1} page${twoPages ? 's' : ''})`,
+  const publicDir = path.join(root, 'public/downloads')
+  await mkdir(publicDir, { recursive: true })
+  await copyFile(
+    path.join(outputDir, `${basename}.pdf`),
+    path.join(publicDir, `${basename}.pdf`),
   )
+  console.log(`Generated ${path.join(outputDir, `${basename}.pdf`)} (2 pages)`)
 } finally {
   await browser.close()
 }
