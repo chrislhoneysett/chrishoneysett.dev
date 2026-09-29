@@ -76,6 +76,23 @@
   text-transform: uppercase;
 }
 
+.companyLink {
+  text-decoration: underline;
+  text-decoration-color: var(--color-border);
+  text-decoration-thickness: var(--border-thin);
+  text-underline-offset: 0.17em;
+  &:hover {
+    text-decoration-color: var(--color-accent);
+  }
+}
+
+.companyLinkIcon {
+  display: inline-flex;
+  margin-left: var(--space-1);
+  font-size: var(--font-size-sm);
+  vertical-align: middle;
+}
+
 .roleTenure {
   display: block;
   margin-top: var(--space-2);

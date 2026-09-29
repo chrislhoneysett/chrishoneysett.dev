@@ -2,6 +2,7 @@ import {
   experience,
   additionalExperience,
 } from '@/data/experience'
+import { Icon } from '@/components/Icon'
 import styles from './Experience.module.css'
 
 const calculateTenureLabel = (startDate: string, endDate: string) => {
@@ -46,7 +47,19 @@ export function ExperienceSection() {
               ) : null}
             </p>
             <div>
-              <h3>{role.company}</h3>
+              <h3>
+                {role.website ? (
+                  <a
+                    className={styles.companyLink}
+                    href={role.website}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    {role.company}
+                    <Icon name='north-east' className={styles.companyLinkIcon} />
+                  </a>
+                ) : role.company}
+              </h3>
               <p className={styles.roleTitle}>{role.title}</p>
             </div>
             <p className={styles.roleSummary}>{role.summary}</p>

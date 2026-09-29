@@ -2,24 +2,25 @@ import type { ResumeProject } from './projects'
 
 /** Company names represented in this domain. */
 export type ExperienceCompany =
-  | "Gravity Works"
-  | "Honeysett Design"
-  | "North American Color, Inc."
-  | "Twisthink"
-  | "VMLY&R / Biggs | Gilmore";
+  | 'Gravity Works'
+  | 'Honeysett Design'
+  | 'North American Color, Inc.'
+  | 'Twisthink'
+  | 'VML / Biggs | Gilmore'
 
 export interface Experience {
-  id: string;
-  company: ExperienceCompany;
-  title: string;
-  location: string;
+  id: string
+  company: ExperienceCompany
+  website?: string
+  title: string
+  location: string
   /** Year precision matches the source resume; no month is implied. */
-  startDate: string;
-  endDate: string;
+  startDate: string
+  endDate: string
   /** Approximate tenure shown below the year range when useful. */
-  tenureLabel?: string;
-  summary: string;
-  projects: ResumeProject[];
+  tenureLabel?: string
+  summary: string
+  projects: ResumeProject[]
 }
 
 import { projectsByRole } from './projects'
@@ -28,6 +29,7 @@ export const experience: Experience[] = [
   {
     id: 'twisthink',
     company: 'Twisthink',
+    website: 'https://www.twisthink.com/',
     title: 'Senior Software Engineer',
     location: 'Grand Rapids, MI',
     startDate: '2023',
@@ -39,6 +41,7 @@ export const experience: Experience[] = [
   {
     id: 'gravity-works',
     company: 'Gravity Works',
+    website: 'https://www.gravityworksdesign.com/',
     title: 'Senior Frontend Developer',
     location: 'Lansing, MI',
     startDate: '2020',
@@ -49,7 +52,8 @@ export const experience: Experience[] = [
   },
   {
     id: 'vmlyr',
-    company: 'VMLY&R / Biggs | Gilmore',
+    company: 'VML / Biggs | Gilmore',
+    website: 'https://www.vml.com/',
     title: 'Lead Technologist',
     location: 'Kalamazoo, MI',
     startDate: '2009',
