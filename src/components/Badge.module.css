@@ -1,0 +1,22 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-compact);
+  text-transform: uppercase;
+}
+
+.subtle {
+  padding: var(--space-1) var(--space-2);
+  color: var(--color-text-muted);
+  background: color-mix(in srgb, var(--color-border) 30%, var(--color-surface));
+}
+
+.highlight {
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-button-text);
+  background: var(--color-button);
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: var(--tracking-meta);
+}

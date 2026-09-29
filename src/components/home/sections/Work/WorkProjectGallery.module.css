@@ -74,6 +74,8 @@
 
 .card {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: var(--border-thin) solid var(--color-border);
   background: var(--color-surface);
@@ -170,15 +172,6 @@
   z-index: 3;
   right: 0;
   bottom: 0;
-  padding: var(--space-2) var(--space-3);
-  color: var(--color-button-text);
-  background: var(--color-button);
-  font-family: var(--font-family-code);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-heavy);
-  letter-spacing: var(--tracking-meta);
-  text-align: center;
-  text-transform: uppercase;
 }
 
 .visualType {
@@ -204,6 +197,9 @@
 
 .cardBody {
   padding: var(--space-6);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   & > p {
     margin-top: var(--space-4);
     color: var(--color-text-muted);
@@ -230,22 +226,14 @@
 }
 
 .tags {
-  margin: var(--space-5) 0 0;
+  margin: var(--space-5) 0 var(--space-6);
   padding: 0;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
   list-style: none;
-  & li {
-    padding: var(--space-1) var(--space-2);
-    border: var(--border-thin) solid var(--color-border);
-    font-family: var(--font-family-code);
-    font-size: var(--font-size-xs);
-    text-transform: uppercase;
-  }
 }
 
-.openButton,
 .dialogNavigation button,
 .dialogFooter button,
 .dialogFooter a {
@@ -263,10 +251,21 @@
 }
 
 .openButton {
-  margin-top: var(--space-6);
+  margin-top: auto;
+  padding: var(--space-3) 0;
+  display: inline-flex;
+  align-self: flex-end;
+  align-items: center;
+  gap: var(--space-1);
+  border: 0;
+  border-bottom: var(--border-thin) solid var(--color-border);
+  color: var(--color-text);
+  background: transparent;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
 }
 
-.openButton:hover,
 .dialogNavigation button:hover,
 .dialogFooter button:hover,
 .dialogFooter a:hover {

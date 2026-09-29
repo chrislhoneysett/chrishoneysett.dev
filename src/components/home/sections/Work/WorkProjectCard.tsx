@@ -2,6 +2,7 @@ import type { ResumeProject } from '@/data/projects'
 import styles from './WorkProjectGallery.module.css'
 import Image from 'next/image'
 import { Icon } from '@/components/Icon'
+import { Badge } from '@/components/Badge'
 import { assetPath } from '@/lib/assetPath'
 
 type WorkProject = ResumeProject & { employer: string }
@@ -37,7 +38,9 @@ export const WorkProjectCard = ({
       <span className={styles.visualType}>{project.type}</span>
       <span className={styles.shape} />
       {project.projectOrigin ? (
-        <span className={styles.originBanner}>{project.projectOrigin}</span>
+        <Badge className={styles.originBanner} tone='highlight'>
+          {project.projectOrigin}
+        </Badge>
       ) : null}
     </div>
     <div className={styles.cardBody}>
@@ -47,11 +50,15 @@ export const WorkProjectCard = ({
       </div>
       <h3>{project.name}</h3>
       <p>{project.description}</p>
-      <ul className={styles.tags} aria-label='Technologies used'>
-        {project.technologies.map((technology) => (
-          <li key={technology}>{technology}</li>
-        ))}
-      </ul>
+      {project.technologies.length > 0 ? (
+        <ul className={styles.tags} aria-label='Technologies used'>
+          {project.technologies.map((technology) => (
+            <li key={technology}>
+              <Badge>{technology}</Badge>
+            </li>
+          ))}
+        </ul>
+      ) : null}
       <button className={styles.openButton} type='button' onClick={onClick}>
         View project <Icon name='north-east' />
       </button>
