@@ -74,14 +74,15 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       client: 'Twisthink',
       type: 'Component Library',
       description:
-        'A Material Design-based component library that helps teams start custom client applications quickly and gives designers and developers a shared vocabulary.',
+        'A Material Design-based component and theme library that helps teams start custom client applications quickly and gives designers and developers a shared vocabulary.',
       modal: {
         overview:
           'Auris is an internal component library built as a starter for custom client applications. It draws on Material Design and gives designers and developers a shared vocabulary for interface decisions.',
         contribution:
-          'I defined the React component structure using Atomic Design, set up Storybook for discovery, and packaged the library for private npm distribution.',
+          'I built the React component system and its CSS theme library, organized the components using Atomic Design, set up Storybook for discovery, and packaged the library for private npm distribution.',
         highlights: [
           'Built small atomic components that combine into larger, reusable interface components.',
+          'Developed the theme library to give components a consistent visual foundation across client applications.',
           'Wrapped selected third-party components so developers could fully customize them through Auris’s design language without needing to work with the underlying components directly.',
           'Used Auris to scaffold a new project within an hour, including user authentication, a full theme, and the component library.',
           'Used a common component language to keep design and development aligned.',
@@ -105,8 +106,8 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         ],
       },
       resumeHighlight:
-        'Built a Material Design-based React starter with Atomic Design, Storybook, and private npm distribution. Used it to scaffold a new project within an hour, including user authentication, a full theme, and the component library.',
-      technologies: ['React', 'Storybook', 'npm'],
+        'Built a Material Design-based React component and CSS theme library with Atomic Design, Storybook, and private npm distribution. Used it to scaffold a new project within an hour, including user authentication and a full theme.',
+      technologies: ['React', 'CSS', 'Storybook', 'npm'],
       tags: ['web', 'ui', 'design-system'],
     },
     {
@@ -157,7 +158,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       },
       resumeHighlight:
         'Rebuilt a fragile Vue dashboard in React with Auris components and a maintainable architecture. Completed a dashboard section redesign within one week, versus an estimated month in the previous codebase.',
-      technologies: ['React', 'Vue', 'AWS'],
+      technologies: ['React', 'Vue', 'CSS', 'AWS'],
       tags: ['web', 'ui'],
     },
     {
@@ -292,9 +293,10 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         overview:
           'The UC Irvine School of Medicine website serves a broad community of prospective and current students, residents, researchers, faculty, alumni, and the public. The experience pairs the school’s “Discover. Teach. Heal.” identity with direct pathways into its programs, clinical resources, research, news, events, and community information.',
         contribution:
-          'At Gravity Works, I led frontend development for the Drupal and React platform. I architected the site’s data structure while keeping the implementation aligned with the existing component library wherever possible. Shared themes and modules supported a consistent foundation across the School of Medicine and its department sites.',
+          'At Gravity Works, I led frontend development for the Drupal and React platform, including substantial responsive CSS work. I architected the site’s data structure while keeping the implementation aligned with the existing component library wherever possible. Shared themes and modules supported a consistent foundation across the School of Medicine and its department sites.',
         highlights: [
           'Structured the site’s data to support content and navigation across the School of Medicine and its departments.',
+          'Implemented responsive layouts and navigation across desktop and mobile experiences.',
           'Worked within the existing component library wherever possible to preserve a consistent experience.',
           'Organized key pathways around the needs of distinct school audiences.',
           'Connected education, research, healthcare, community, news, and events in one institutional experience.',
@@ -361,8 +363,8 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         liveUrl: 'https://medschool.uci.edu/',
       },
       resumeHighlight:
-        'Led frontend development and data structure design for UC Irvine’s School of Medicine website, aligning the Drupal and React implementation with an existing component library.',
-      technologies: ['Drupal', 'React'],
+        'Led frontend development, responsive CSS implementation, and data structure design for UC Irvine’s School of Medicine website, aligning the Drupal and React implementation with an existing component library.',
+      technologies: ['Drupal', 'React', 'CSS'],
       tags: ['web', 'cms', 'leadership'],
     },
     {
@@ -381,8 +383,9 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         overview:
           'The IHSAA site brings together tournament coverage and year-round resources for Indiana high school athletics. Visitors can browse sports and schools, follow tournament schedules and results, and share a link to a specific tournament.',
         contribution:
-          'I led development of the Drupal website and embedded React tournament application. Integrating MaxPreps schedules, results, and statistics involved challenges around tournament data entry, routing, and consistency. I used Drupal Views with query-string routing to filter tournament content without reloading the full page.',
+          'I led development of the Drupal website and embedded React tournament application, including responsive CSS for the site and tournament views. Integrating MaxPreps schedules, results, and statistics involved challenges around tournament data entry, routing, and consistency. I used Drupal Views with query-string routing to filter tournament content without reloading the full page.',
         highlights: [
+          'Built responsive layouts for athletics content, tournament controls, and results across screen sizes.',
           'Integrated MaxPreps tournament schedules, results, and statistics into the React experience.',
           'Used Drupal Views filters and query-string routing so visitors could change tournament content without a full-page reload.',
           'Made tournament-specific URLs shareable while keeping the displayed content consistent with the selected route.',
@@ -428,8 +431,8 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         liveUrl: 'https://www.ihsaa.org/',
       },
       resumeHighlight:
-        'Led a Drupal website and embedded React tournament app, integrating MaxPreps data and using Drupal Views with query-string routing for seamless filtering and shareable tournament URLs.',
-      technologies: ['Drupal', 'React', 'MaxPreps API'],
+        'Led responsive CSS and frontend development for a Drupal website and embedded React tournament app, integrating MaxPreps data and using Drupal Views with query-string routing for shareable tournament URLs.',
+      technologies: ['Drupal', 'React', 'CSS', 'MaxPreps API'],
       tags: ['web', 'cms', 'leadership'],
     },
     {
@@ -448,8 +451,9 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         overview:
           'Miller Auditorium’s site helps audiences discover upcoming performances and plan a visit. Featured shows and a broader event calendar sit alongside ticketing, box office, accessibility, parking, dining, group sales, and support information.',
         contribution:
-          'I led development of the Drupal website and React components that present performance information integrated with the Tessitura ticketing system.',
+          'I led development of the Drupal website and React components that present performance information integrated with the Tessitura ticketing system. I built responsive CSS for the event listings and content pages across desktop and mobile layouts.',
         highlights: [
+          'Adapted performance listings and show details for desktop and mobile screens.',
           'Brought featured productions and a broad event calendar into the same discovery experience.',
           'Connected performance listings with Tessitura data and ticket-purchase pathways.',
           'Made practical visit information easy to find, including accessibility, directions, and parking.',
@@ -503,8 +507,8 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         liveUrl: 'https://www.millerauditorium.com/',
       },
       resumeHighlight:
-        'Led development of a Drupal website with React components integrating performance data from the Tessitura ticketing system.',
-      technologies: ['Drupal', 'React', 'Tessitura'],
+        'Led responsive CSS and frontend development of a Drupal website with React components integrating performance data from the Tessitura ticketing system.',
+      technologies: ['Drupal', 'React', 'CSS', 'Tessitura'],
       tags: ['web', 'cms', 'leadership'],
     },
     {
@@ -722,10 +726,10 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       client: "Kellogg's",
       type: 'Website',
       description:
-        'A consumer rewards website and connected microsites that needed a consistent experience across a long-running program.',
+        'A consumer rewards website and connected microsites that relied on extensive CSS work for a responsive redesign and a consistent experience across the program.',
       resumeHighlight:
-        'Directed frontend development for more than six years, including an Adobe AEM/Vue responsive redesign and a shared codebase across rewards microsites.',
-      technologies: ['Adobe AEM', 'Vue'],
+        'Directed frontend development for more than six years, including substantial CSS work on an Adobe AEM/Vue responsive redesign and a shared codebase across rewards microsites.',
+      technologies: ['Adobe AEM', 'Vue', 'CSS'],
       tags: ['web', 'cms', 'ui', 'leadership'],
     },
     {
@@ -808,7 +812,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         'A regional theatre website where audiences can explore productions and follow a path to online ticket purchases.',
       resumeHighlight:
         'Designed and built the Drupal site, integrated Ludus ticketing, and maintained the experience over time.',
-      technologies: ['Drupal', 'Ludus'],
+      technologies: ['Drupal', 'CSS', 'Ludus'],
       tags: ['web', 'cms', 'ui'],
     },
   ],

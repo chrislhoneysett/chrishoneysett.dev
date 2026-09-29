@@ -235,8 +235,7 @@
 }
 
 .dialogNavigation button,
-.dialogFooter button,
-.dialogFooter a {
+.dialogFooter button {
   min-height: var(--button-min-height);
   padding: var(--space-3) var(--space-4);
   display: inline-flex;
@@ -267,8 +266,7 @@
 }
 
 .dialogNavigation button:hover,
-.dialogFooter button:hover,
-.dialogFooter a:hover {
+.dialogFooter button:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
@@ -300,6 +298,30 @@
   position: relative;
   padding: clamp(1.5rem, 4vw, 3.5rem);
   overflow-y: auto;
+}
+
+.projectLink {
+  text-decoration: underline;
+  text-decoration-color: var(--color-border);
+  text-decoration-thickness: var(--border-thin);
+  text-underline-offset: 0.17em;
+  &:hover {
+    text-decoration-color: var(--color-accent);
+  }
+}
+
+.projectLinkIcon {
+  display: inline-flex;
+  margin-left: var(--space-1);
+  font-size: 0.35em;
+  vertical-align: middle;
+}
+
+.cardLinkIcon {
+  display: inline-flex;
+  margin-left: var(--space-1);
+  font-size: var(--font-size-sm);
+  vertical-align: middle;
 }
 
 .closeButton {
@@ -541,7 +563,7 @@
   margin-top: var(--space-10);
   padding-top: var(--space-6);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: var(--space-4);
   border-top: var(--border-thin) solid var(--color-border);
   @media (max-width: 760px) {

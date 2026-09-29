@@ -176,7 +176,20 @@ export function WorkProjectGallery({
                 Client: {activeProject.client}
               </p>
             ) : null}
-            <h2 id='project-dialog-title'>{activeProject.name}</h2>
+            <h2 id='project-dialog-title'>
+              {activeProject.modal?.liveUrl ? (
+                <a
+                  className={styles.projectLink}
+                  href={activeProject.modal.liveUrl}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  aria-label={`${activeProject.name} live site (opens in a new tab)`}
+                >
+                  {activeProject.name}
+                  <Icon name='north-east' className={styles.projectLinkIcon} />
+                </a>
+              ) : activeProject.name}
+            </h2>
             <p className={styles.overview}>
               {activeProject.modal?.overview ?? activeProject.description}
             </p>
@@ -270,15 +283,6 @@ export function WorkProjectGallery({
               </p>
             ) : null}
             <div className={styles.dialogFooter}>
-              {activeProject.modal?.liveUrl ? (
-                <a
-                  href={activeProject.modal.liveUrl}
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  Visit live site <Icon name='north-east' />
-                </a>
-              ) : null}
               <button type='button' onClick={closeDialog}>
                 Close details
               </button>

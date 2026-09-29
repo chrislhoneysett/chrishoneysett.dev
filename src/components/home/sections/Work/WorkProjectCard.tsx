@@ -48,7 +48,20 @@ export const WorkProjectCard = ({
         <span>{project.employer}</span>
         <span>{project.type}</span>
       </div>
-      <h3>{project.name}</h3>
+      <h3>
+        {project.modal?.liveUrl ? (
+          <a
+            className={styles.projectLink}
+            href={project.modal.liveUrl}
+            target='_blank'
+            rel='noopener noreferrer'
+            aria-label={`${project.name} live site (opens in a new tab)`}
+          >
+            {project.name}
+            <Icon name='north-east' className={styles.cardLinkIcon} />
+          </a>
+        ) : project.name}
+      </h3>
       <p>{project.description}</p>
       {project.technologies.length > 0 ? (
         <ul className={styles.tags} aria-label='Technologies used'>
