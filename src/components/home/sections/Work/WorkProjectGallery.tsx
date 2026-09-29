@@ -2,13 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Icon } from '@/components/Icon'
-import type { ResumeProject } from '@/data/projects'
+import type { ProjectScreenshot, ResumeProject } from '@/data/projects'
 import styles from './WorkProjectGallery.module.css'
 import { WorkProjectCard } from './WorkProjectCard'
 import { assetPath } from '@/lib/assetPath'
 
 type WorkProjectGalleryItem = ResumeProject & { employer: string }
-type ProjectScreenshot = NonNullable<ResumeProject['modal']>['screenshots'][number]
 
 export function WorkProjectGallery({
   projects,
@@ -220,19 +219,48 @@ export function WorkProjectGallery({
               >
                 <h3>Site screenshots</h3>
                 <div className={styles.screenshotGrid}>
-                  {activeProject.modal.screenshots.map((screenshot) => (
-                    <figure key={screenshot.src}>
-                      <button
-                        className={styles.screenshotButton}
-                        type='button'
-                        aria-label={`Enlarge screenshot: ${screenshot.caption}`}
-                        onClick={() => setActiveScreenshot(screenshot)}
-                      >
-                        <img src={assetPath(screenshot.src)} alt={screenshot.alt} />
-                      </button>
-                      <figcaption>{screenshot.caption}</figcaption>
-                    </figure>
-                  ))}
+                  {activeProject.modal.screenshots.map((screenshot) =>
+                    'desktop' in screenshot ? (
+                      <figure className={styles.pairedScreenshot} key={screenshot.desktop.src}>
+                        <div className={styles.pairedScreens}>
+                          {(['desktop', 'mobile'] as const).map((format) => {
+                            const image = screenshot[format]
+                            const label = format === 'desktop' ? 'Desktop' : 'Mobile'
+
+                            return (
+                              <div className={styles.pairedScreen} key={format}>
+                                <span className={styles.screenLabel}>{label}</span>
+                                <button
+                                  className={styles.screenshotButton}
+                                  type='button'
+                                  aria-label={`Enlarge ${label.toLowerCase()} screenshot: ${screenshot.caption}`}
+                                  onClick={() => setActiveScreenshot({
+                                    ...image,
+                                    caption: `${screenshot.caption} (${label})`,
+                                  })}
+                                >
+                                  <img src={assetPath(image.src)} alt={image.alt} loading='lazy' />
+                                </button>
+                              </div>
+                            )
+                          })}
+                        </div>
+                        <figcaption>{screenshot.caption}</figcaption>
+                      </figure>
+                    ) : (
+                      <figure className={styles.singleScreenshot} key={screenshot.src}>
+                        <button
+                          className={styles.screenshotButton}
+                          type='button'
+                          aria-label={`Enlarge screenshot: ${screenshot.caption}`}
+                          onClick={() => setActiveScreenshot(screenshot)}
+                        >
+                          <img src={assetPath(screenshot.src)} alt={screenshot.alt} />
+                        </button>
+                        <figcaption>{screenshot.caption}</figcaption>
+                      </figure>
+                    ),
+                  )}
                 </div>
               </section>
             ) : null}

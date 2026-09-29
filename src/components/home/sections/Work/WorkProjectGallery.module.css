@@ -421,7 +421,7 @@
     border: var(--border-thin) solid var(--color-border);
     background: var(--color-surface);
   }
-  & img {
+  & .singleScreenshot img {
     width: 100%;
     display: block;
     aspect-ratio: 16 / 10;
@@ -434,6 +434,40 @@
     font-size: var(--font-size-xs);
     line-height: var(--line-height-copy);
   }
+}
+
+.pairedScreenshot {
+  grid-column: 1 / -1;
+}
+
+.pairedScreens {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.29fr);
+  align-items: start;
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+
+.pairedScreen {
+  min-width: 0;
+}
+
+.screenLabel {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--color-text-muted);
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+}
+
+.pairedScreen img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: var(--border-thin) solid var(--color-border);
+  background: var(--color-surface);
 }
 
 .screenshotButton {
@@ -520,5 +554,14 @@
   .detailGrid,
   .screenshotGrid {
     grid-template-columns: 1fr;
+  }
+
+  .pairedScreens {
+    grid-template-columns: 1fr;
+  }
+
+  .pairedScreen:nth-child(2) {
+    width: min(100%, 20rem);
+    justify-self: center;
   }
 }

@@ -7,6 +7,18 @@ export type ResumeTag =
   | 'cms'
   | 'leadership'
 
+export interface ProjectScreenshot {
+  src: string
+  alt: string
+  caption: string
+}
+
+export interface ProjectScreenshotPair {
+  caption: string
+  desktop: Pick<ProjectScreenshot, 'src' | 'alt'>
+  mobile: Pick<ProjectScreenshot, 'src' | 'alt'>
+}
+
 export interface ResumeProject {
   id: string
   name: string
@@ -37,11 +49,7 @@ export interface ResumeProject {
     overview: string
     contribution: string
     highlights: string[]
-    screenshots: {
-      src: string
-      alt: string
-      caption: string
-    }[]
+    screenshots: (ProjectScreenshot | ProjectScreenshotPair)[]
     liveUrl?: string
   }
   /** Concise contribution statement for PDF resume bullets. */
@@ -59,7 +67,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       projectOrigin: 'Greenfield',
       heroImage: {
         src: '/projects/auris/auris-button.png',
-        alt: 'Illustration of interface components and design system elements',
+        alt: 'Auris Storybook page showing the Button component',
         kind: 'illustration',
       },
       name: 'Auris Internal Component Library',
@@ -81,18 +89,18 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         screenshots: [
           {
             src: '/projects/auris/auris-button.png',
-            alt: 'Illustration of interface components and design system elements',
-            caption: 'Auris component library button component',
+            alt: 'Auris Storybook Button documentation with a live preview, code, and controls',
+            caption: 'Button documentation and interactive preview in Auris Storybook.',
           },
           {
             src: '/projects/auris/auris-input.png',
-            alt: 'Illustration of a form component within the Auris design system',
-            caption: 'Auris component library form component',
+            alt: 'Auris Storybook Input documentation with a required text field, code, and controls',
+            caption: 'Input field documentation and preview in Auris Storybook.',
           },
           {
             src: '/projects/auris/auris-charts.png',
-            alt: 'Illustration of a charts component within the Auris design system',
-            caption: 'Auris component library charts component',
+            alt: 'Auris Storybook Pie chart example with five colored segments and a legend',
+            caption: 'Pie chart example in the Auris component library.',
           },
         ],
       },
@@ -127,27 +135,23 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         screenshots: [
           {
             src: '/projects/charity-water/charitywater-map-data-view.png',
-            alt: 'Map data view of the Charity Water well-monitoring dashboard',
-            caption:
-              'Map data view of the Charity Water well-monitoring dashboard',
+            alt: 'Charity Water dashboard with a sensor list, status filters, and a selected well on a map',
+            caption: 'Map and sensor list with a selected well marked for a sharp drop in flow.',
           },
           {
             src: '/projects/charity-water/charitywater-details.png',
-            alt: 'Detail view of the Charity Water well-monitoring dashboard',
-            caption:
-              'Detail view of the Charity Water well-monitoring dashboard',
+            alt: 'Charity Water sensor detail page with water-flow chart, activity data, and location map',
+            caption: 'Sensor details combining water-flow history, activity data, and location.',
           },
           {
             src: '/projects/charity-water/charitywater-edit-sensor.png',
-            alt: 'Edit sensor view of the Charity Water well-monitoring dashboard',
-            caption:
-              'Edit sensor view of the Charity Water well-monitoring dashboard',
+            alt: 'Edit Sensor form open over the Charity Water map and sensor list',
+            caption: 'Sensor editing form alongside the map and sensor list.',
           },
           {
             src: '/projects/charity-water/charitywater-table.png',
-            alt: 'Table view of the Charity Water well-monitoring dashboard',
-            caption:
-              'Table view of the Charity Water well-monitoring dashboard',
+            alt: 'Charity Water sensor list with provider, connection, water activity, and check-in columns',
+            caption: 'Filterable sensor list with connection, water activity, and check-in status.',
           },
         ],
       },
@@ -276,7 +280,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       id: 'uci-medicine',
       projectOrigin: 'Greenfield',
       heroImage: {
-        src: '/projects/ucisom/ucisom-card.webp',
+        src: '/projects/ucisom/ucisom.png',
         alt: 'UC Irvine School of Medicine homepage',
       },
       name: 'University of California Irvine School of Medicine',
@@ -299,28 +303,59 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         ],
         screenshots: [
           {
-            src: '/projects/ucisom/ucisom-card.webp',
-            alt: 'Screenshot of the UC Irvine School of Medicine homepage',
-            caption:
-              'Homepage hero and the “Discover. Teach. Heal.” message. Screenshot preview of the live site.',
+            caption: 'Homepage hero and the “Discover. Teach. Heal.” message.',
+            desktop: {
+              src: '/projects/ucisom/ucisom.png',
+              alt: 'Desktop UC Irvine School of Medicine homepage hero',
+            },
+            mobile: {
+              src: '/projects/ucisom/ucisom_mobile.png',
+              alt: 'Mobile UC Irvine School of Medicine homepage with compact navigation and stacked hero',
+            },
           },
           {
-            src: '/projects/ucisom/ucisom-footer.png',
-            alt: 'Screenshot preview of the UC Irvine School of Medicine homepage content',
-            caption:
-              'A preview of the footer for the UC Irvine School of Medicine website.',
+            caption: 'Office of Research page with a research-focused hero and supporting content.',
+            desktop: {
+              src: '/projects/ucisom/ucisom-department.png',
+              alt: 'Desktop UC Irvine School of Medicine Office of Research page',
+            },
+            mobile: {
+              src: '/projects/ucisom/ucisom-department_mobile.png',
+              alt: 'Mobile UC Irvine School of Medicine Office of Research page with stacked hero text',
+            },
           },
           {
-            src: '/projects/ucisom/ucisom-mega-nav.png',
-            alt: 'Screenshot preview of the UC Irvine School of Medicine mega navigation',
-            caption:
-              'A preview of the mega navigation for the UC Irvine School of Medicine website, showing how key pathways are organized for different audiences.',
+            caption: 'Footer and contact information.',
+            desktop: {
+              src: '/projects/ucisom/ucisom-footer.png',
+              alt: 'Desktop UC Irvine School of Medicine footer with contact information in columns',
+            },
+            mobile: {
+              src: '/projects/ucisom/ucisom-footer_mobile.png',
+              alt: 'Mobile UC Irvine School of Medicine footer with contact information stacked vertically',
+            },
           },
           {
-            src: '/projects/ucisom/ucisom-news-room.png',
-            alt: 'Screenshot preview of the UC Irvine School of Medicine news room',
-            caption:
-              'A preview of the news room for the UC Irvine School of Medicine website, showing how news and updates are presented to visitors.',
+            caption: 'Education navigation with admissions and program pathways.',
+            desktop: {
+              src: '/projects/ucisom/ucisom-mega-nav.png',
+              alt: 'Desktop UC Irvine School of Medicine Education mega menu with program links',
+            },
+            mobile: {
+              src: '/projects/ucisom/ucisom-mega-nav_mobile.png',
+              alt: 'Mobile UC Irvine School of Medicine Education accordion with program links',
+            },
+          },
+          {
+            caption: 'Newsroom press releases and media contacts.',
+            desktop: {
+              src: '/projects/ucisom/ucisom-news-room.png',
+              alt: 'Desktop UC Irvine School of Medicine Newsroom with press releases and media contacts',
+            },
+            mobile: {
+              src: '/projects/ucisom/ucisom-news-room_mobile.png',
+              alt: 'Mobile UC Irvine School of Medicine Newsroom with press releases in one column',
+            },
           },
         ],
         liveUrl: 'https://medschool.uci.edu/',
@@ -334,7 +369,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       id: 'ihsaa',
       projectOrigin: 'Greenfield',
       heroImage: {
-        src: '/projects/ihsaa/ihsaa.jpeg',
+        src: '/projects/ihsaa/ihsaa.png',
         alt: 'Indiana High School Athletic Association homepage',
       },
       name: 'Indiana High School Athletic Association',
@@ -354,28 +389,40 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         ],
         screenshots: [
           {
-            src: '/projects/ihsaa/ihsaa.jpeg',
-            alt: 'Screenshot preview of the Indiana High School Athletic Association homepage',
             caption:
-              'IHSAA homepage with current tournament information and pathways to sports and association resources.',
+              'Homepage with featured athletics news and pathways to association resources.',
+            desktop: {
+              src: '/projects/ihsaa/ihsaa.png',
+              alt: 'Desktop IHSAA homepage with featured athletics news',
+            },
+            mobile: {
+              src: '/projects/ihsaa/ihsaa_mobile.png',
+              alt: 'Mobile IHSAA homepage with compact navigation and stacked featured content',
+            },
           },
           {
-            src: '/projects/ihsaa/ihsaa-tournament.png',
-            alt: 'Screenshot preview of the Indiana High School Athletic Association tournament page',
             caption:
-              'IHSAA tournament page showing schedules, results, and statistics for ongoing tournaments.',
+              'Boys tennis tournament page with Individual and Team tabs and a year selector.',
+            desktop: {
+              src: '/projects/ihsaa/ihsaa-tournament.png',
+              alt: 'Desktop IHSAA boys tennis tournament page with Individual and Team tabs and a year selector',
+            },
+            mobile: {
+              src: '/projects/ihsaa/ihsaa-tournament_mobile.png',
+              alt: 'Mobile IHSAA boys tennis tournament page with Individual and Team tabs above a year selector',
+            },
           },
           {
-            src: '/projects/ihsaa/ihsaa-news.png',
-            alt: 'Screenshot preview of the Indiana High School Athletic Association news page',
             caption:
-              'IHSAA news page showing the latest updates and announcements for Indiana high school athletics.',
-          },
-          {
-            src: '/projects/ihsaa/ihsaa.png',
-            alt: 'Screenshot preview of the Indiana High School Athletic Association homepage',
-            caption:
-              'IHSAA homepage with current tournament information and pathways to sports and association resources.',
+              'News page with category and sport filters above article cards.',
+            desktop: {
+              src: '/projects/ihsaa/ihsaa-news.png',
+              alt: 'Desktop IHSAA news page with filters and a row of article cards',
+            },
+            mobile: {
+              src: '/projects/ihsaa/ihsaa-news_mobile.png',
+              alt: 'Mobile IHSAA news page with vertically stacked filters above an article card',
+            },
           },
         ],
         liveUrl: 'https://www.ihsaa.org/',
@@ -408,12 +455,50 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
           'Made practical visit information easy to find, including accessibility, directions, and parking.',
         ],
         screenshots: [
-          // {
-          //   src: '/projects/millerauditorium.jpeg',
-          //   alt: 'Screenshot preview of the Miller Auditorium homepage',
-          //   caption:
-          //     'Featured shows and upcoming performances on the Miller Auditorium homepage.',
-          // },
+          {
+            caption: 'Homepage promotion for the 2026–27 Zhang Broadway season.',
+            desktop: {
+              src: '/projects/miller/miller.png',
+              alt: 'Desktop Miller Auditorium homepage promoting Zhang Broadway Your Way',
+            },
+            mobile: {
+              src: '/projects/miller/miller_mobile.png',
+              alt: 'Mobile Miller Auditorium homepage with menu button and Zhang Broadway promotion',
+            },
+          },
+          {
+            caption: 'Featured performances with event dates and ticket links.',
+            desktop: {
+              src: '/projects/miller/miller-featured.png',
+              alt: 'Desktop Miller Auditorium Featured section with three performance cards',
+            },
+            mobile: {
+              src: '/projects/miller/miller-featured_mobile.png',
+              alt: 'Mobile Miller Auditorium Featured section with a performance card and ticket link',
+            },
+          },
+          {
+            caption: 'Show page for INVINCIBLE: A Glorious Tribute to Michael Jackson.',
+            desktop: {
+              src: '/projects/miller/miller-show.png',
+              alt: 'Desktop Miller Auditorium show page with INVINCIBLE artwork, title, and event details',
+            },
+            mobile: {
+              src: '/projects/miller/miller-show_mobile.png',
+              alt: 'Mobile Miller Auditorium show page with INVINCIBLE artwork and title',
+            },
+          },
+          {
+            caption: 'About page and auditorium mission.',
+            desktop: {
+              src: '/projects/miller/miller-about.png',
+              alt: 'Desktop Miller Auditorium About page and mission',
+            },
+            mobile: {
+              src: '/projects/miller/miller-about_mobile.png',
+              alt: 'Mobile Miller Auditorium About page with mission text in a single column',
+            },
+          },
         ],
         liveUrl: 'https://www.millerauditorium.com/',
       },
@@ -448,9 +533,9 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         screenshots: [
           {
             src: '/projects/flylansing.jpeg',
-            alt: 'Screenshot preview of the Capital Region International Airport website',
+            alt: 'Fly Lansing homepage with flight search and navigation for flights, parking, and airport information',
             caption:
-              'Fly Lansing homepage and its traveler information pathways.',
+              'Fly Lansing homepage with flight search and traveler navigation.',
           },
         ],
         liveUrl: 'https://www.flylansing.com/',
@@ -486,9 +571,9 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         screenshots: [
           {
             src: '/projects/https___www.williamstontheatre.jpeg',
-            alt: 'Screenshot preview of the Williamston Theatre homepage',
+            alt: 'Williamston Theatre homepage featuring The One Good Thing with Learn More and Buy Tickets links',
             caption:
-              'Season highlights and ticket links on the Williamston Theatre homepage.',
+              'Williamston Theatre homepage featuring a current production and ticket links.',
           },
         ],
         liveUrl: 'https://www.williamstontheatre.org/',
@@ -523,9 +608,9 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         screenshots: [
           {
             src: '/projects/https___www.mipotato.jpeg',
-            alt: 'Screenshot preview of the Michigan Potatoes public website',
+            alt: 'Michigan Potatoes public homepage featuring a grilled potato recipe',
             caption:
-              'Michigan Potatoes’ consumer site, with recipes and potato education resources. This is the client website, not a screenshot of the conference registration flow.',
+              'Michigan Potatoes’ public recipe site. This image does not show the conference registration experience.',
           },
         ],
         liveUrl: 'https://www.mipotato.com/',
@@ -577,9 +662,9 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         screenshots: [
           {
             src: '/projects/msu.jpeg',
-            alt: 'Screenshot preview of Michigan State University graduate aid guidance',
+            alt: 'MSU Office of Financial Aid page showing Billing and Payments guidance and cost-of-attendance links',
             caption:
-              'Graduate Manage Your Aid page from the MSU Office of Financial Aid.',
+              'Graduate Manage Your Aid page with billing guidance and cost-of-attendance resources.',
           },
         ],
         liveUrl: 'https://finaid.msu.edu/grad/manage-aid',
