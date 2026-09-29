@@ -91,12 +91,14 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
           {
             src: '/projects/auris/auris-button.png',
             alt: 'Auris Storybook Button documentation with a live preview, code, and controls',
-            caption: 'Button documentation and interactive preview in Auris Storybook.',
+            caption:
+              'Button documentation and interactive preview in Auris Storybook.',
           },
           {
             src: '/projects/auris/auris-input.png',
             alt: 'Auris Storybook Input documentation with a required text field, code, and controls',
-            caption: 'Input field documentation and preview in Auris Storybook.',
+            caption:
+              'Input field documentation and preview in Auris Storybook.',
           },
           {
             src: '/projects/auris/auris-charts.png',
@@ -137,12 +139,14 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
           {
             src: '/projects/charity-water/charitywater-map-data-view.png',
             alt: 'Charity Water dashboard with a sensor list, status filters, and a selected well on a map',
-            caption: 'Map and sensor list with a selected well marked for a sharp drop in flow.',
+            caption:
+              'Map and sensor list with a selected well marked for a sharp drop in flow.',
           },
           {
             src: '/projects/charity-water/charitywater-details.png',
             alt: 'Charity Water sensor detail page with water-flow chart, activity data, and location map',
-            caption: 'Sensor details combining water-flow history, activity data, and location.',
+            caption:
+              'Sensor details combining water-flow history, activity data, and location.',
           },
           {
             src: '/projects/charity-water/charitywater-edit-sensor.png',
@@ -152,7 +156,8 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
           {
             src: '/projects/charity-water/charitywater-table.png',
             alt: 'Charity Water sensor list with provider, connection, water activity, and check-in columns',
-            caption: 'Filterable sensor list with connection, water activity, and check-in status.',
+            caption:
+              'Filterable sensor list with connection, water activity, and check-in status.',
           },
         ],
       },
@@ -316,7 +321,8 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
             },
           },
           {
-            caption: 'Office of Research page with a research-focused hero and supporting content.',
+            caption:
+              'Office of Research page with a research-focused hero and supporting content.',
             desktop: {
               src: '/projects/ucisom/ucisom-department.png',
               alt: 'Desktop UC Irvine School of Medicine Office of Research page',
@@ -338,7 +344,8 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
             },
           },
           {
-            caption: 'Education navigation with admissions and program pathways.',
+            caption:
+              'Education navigation with admissions and program pathways.',
             desktop: {
               src: '/projects/ucisom/ucisom-mega-nav.png',
               alt: 'Desktop UC Irvine School of Medicine Education mega menu with program links',
@@ -432,7 +439,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       },
       resumeHighlight:
         'Led responsive CSS and frontend development for a Drupal website and embedded React tournament app, integrating MaxPreps data and using Drupal Views with query-string routing for shareable tournament URLs.',
-      technologies: ['Drupal', 'React', 'CSS', 'MaxPreps API'],
+      technologies: ['Drupal', 'React', 'CSS', 'MaxPreps'],
       tags: ['web', 'cms', 'leadership'],
     },
     {
@@ -460,7 +467,8 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         ],
         screenshots: [
           {
-            caption: 'Homepage promotion for the 2026–27 Zhang Broadway season.',
+            caption:
+              'Homepage promotion for the 2026–27 Zhang Broadway season.',
             desktop: {
               src: '/projects/miller/miller.png',
               alt: 'Desktop Miller Auditorium homepage promoting Zhang Broadway Your Way',
@@ -482,7 +490,8 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
             },
           },
           {
-            caption: 'Show page for INVINCIBLE: A Glorious Tribute to Michael Jackson.',
+            caption:
+              'Show page for INVINCIBLE: A Glorious Tribute to Michael Jackson.',
             desktop: {
               src: '/projects/miller/miller-show.png',
               alt: 'Desktop Miller Auditorium show page with INVINCIBLE artwork, title, and event details',
