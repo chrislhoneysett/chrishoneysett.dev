@@ -436,6 +436,66 @@
   }
 }
 
+.screenshotButton {
+  width: 100%;
+  padding: 0;
+  display: block;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.screenshotButton:hover img {
+  opacity: 0.8;
+}
+
+.screenshotDialog {
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  border: var(--border-thin) solid var(--color-border);
+  color: var(--color-text);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  &::backdrop {
+    background: rgb(8 12 18 / 86%);
+  }
+}
+
+.screenshotDialogContent {
+  position: relative;
+  padding: var(--space-3);
+  & img {
+    max-width: min(90vw, 90rem);
+    max-height: calc(100dvh - 7rem);
+    display: block;
+    object-fit: contain;
+  }
+  & p {
+    margin-top: var(--space-3);
+    padding-right: 3rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-copy);
+  }
+}
+
+.screenshotCloseButton {
+  position: absolute;
+  z-index: 1;
+  top: var(--space-5);
+  right: var(--space-5);
+  width: 2.75rem;
+  height: 2.75rem;
+  border: var(--border-thin) solid var(--color-border);
+  color: var(--color-text);
+  background: var(--color-surface);
+  font-size: var(--font-size-3xl);
+  line-height: 1;
+  cursor: pointer;
+}
+
 .confidentialityNote {
   max-width: 56rem;
   margin-top: var(--space-10);

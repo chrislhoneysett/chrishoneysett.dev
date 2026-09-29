@@ -8,6 +8,7 @@ import { WorkProjectCard } from './WorkProjectCard'
 import { assetPath } from '@/lib/assetPath'
 
 type WorkProjectGalleryItem = ResumeProject & { employer: string }
+type ProjectScreenshot = NonNullable<ResumeProject['modal']>['screenshots'][number]
 
 export function WorkProjectGallery({
   projects,
@@ -17,8 +18,10 @@ export function WorkProjectGallery({
   moreProjects: readonly WorkProjectGalleryItem[]
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const screenshotDialogRef = useRef<HTMLDialogElement>(null)
   const dialogContentRef = useRef<HTMLDivElement>(null)
   const [showMore, setShowMore] = useState(false)
+  const [activeScreenshot, setActiveScreenshot] = useState<ProjectScreenshot | null>(null)
   const [activeProject, setActiveProject] = useState<WorkProjectGalleryItem | null>(
     null,
   )
@@ -40,13 +43,26 @@ export function WorkProjectGallery({
     }
   }, [activeProject])
 
+  useEffect(() => {
+    const dialog = screenshotDialogRef.current
+    if (!dialog) return
+
+    if (activeScreenshot) {
+      if (!dialog.open) dialog.showModal()
+    } else if (dialog.open) {
+      dialog.close()
+    }
+  }, [activeScreenshot])
+
   function closeDialog() {
+    setActiveScreenshot(null)
     dialogRef.current?.close()
     setActiveProject(null)
   }
 
   function showRelativeProject(offset: number) {
     if (activeIndex < 0 || visibleProjects.length < 2) return
+    setActiveScreenshot(null)
     setActiveProject(
       visibleProjects[(activeIndex + offset + visibleProjects.length) % visibleProjects.length],
     )
@@ -206,7 +222,14 @@ export function WorkProjectGallery({
                 <div className={styles.screenshotGrid}>
                   {activeProject.modal.screenshots.map((screenshot) => (
                     <figure key={screenshot.src}>
-                      <img src={assetPath(screenshot.src)} alt={screenshot.alt} />
+                      <button
+                        className={styles.screenshotButton}
+                        type='button'
+                        aria-label={`Enlarge screenshot: ${screenshot.caption}`}
+                        onClick={() => setActiveScreenshot(screenshot)}
+                      >
+                        <img src={assetPath(screenshot.src)} alt={screenshot.alt} />
+                      </button>
                       <figcaption>{screenshot.caption}</figcaption>
                     </figure>
                   ))}
@@ -232,6 +255,30 @@ export function WorkProjectGallery({
                 Close details
               </button>
             </div>
+          </div>
+        )}
+      </dialog>
+      <dialog
+        className={styles.screenshotDialog}
+        ref={screenshotDialogRef}
+        aria-label={activeScreenshot ? `Screenshot: ${activeScreenshot.caption}` : 'Screenshot'}
+        onClose={() => setActiveScreenshot(null)}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) screenshotDialogRef.current?.close()
+        }}
+      >
+        {activeScreenshot && (
+          <div className={styles.screenshotDialogContent}>
+            <button
+              className={styles.screenshotCloseButton}
+              type='button'
+              aria-label='Close enlarged screenshot'
+              onClick={() => screenshotDialogRef.current?.close()}
+            >
+              <Icon name='close' />
+            </button>
+            <img src={assetPath(activeScreenshot.src)} alt={activeScreenshot.alt} />
+            <p>{activeScreenshot.caption}</p>
           </div>
         )}
       </dialog>

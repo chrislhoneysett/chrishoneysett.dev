@@ -58,7 +58,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       id: 'auris',
       projectOrigin: 'Greenfield',
       heroImage: {
-        src: '/projects/auris-component-library.png',
+        src: '/projects/auris/auris-button.png',
         alt: 'Illustration of interface components and design system elements',
         kind: 'illustration',
       },
@@ -78,7 +78,23 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
           'Used Auris to scaffold a new project within an hour, including user authentication, a full theme, and the component library.',
           'Used a common component language to keep design and development aligned.',
         ],
-        screenshots: [],
+        screenshots: [
+          {
+            src: '/projects/auris/auris-button.png',
+            alt: 'Illustration of interface components and design system elements',
+            caption: 'Auris component library button component',
+          },
+          {
+            src: '/projects/auris/auris-input.png',
+            alt: 'Illustration of a form component within the Auris design system',
+            caption: 'Auris component library form component',
+          },
+          {
+            src: '/projects/auris/auris-charts.png',
+            alt: 'Illustration of a charts component within the Auris design system',
+            caption: 'Auris component library charts component',
+          },
+        ],
       },
       resumeHighlight:
         'Built a Material Design-based React starter with Atomic Design, Storybook, and private npm distribution. Used it to scaffold a new project within an hour, including user authentication, a full theme, and the component library.',
@@ -88,7 +104,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
     {
       id: 'charity-water',
       heroImage: {
-        src: '/projects/charitywater.png',
+        src: '/projects/charity-water/charitywater-map-data-view.png',
         alt: 'Charity Water well-monitoring dashboard with sensor readings and a map',
       },
       name: 'Charity Water Dashboard',
@@ -108,7 +124,32 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
           'Broke up oversized files that handled too many responsibilities into smaller, focused components and modules, making the project easier to navigate.',
           'Connected AWS sensor data to the technician-facing interface.',
         ],
-        screenshots: [],
+        screenshots: [
+          {
+            src: '/projects/charity-water/charitywater-map-data-view.png',
+            alt: 'Map data view of the Charity Water well-monitoring dashboard',
+            caption:
+              'Map data view of the Charity Water well-monitoring dashboard',
+          },
+          {
+            src: '/projects/charity-water/charitywater-details.png',
+            alt: 'Detail view of the Charity Water well-monitoring dashboard',
+            caption:
+              'Detail view of the Charity Water well-monitoring dashboard',
+          },
+          {
+            src: '/projects/charity-water/charitywater-edit-sensor.png',
+            alt: 'Edit sensor view of the Charity Water well-monitoring dashboard',
+            caption:
+              'Edit sensor view of the Charity Water well-monitoring dashboard',
+          },
+          {
+            src: '/projects/charity-water/charitywater-table.png',
+            alt: 'Table view of the Charity Water well-monitoring dashboard',
+            caption:
+              'Table view of the Charity Water well-monitoring dashboard',
+          },
+        ],
       },
       resumeHighlight:
         'Rebuilt a fragile Vue dashboard in React with Auris components and a maintainable architecture. Completed a dashboard section redesign within one week, versus an estimated month in the previous codebase.',
@@ -235,7 +276,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       id: 'uci-medicine',
       projectOrigin: 'Greenfield',
       heroImage: {
-        src: '/projects/ucisom-card.webp',
+        src: '/projects/ucisom/ucisom-card.webp',
         alt: 'UC Irvine School of Medicine homepage',
       },
       name: 'University of California Irvine School of Medicine',
@@ -258,16 +299,28 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         ],
         screenshots: [
           {
-            src: '/projects/ucisom.jpeg',
+            src: '/projects/ucisom/ucisom-card.webp',
             alt: 'Screenshot of the UC Irvine School of Medicine homepage',
             caption:
               'Homepage hero and the “Discover. Teach. Heal.” message. Screenshot preview of the live site.',
           },
           {
-            src: '/projects/ucisom.jpeg',
+            src: '/projects/ucisom/ucisom-footer.png',
             alt: 'Screenshot preview of the UC Irvine School of Medicine homepage content',
             caption:
-              'A second live-site preview for the project gallery. The page brings news, events, and school resources together.',
+              'A preview of the footer for the UC Irvine School of Medicine website.',
+          },
+          {
+            src: '/projects/ucisom/ucisom-mega-nav.png',
+            alt: 'Screenshot preview of the UC Irvine School of Medicine mega navigation',
+            caption:
+              'A preview of the mega navigation for the UC Irvine School of Medicine website, showing how key pathways are organized for different audiences.',
+          },
+          {
+            src: '/projects/ucisom/ucisom-news-room.png',
+            alt: 'Screenshot preview of the UC Irvine School of Medicine news room',
+            caption:
+              'A preview of the news room for the UC Irvine School of Medicine website, showing how news and updates are presented to visitors.',
           },
         ],
         liveUrl: 'https://medschool.uci.edu/',
@@ -281,7 +334,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       id: 'ihsaa',
       projectOrigin: 'Greenfield',
       heroImage: {
-        src: '/projects/ihsaa-card.webp',
+        src: '/projects/ihsaa/ihsaa.jpeg',
         alt: 'Indiana High School Athletic Association homepage',
       },
       name: 'Indiana High School Athletic Association',
@@ -301,7 +354,25 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         ],
         screenshots: [
           {
-            src: '/projects/ihsaa.jpeg',
+            src: '/projects/ihsaa/ihsaa.jpeg',
+            alt: 'Screenshot preview of the Indiana High School Athletic Association homepage',
+            caption:
+              'IHSAA homepage with current tournament information and pathways to sports and association resources.',
+          },
+          {
+            src: '/projects/ihsaa/ihsaa-tournament.png',
+            alt: 'Screenshot preview of the Indiana High School Athletic Association tournament page',
+            caption:
+              'IHSAA tournament page showing schedules, results, and statistics for ongoing tournaments.',
+          },
+          {
+            src: '/projects/ihsaa/ihsaa-news.png',
+            alt: 'Screenshot preview of the Indiana High School Athletic Association news page',
+            caption:
+              'IHSAA news page showing the latest updates and announcements for Indiana high school athletics.',
+          },
+          {
+            src: '/projects/ihsaa/ihsaa.png',
             alt: 'Screenshot preview of the Indiana High School Athletic Association homepage',
             caption:
               'IHSAA homepage with current tournament information and pathways to sports and association resources.',

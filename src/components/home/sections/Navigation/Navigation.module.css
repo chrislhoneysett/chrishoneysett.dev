@@ -60,6 +60,7 @@
   display: block;
   flex: none;
   border-radius: var(--radius-round);
+  object-fit: cover;
 }
 
 .navLinks,

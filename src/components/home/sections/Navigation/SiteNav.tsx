@@ -63,7 +63,7 @@ export function SiteNav() {
         >
           <Image
             className={styles.mark}
-            src={assetPath('/nav-mark.svg')}
+            src={assetPath('/ch.svg')}
             alt=''
             width={44}
             height={44}
