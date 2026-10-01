@@ -3,14 +3,22 @@ import styles from './Capabilities.module.css'
 
 export function CapabilitiesSection() {
   return (
-    <section className={styles.capabilities} aria-labelledby='capabilities-title'>
+    <section
+      className={styles.capabilities}
+      aria-labelledby='capabilities-title'
+    >
       <p className={styles.sectionLabel}>04 / Capabilities</p>
       <div>
-        <h2 id='capabilities-title'>Technical<br /><em>strengths.</em></h2>
+        <h2 id='capabilities-title'>
+          Technical
+          <br />
+          <em>strengths.</em>
+        </h2>
         <p className={styles.capabilitiesIntro}>
-          The tools have changed as the work has grown. I use them together to
-          build interfaces people can use and systems another engineer can
-          keep improving.
+          I build responsive interfaces, reusable components, and clear APIs
+          that help teams develop and maintain products. My graphic design
+          background informs the visual details; my engineering experience
+          supports the structure behind them.
         </p>
       </div>
       <div className={styles.skillList}>

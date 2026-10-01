@@ -49,6 +49,10 @@
   color: var(--color-capabilities-muted);
   font-size: var(--font-size-lg);
   line-height: var(--line-height-body);
+
+  @media (max-width: 760px) {
+    max-width: none;
+  }
 }
 
 .skillList {

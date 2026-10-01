@@ -12,9 +12,9 @@ export function AboutSection() {
       </div>
       <div className={styles.aboutMain}>
         <h2 id='about-title'>
-          The work is still
+          A designer&apos;s eye.
           <br />
-          about <em>people.</em>
+          An engineer&apos;s <em>care.</em>
         </h2>
         <p>{profile.summary}</p>
         <div className={styles.education}>

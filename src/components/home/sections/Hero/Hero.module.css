@@ -11,6 +11,10 @@
     letter-spacing: var(--tracking-hero);
     line-height: 1;
 
+    @media (max-width: 760px) {
+      margin-inline: auto;
+    }
+
     & em {
       color: var(--color-highlight-strong);
       font-weight: var(--font-weight-regular);
@@ -101,7 +105,7 @@
   z-index: 1;
   padding-block: var(--space-12);
   @media (max-width: 760px) {
-    padding-block: 0 var(--space-12);
+    padding-block: var(--space-12);
   }
 }
 
@@ -111,6 +115,11 @@
 
   &:last-child {
     transform: translateX(0.6em);
+
+    @media (max-width: 760px) {
+      transform: none;
+      padding-inline-start: 0.6em;
+    }
   }
 }
 
@@ -167,6 +176,10 @@
   color: var(--color-hero-muted);
   font-size: var(--font-size-lg);
   line-height: var(--line-height-short);
+
+  @media (max-width: 760px) {
+    max-width: none;
+  }
 }
 
 .heroActions {

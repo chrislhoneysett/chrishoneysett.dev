@@ -6,9 +6,9 @@ export function CareerPathSection() {
       <p className={styles.sectionLabel}>02 / Career path</p>
       <div>
         <h2 id='statement-title'>
-          Each step builds
+          Each step <em>builds</em>
           <br />
-          <em>on the last.</em>
+          on the last.
         </h2>
         <p className={styles.statementIntro}>
           My path from print design to software has been shaped by changing

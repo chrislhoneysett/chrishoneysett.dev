@@ -1,7 +1,4 @@
-import {
-  experience,
-  additionalExperience,
-} from '@/data/experience'
+import { experience, additionalExperience } from '@/data/experience'
 import { Icon } from '@/components/Icon'
 import styles from './Experience.module.css'
 
@@ -26,12 +23,13 @@ export function ExperienceSection() {
           <h2 id='experience-title'>
             One career.
             <br />
-            <em>Several iterations.</em>
+            Several <em>chapters.</em>
           </h2>
           <p>
-            Those layers show up in the roles below. I have stayed with teams
-            long enough to see projects through and take on new kinds of work,
-            bringing earlier skills into each new responsibility.
+            Across these roles, I&apos;ve carried earlier skills into new
+            responsibilities. I have stayed with teams long enough to see
+            projects through and take on new kinds of work, bringing earlier
+            skills into each new responsibility.
           </p>
         </div>
       </div>
@@ -56,9 +54,14 @@ export function ExperienceSection() {
                     rel='noopener noreferrer'
                   >
                     {role.company}
-                    <Icon name='north-east' className={styles.companyLinkIcon} />
+                    <Icon
+                      name='north-east'
+                      className={styles.companyLinkIcon}
+                    />
                   </a>
-                ) : role.company}
+                ) : (
+                  role.company
+                )}
               </h3>
               <p className={styles.roleTitle}>{role.title}</p>
             </div>

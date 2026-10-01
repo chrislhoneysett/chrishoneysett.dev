@@ -18,35 +18,36 @@ export function HeroSection() {
       </div>
       <div className={styles.heroMain}>
         <p className={styles.kicker}>
-          <span className={styles.kickerDot} /> Engineering informed by
-          graphic design
+          <span className={styles.kickerDot} /> Engineering informed by graphic
+          design
         </p>
         <div className={styles.heroRow}>
-        <div className={styles.heroCopy}>
-          <h1>
-            <span className={styles.taglineLine}>Clear vision.</span>{' '}
-            <span className={styles.taglineLine}>
-              Crafted <em>code.</em>
-            </span>
-          </h1>
-        </div>
-        <div className={styles.heroSupport}>
-          <p className={styles.heroLead}>
-            I build web and mobile products with React and React Native, taking
-            responsibility from early planning through release and the
-            improvements that follow. I work closely with clients, designers,
-            and engineers to turn complex needs into software that is clear,
-            useful, and maintainable.
-          </p>
-          <div className={styles.heroActions}>
-            <a className={styles.primaryLink} href='#work'>
-              View projects <Icon name='north-east' />
-            </a>
-            <a className={styles.secondaryLink} href='#experience'>
-              Career background <span aria-hidden='true'>↓</span>
-            </a>
+          <div className={styles.heroCopy}>
+            <h1>
+              <span className={styles.taglineLine}>Clear vision.</span>{' '}
+              <span className={styles.taglineLine}>
+                Crafted <em>code.</em>
+              </span>
+            </h1>
           </div>
-        </div>
+          <div className={styles.heroSupport}>
+            <p className={styles.heroLead}>
+              I work with clients, designers, and engineers to understand what a
+              product needs to achieve, then build the web and mobile
+              experiences that bring it to life. With React and React Native, I
+              carry that work from early planning through release, paying close
+              attention to usability, implementation, and the improvements that
+              follow.
+            </p>
+            <div className={styles.heroActions}>
+              <a className={styles.primaryLink} href='#work'>
+                View projects <Icon name='north-east' />
+              </a>
+              <a className={styles.secondaryLink} href='#experience'>
+                Career background <span aria-hidden='true'>↓</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       <div className={styles.heroFooter}>
