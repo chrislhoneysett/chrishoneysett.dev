@@ -13,9 +13,9 @@
   color-scheme: light;
 
   /* Type families and a compact size scale */
-  --font-family-display: Georgia, 'Times New Roman', serif;
-  --font-family-body: Arial, Helvetica, sans-serif;
-  --font-family-code: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  --font-family-display: 'Gelasio', Georgia, 'Times New Roman', serif;
+  --font-family-body: 'Arimo', Arial, Helvetica, sans-serif;
+  --font-family-code: 'IBM Plex Mono', monospace;
   --font-weight-regular: 400;
   --font-weight-bold: 700;
   --font-weight-heavy: 800;

@@ -1,6 +1,7 @@
 import Script from "next/script";
 import type { Metadata } from "next";
 import { profile } from "@/data/profile";
+import "./fonts.css";
 import "./theme.css";
 import "./globals.css";
 

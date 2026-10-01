@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Chris Honeysett — LinkedIn banner</title>
+<style>
+  @import url('../../src/app/theme.css');
+  @import url('../../src/app/fonts.css');
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .banner { position: relative; width: 1584px; height: 396px; overflow: hidden; background: #e8e9df; color: #173037; }
+  .mark { position: absolute; top: 48px; left: 72px; width: 64px; height: 64px; }
+  .copy { position: absolute; left: 440px; top: 49px; }
+  .kicker { margin: 0 0 28px; color: #9c5b19; font: bold 12px var(--font-family-code); letter-spacing: var(--tracking-label); text-transform: uppercase; }
+  .kicker::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 13px; border-radius: 50%; background: currentColor; vertical-align: 1px; }
+  h1 { margin: 0; font: normal 112px/1 var(--font-family-display); letter-spacing: var(--tracking-hero); }
+  h1 span { display: block; }
+  h1 span:last-child { padding-left: 0.6em; }
+  em { color: #9c5b19; }
+  .footer { position: absolute; left: 440px; right: 72px; bottom: 34px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(23,48,55,.25); padding-top: 17px; color: #52656a; font: 13px var(--font-family-code); letter-spacing: 1px; text-transform: uppercase; }
+  .url { color: #173037; font-weight: bold; }
+</style>
+<main class="banner">
+  <img class="mark" src="../../src/app/icon.svg" alt="Chris Honeysett mark">
+  <div class="copy">
+    <p class="kicker">Engineering informed by graphic design</p>
+    <h1><span>Clear vision.</span><span>Crafted <em>code.</em></span></h1>
+  </div>
+  <div class="footer"><span>React &amp; connected mobile apps</span><span class="url">chrishoneysett.dev</span></div>
+</main>
+</html>
