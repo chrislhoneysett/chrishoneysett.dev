@@ -5,6 +5,7 @@ import "./theme.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://chrishoneysett.dev"),
   title: `${profile.name} — ${profile.headline}`,
   description: "Senior frontend engineer building React applications and connected mobile experiences with React Native, BLE, and NFC.",
   authors: [{ name: profile.name }],
