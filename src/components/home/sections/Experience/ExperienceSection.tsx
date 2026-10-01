@@ -1,14 +1,7 @@
 import { experience, additionalExperience } from '@/data/experience'
 import { Icon } from '@/components/Icon'
 import styles from './Experience.module.css'
-
-const calculateTenureLabel = (startDate: string, endDate: string) => {
-  const start = parseInt(startDate, 10)
-  const end =
-    endDate === 'Present' ? new Date().getFullYear() : parseInt(endDate, 10)
-  const years = end - start
-  return `${years} year${years !== 1 ? 's' : ''}`
-}
+import { calculateTenureLabel, formatExperienceDate } from '@/lib/experienceDates'
 
 export function ExperienceSection() {
   return (
@@ -37,12 +30,10 @@ export function ExperienceSection() {
         {[...experience, ...additionalExperience].map((role) => (
           <article className={styles.role} key={role.id}>
             <p className={styles.roleDate}>
-              {role.startDate} — {role.endDate}
-              {role.endDate ? (
-                <span className={styles.roleTenure}>
-                  {calculateTenureLabel(role.startDate, role.endDate)}
-                </span>
-              ) : null}
+              {formatExperienceDate(role.startDate)} — {formatExperienceDate(role.endDate)}
+              <span className={styles.roleTenure}>
+                {calculateTenureLabel(role.startDate, role.endDate)}
+              </span>
             </p>
             <div>
               <h3>

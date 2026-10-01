@@ -18,6 +18,7 @@
 /out/
 
 # production
+/output
 /build
 /output/pdf/
 /public/downloads/chris-honeysett-resume.pdf

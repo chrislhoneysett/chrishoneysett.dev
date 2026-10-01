@@ -1,4 +1,5 @@
 import { ResumeProjectCard, type ResumeProjectCardData } from "./ResumeProjectCard";
+import { formatExperienceDate } from '@/lib/experienceDates';
 
 export interface ResumeExperienceEntryData {
   id: string;
@@ -6,7 +7,7 @@ export interface ResumeExperienceEntryData {
   title: string;
   location: string;
   startDate: string;
-  endDate: string;
+  endDate: string | null;
   summary: string;
   projects: readonly ResumeProjectCardData[];
 }
@@ -23,7 +24,7 @@ export function ResumeExperienceSection({ id, title, entries }: {
         <article key={entry.id} aria-labelledby={`experience-${entry.id}`}>
           <h3 id={`experience-${entry.id}`}>{entry.company}</h3>
           <p><strong>{entry.title}</strong></p>
-          <p>{entry.startDate}–{entry.endDate} · {entry.location}</p>
+          <p>{formatExperienceDate(entry.startDate)}–{formatExperienceDate(entry.endDate)} · {entry.location}</p>
           <p>{entry.summary}</p>
           {entry.projects.map((project) => (
             <ResumeProjectCard key={project.id} project={project} />

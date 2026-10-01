@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { chromium } from 'playwright'
 import { resume } from '../src/data/resume'
+import { formatExperienceDate } from '../src/lib/experienceDates'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 if (process.argv.length > 2) {
@@ -25,7 +26,7 @@ const [firstName, ...lastName] = resume.name.split(' ')
 const roles = resume.experience
   .map(
     (role) => `<article class="role">
-  <div class="role-heading"><h3>${escape(role.company)}</h3><span class="meta">${escape(role.startDate)} - ${escape(role.endDate)}</span></div>
+  <div class="role-heading"><h3>${escape(role.company)}</h3><span class="meta">${escape(formatExperienceDate(role.startDate))} - ${escape(formatExperienceDate(role.endDate))}</span></div>
   <div class="role-title">${escape(role.title)} <span class="muted">/ ${escape(role.location)}</span></div>
   <p>${escape(role.summary)}</p>
 </article>`,
@@ -34,7 +35,7 @@ const roles = resume.experience
 const extraRoles = resume.additionalExperience
   .map(
     (role) => `<article class="additional-role">
-  <div class="role-heading"><h3>${escape(role.company)}</h3><span class="meta">${escape(role.startDate)} - ${escape(role.endDate)}</span></div>
+  <div class="role-heading"><h3>${escape(role.company)}</h3><span class="meta">${escape(formatExperienceDate(role.startDate))} - ${escape(formatExperienceDate(role.endDate))}</span></div>
   <div class="role-title">${escape(role.title)}</div><p>${escape(role.summary)}</p>
 </article>`,
   )
