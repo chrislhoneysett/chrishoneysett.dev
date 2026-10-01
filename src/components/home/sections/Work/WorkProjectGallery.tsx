@@ -225,6 +225,28 @@ export function WorkProjectGallery({
                 </ul>
               </section>
             ) : null}
+            {activeProject.modal?.relatedSites ? (
+              <section className={styles.highlights}>
+                <h3>Additional sites</h3>
+                <p>{activeProject.modal.relatedSites.description}</p>
+                <ul>
+                  {activeProject.modal.relatedSites.links.map((site) => (
+                    <li key={site.url}>
+                      <a
+                        className={styles.projectLink}
+                        href={site.url}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        aria-label={`${site.label} (opens in a new tab)`}
+                      >
+                        {site.label}
+                        <Icon name='north-east' className={styles.cardLinkIcon} />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
             {activeProject.modal?.screenshots.length ? (
               <section
                 className={styles.gallery}

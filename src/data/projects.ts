@@ -51,6 +51,10 @@ export interface ResumeProject {
     highlights: string[]
     screenshots: (ProjectScreenshot | ProjectScreenshotPair)[]
     liveUrl?: string
+    relatedSites?: {
+      description: string
+      links: { label: string; url: string }[]
+    }
   }
   /** Concise contribution statement for PDF resume bullets. */
   resumeHighlight: string
@@ -293,7 +297,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       client: 'University of California Irvine School of Medicine',
       type: 'Website',
       description:
-        'A welcoming digital home for UC Irvine’s School of Medicine, bringing education, research, healthcare, and community resources together in a clear, audience-focused experience.',
+        'A shared website structure for UC Irvine’s School of Medicine and its departments, bringing education, research, healthcare, and community resources together while supporting each site’s distinct content and audiences.',
       modal: {
         overview:
           'The UC Irvine School of Medicine website serves a broad community of prospective and current students, residents, researchers, faculty, alumni, and the public. The experience pairs the school’s “Discover. Teach. Heal.” identity with direct pathways into its programs, clinical resources, research, news, events, and community information.',
@@ -368,9 +372,18 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
           },
         ],
         liveUrl: 'https://medschool.uci.edu/',
+        relatedSites: {
+          description:
+            'The site structure I built provides a common foundation for the School of Medicine and department sites. These live examples show how the same structure supports different content, navigation, and audiences.',
+          links: [
+            { label: 'School of Medicine', url: 'https://medschool.uci.edu/' },
+            { label: 'Ophthalmology · Gavin Herbert Eye Institute', url: 'https://ophthalmology.uci.edu/' },
+            { label: 'Chao Family Comprehensive Cancer Center', url: 'https://cancer.uci.edu/' },
+          ],
+        },
       },
       resumeHighlight:
-        'Led frontend development, responsive CSS implementation, and data structure design for UC Irvine’s School of Medicine website, aligning the Drupal and React implementation with an existing component library.',
+        'Led frontend development, responsive CSS implementation, and data structure design for a shared Drupal and React foundation used by UC Irvine’s School of Medicine and department sites, aligned with an existing component library.',
       technologies: ['Drupal', 'React', 'CSS'],
       tags: ['web', 'cms', 'leadership'],
     },
