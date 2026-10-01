@@ -377,8 +377,14 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
             'The site structure I built provides a common foundation for the School of Medicine and department sites. These live examples show how the same structure supports different content, navigation, and audiences.',
           links: [
             { label: 'School of Medicine', url: 'https://medschool.uci.edu/' },
-            { label: 'Ophthalmology · Gavin Herbert Eye Institute', url: 'https://ophthalmology.uci.edu/' },
-            { label: 'Chao Family Comprehensive Cancer Center', url: 'https://cancer.uci.edu/' },
+            {
+              label: 'Ophthalmology · Gavin Herbert Eye Institute',
+              url: 'https://ophthalmology.uci.edu/',
+            },
+            {
+              label: 'Chao Family Comprehensive Cancer Center',
+              url: 'https://cancer.uci.edu/',
+            },
           ],
         },
       },
@@ -748,7 +754,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       client: "Kellogg's",
       type: 'Website',
       description:
-        'A consumer rewards website and connected microsites that relied on extensive CSS work for a responsive redesign and a consistent experience across the program.',
+        'Led frontend development and ongoing maintenance of Kellogg’s Family Rewards, updating promotions and features on the main website and building numerous microsites on its shared platform. Maintained a common codebase and implemented extensive CSS work for a responsive redesign, creating a consistent experience across the rewards program.',
       resumeHighlight:
         'Directed frontend development for more than six years, including substantial CSS work on an Adobe AEM/Vue responsive redesign and a shared codebase across rewards microsites.',
       technologies: ['Adobe AEM', 'Vue', 'CSS'],
