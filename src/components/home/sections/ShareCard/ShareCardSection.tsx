@@ -17,11 +17,8 @@ export function ShareCardSection() {
             <span aria-hidden='true' /> Engineering informed by graphic design
           </p>
           <h2 id='share-card-title'>
-            Making
-            <br />
-            <em>complex</em>
-            <br />
-            feel clear<span>.</span>
+            <span className={styles.taglineLine}>Clear vision.</span>
+            <span className={styles.taglineLine}>Crafted <em>code.</em></span>
           </h2>
         </div>
         <div className={styles.cardDetails}>

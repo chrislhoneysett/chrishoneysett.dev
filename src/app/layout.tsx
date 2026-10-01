@@ -7,17 +7,17 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://chrishoneysett.dev"),
   title: `${profile.name} — ${profile.headline}`,
-  description: "Senior frontend engineer building React applications and connected mobile experiences with React Native, BLE, and NFC.",
+  description: "Clear vision. Crafted code. Chris Honeysett is a senior frontend engineer bringing design and engineering together for React and React Native products.",
   authors: [{ name: profile.name }],
   openGraph: {
     title: `${profile.name} — ${profile.headline}`,
-    description: "Senior frontend engineer building React applications and connected mobile experiences with React Native, BLE, and NFC.",
-    images: [{ url: "/shareImage.png", alt: "Chris Honeysett — Making complex feel clear" }],
+    description: "Clear vision. Crafted code. Chris Honeysett is a senior frontend engineer bringing design and engineering together for React and React Native products.",
+    images: [{ url: "/shareImage.png", width: 1200, height: 630, alt: "Chris Honeysett — Clear vision. Crafted code." }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${profile.name} — ${profile.headline}`,
-    description: "Senior frontend engineer building React applications and connected mobile experiences with React Native, BLE, and NFC.",
+    description: "Clear vision. Crafted code. Chris Honeysett is a senior frontend engineer bringing design and engineering together for React and React Native products.",
     images: ["/shareImage.png"],
   },
 };
