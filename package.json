@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "bash scripts/dev-herdr.sh",
     "prebuild": "npm run resume",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "resume": "node --import tsx scripts/generate-resume.mts"
+    "resume": "node --import tsx scripts/generate-resume.mts",
+    "dev:server": "next dev",
+    "dev:herdr": "bash scripts/dev-herdr.sh",
+    "dev:login": "bash scripts/dev-herdr.sh --login",
+    "dev:logs": "bash scripts/herdr-logs.sh",
+    "dev:stop": "bash scripts/stop-dev-herdr.sh"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

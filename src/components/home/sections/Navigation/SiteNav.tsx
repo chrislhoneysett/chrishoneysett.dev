@@ -26,9 +26,10 @@ export function SiteNav() {
     const sections = ['work', 'experience', 'about', 'resume']
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null)
-    const navHeight = document
-      .querySelector('nav[aria-label="Main navigation"]')
-      ?.getBoundingClientRect().height ?? 0
+    const navHeight =
+      document
+        .querySelector('nav[aria-label="Main navigation"]')
+        ?.getBoundingClientRect().height ?? 0
     const activeOffset = window.innerWidth <= 760 ? 24 : Math.ceil(navHeight)
 
     const observer = new IntersectionObserver(
@@ -54,7 +55,11 @@ export function SiteNav() {
   }, [])
 
   return (
-    <nav className={styles.nav} data-scroll-mode={scrollMode} aria-label='Main navigation'>
+    <nav
+      className={styles.nav}
+      data-scroll-mode={scrollMode}
+      aria-label='Main navigation'
+    >
       <div className={styles.navIdentity}>
         <a
           className={styles.wordmark}
@@ -63,7 +68,7 @@ export function SiteNav() {
         >
           <Image
             className={styles.mark}
-            src={assetPath('/ch.svg')}
+            src={assetPath('/H.svg')}
             alt=''
             width={44}
             height={44}
@@ -89,7 +94,9 @@ export function SiteNav() {
           Work
         </a>
         <a
-          className={activeSection === 'experience' ? styles.activeLink : undefined}
+          className={
+            activeSection === 'experience' ? styles.activeLink : undefined
+          }
           href='#experience'
           aria-current={activeSection === 'experience' ? 'location' : undefined}
         >

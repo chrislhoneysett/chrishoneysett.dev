@@ -82,7 +82,7 @@ export const additionalExperience: Experience[] = [
     company: 'Honeysett Design',
     title: 'Freelance Designer / Developer',
     location: 'Kalamazoo, MI',
-    startDate: '1998',
+    startDate: '2002',
     endDate: '2024',
     summary:
       'Worked directly with arts and education clients on responsive websites, marketing, branding, and graphic design, much of it for theatrical productions. Concurrent theatre technical direction involved production planning and crew coordination.',
