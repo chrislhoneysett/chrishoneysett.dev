@@ -2,15 +2,17 @@
   width: min(calc(100% - 2 * var(--layout-gutter)), var(--layout-max-width));
   margin-inline: auto;
   & h1 {
-    margin-top: var(--space-8);
+    width: fit-content;
+    max-width: 100%;
+    margin-top: 0;
     font-family: var(--font-family-display);
-    font-size: var(--font-size-hero);
+    font-size: clamp(2rem, 15cqw, 7rem);
     font-weight: var(--font-weight-regular);
     letter-spacing: var(--tracking-hero);
-    line-height: var(--line-height-hero);
+    line-height: 1;
 
     & em {
-      color: var(--color-accent-display);
+      color: var(--color-highlight-strong);
       font-weight: var(--font-weight-regular);
     }
   }
@@ -73,6 +75,14 @@
 
 .heroMain {
   min-height: var(--hero-min-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* padding-block: var(--space-12); */
+  /* gap: var(--space-8); */
+}
+
+.heroRow {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
   align-items: center;
@@ -86,11 +96,21 @@
 }
 
 .heroCopy {
+  container-type: inline-size;
   position: relative;
   z-index: 1;
-  padding-block: var(--space-12) var(--space-20);
+  padding-block: var(--space-12);
   @media (max-width: 760px) {
     padding-block: 0 var(--space-12);
+  }
+}
+
+.taglineLine {
+  display: block;
+  white-space: nowrap;
+
+  &:last-child {
+    transform: translateX(0.6em);
   }
 }
 

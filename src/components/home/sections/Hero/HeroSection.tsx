@@ -17,17 +17,17 @@ export function HeroSection() {
         <span>{profile.location}</span>
       </div>
       <div className={styles.heroMain}>
+        <p className={styles.kicker}>
+          <span className={styles.kickerDot} /> Engineering informed by
+          graphic design
+        </p>
+        <div className={styles.heroRow}>
         <div className={styles.heroCopy}>
-          <p className={styles.kicker}>
-            <span className={styles.kickerDot} /> Engineering informed by
-            graphic design
-          </p>
           <h1>
-            Making
-            <br />
-            <em>complex</em>
-            <br />
-            feel clear<span className={styles.period}>.</span>
+            <span className={styles.taglineLine}>Clear vision.</span>{' '}
+            <span className={styles.taglineLine}>
+              Crafted <em>code.</em>
+            </span>
           </h1>
         </div>
         <div className={styles.heroSupport}>
@@ -47,17 +47,14 @@ export function HeroSection() {
             </a>
           </div>
         </div>
+        </div>
       </div>
       <div className={styles.heroFooter}>
         <div>
           <strong>
             28<span>+</span>
           </strong>
-          <small>
-            years across graphic design
-            <br />
-            &amp; software development
-          </small>
+          <small>years across graphic design &amp; software development</small>
         </div>
         <div>
           <strong>

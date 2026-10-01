@@ -13,9 +13,9 @@
   color-scheme: light;
 
   /* Type families and a compact size scale */
-  --font-family-display: Georgia, "Times New Roman", serif;
+  --font-family-display: Georgia, 'Times New Roman', serif;
   --font-family-body: Arial, Helvetica, sans-serif;
-  --font-family-code: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --font-family-code: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
   --font-weight-regular: 400;
   --font-weight-bold: 700;
   --font-weight-heavy: 800;
@@ -70,7 +70,7 @@
   --layout-column-gap: var(--space-12);
   --layout-measure: 39rem;
   --nav-height: 6rem;
-  --hero-min-height: 43rem;
+  --hero-min-height: 37rem;
   --hero-art-height: 33rem;
   --hero-stats-height: 8.5rem;
   --project-art-height: 16rem;
@@ -108,7 +108,10 @@
   --color-hero: light-dark(#e8e9df, #0a191e);
   --color-hero-text: light-dark(#173037, #f7f3ea);
   --color-hero-muted: light-dark(#52656a, #b2c5c1);
-  --color-hero-border: light-dark(rgba(23, 48, 55, 0.25), rgba(255, 255, 255, 0.24));
+  --color-hero-border: light-dark(
+    rgba(23, 48, 55, 0.25),
+    rgba(255, 255, 255, 0.24)
+  );
   --color-button: #e3b448;
   --color-button-hover: #f6d889;
   --color-button-text: #173037;
@@ -133,18 +136,18 @@
 }
 
 /* Explicit light choice overrides an operating system dark preference. */
-:root[data-theme="light"] {
+:root[data-theme='light'] {
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+  :root:not([data-theme='light']) {
     color-scheme: dark;
   }
 }
 
 /* An explicit dark choice overrides an operating system light preference. */
-:root[data-theme="dark"] {
+:root[data-theme='dark'] {
   color-scheme: dark;
 }
 
