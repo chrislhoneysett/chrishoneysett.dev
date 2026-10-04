@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${profile.name} — ${profile.headline}`,
+    title: `${profile.name} — ${profile.title}`,
     description:
       'Clear vision. Crafted code. Chris Honeysett is a senior frontend engineer bringing design and engineering together for React and React Native products.',
     images: ['/shareImage.png'],

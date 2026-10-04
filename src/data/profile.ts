@@ -8,6 +8,7 @@ export interface Profile {
   name: string
   headline: string
   location: string
+  title: string
   phone?: string
   links: ResumeLink[]
   summary: string
@@ -17,6 +18,7 @@ export const profile: Profile = {
   name: 'Chris Honeysett',
   headline: 'Senior Frontend Engineer | React & Connected Mobile Apps',
   location: 'Kalamazoo, MI',
+  title: 'Frontend & Mobile Engineer.',
   links: [
     { label: 'chrishoneysett.dev', url: 'https://chrishoneysett.dev' },
     {
