@@ -1,612 +1,347 @@
 # Making Sense of BLE Byte Data
 
-## And Then Came the Bytes
+In my first article, BLE for Web Developers: The Mental Model I Wish I’d Had, I introduced the workflow I learned while building a React Native app that communicates with BLE hardware.
 
-This was my biggest adjustment.
+Finding the device, connecting, and discovering its characteristics gave me a way to exchange data. But that still left another question:
 
-BLE doesn't hand your JavaScript application a friendly object like:
+**What do I do with the data once I receive it?**
 
+With the JSON APIs I was used to, my HTTP client could parse a response into a JavaScript object. With BLE, I had to understand how the device represented its values as bytes.
+
+Suddenly, terms like hexadecimal, signed integers, and endianness mattered. These weren’t concepts I’d needed to work with directly in my web projects.
+
+This is the second article in that series: how I learned to turn BLE byte data into values my application could use, and encode values to send back.
+
+I’ll continue using the fictional weather station from the first article. Its protocol is an example for learning these concepts, rather than a standard BLE weather station format.
+
+## The Bytes Don’t Explain Themselves
+
+Suppose the app reads the weather station’s temperature characteristic and receives:
+
+```text
+[0xEB, 0x00]
 ```
-{
-  temperature: 23.5,
-  humidity: 48
-}
+
+In the first article, we decoded those bytes as **23.5°C**. But nothing in that array tells us that it contains a temperature, or that the result should be divided by ten.
+
+The station’s protocol supplies those rules:
+
+```text
+Type:       Signed 16-bit integer
+Byte order: Little-endian
+Unit:       Tenths of a degree Celsius
 ```
 
-It transports bytes.
+Each part matters. Choosing the wrong integer type, reversing the byte order, or missing the scale can produce a different value from the same bytes.
 
-Coming from web development rather than a computer science or embedded background, I never needed to think about binary representations directly.
+Before getting to the JavaScript, it helps to understand what those rules mean.
 
-Suddenly terms like bits, bytes, hexadecimal, and endianness mattered.
-
-### Bits and Bytes
+## Bits and Bytes: How Much Space Does a Value Take?
 
 A **bit** is a single binary digit: either `0` or `1`.
 
-A **byte** is a group of eight bits.
+A **byte** is a group of eight bits. Eight bits have 256 possible combinations, so a byte interpreted as an unsigned integer can represent a value from **0 through 255**.
 
-Eight bits can represent 256 different combinations, so an unsigned (more on unsigned below) byte can hold a number from:
+A byte array is an ordered sequence of bytes. For example:
 
-```
-0 through 255
-```
-
-A **byte array** is simply an ordered sequence of those bytes.
-
-For example:
-
-```
-[235, 0, 48, 1]
-```
-
-Those numbers don't mean anything by themselves. The device's protocol defines how your application should interpret them.
-
-Perhaps:
-
-```
-Bytes 0-1 → Temperature
-Bytes 2-3 → Humidity
-```
-
-Before we can decode those values, though, there's another representation you'll see constantly when working with BLE: **hexadecimal**.
-
-### Why Does Everything Suddenly Start With `0x`?
-
-When I first started looking at BLE documentation and debugging tools, I kept seeing values like:
-
-```
-0x00
-0xFF
-0x03E8
-```
-
-That's **hexadecimal**, usually shortened to **hex**.
-
-We're used to decimal numbers, which use ten digits:
-
-```
-0 1 2 3 4 5 6 7 8 9
-```
-
-Hexadecimal uses sixteen:
-
-```
-0 1 2 3 4 5 6 7 8 9 A B C D E F
-```
-
-The letters represent values beyond 9:
-
-```
-A = 10
-B = 11
-C = 12
-D = 13
-E = 14
-F = 15
-```
-
-The `0x` prefix is simply a common way of saying:
-
-> "This number is written in hexadecimal."
-
-So:
-
-```
-0x0A = 10
-0x10 = 16
-0xFF = 255
-```
-
-Why is hex so common when working with bytes?
-
-Because it maps very neatly to binary.
-
-One hexadecimal digit represents **4 bits**, so two hexadecimal digits represent exactly **one byte**:
-
-```
-Binary       Hex
-0000 0000    0x00
-0000 0001    0x01
-1111 1111    0xFF
-```
-
-That means a byte whose decimal value is `235` can also be written as:
-
-```
-235 decimal = 0xEB hexadecimal
-```
-
-They're not different values. They're just two different ways of writing the same value.
-
-In JavaScript, these are equivalent:
-
-```
-const decimal = 235;
-const hexadecimal = 0xEB;
-
-console.log(decimal === hexadecimal);
-// true
-```
-
-That realization helped me a lot.
-
-When I saw:
-
-```
+```text
 [235, 0]
 ```
 
-and a hardware specification showed:
+Each number represents one byte. The array contains two bytes, but the protocol might define them as one value.
 
+That distinction was important for me. Two entries in the array didn’t necessarily mean two separate readings. They could be the two parts of a single temperature measurement.
+
+## Why Does Everything Start With `0x`?
+
+When I started reading hardware documentation, I kept seeing numbers like `0x00`, `0xFF`, and `0x03E8`.
+
+These are written in **hexadecimal**, usually shortened to **hex**.
+
+Decimal uses ten digits, `0` through `9`. Hexadecimal uses sixteen: `0` through `9`, followed by `A` through `F`. The letters represent the values 10 through 15.
+
+The `0x` prefix tells us that a number is written in hexadecimal:
+
+| Hexadecimal | Decimal |
+| ----------- | ------- |
+| `0x0A`      | 10      |
+| `0x10`      | 16      |
+| `0xEB`      | 235     |
+| `0xFF`      | 255     |
+
+Hex is useful when working with bytes because each hexadecimal digit represents four bits. Two hex digits can represent all eight bits of a byte:
+
+```text
+Binary       Hexadecimal    Decimal
+0000 0000    0x00           0
+1110 1011    0xEB           235
+1111 1111    0xFF           255
 ```
-[0xEB, 0x00]
+
+That means these arrays describe the same two bytes:
+
+```js
+const decimal = [235, 0];
+const hexadecimal = [0xEB, 0x00];
 ```
 
-those weren't two different payloads.
+In JavaScript, `235 === 0xEB` is `true`. Hexadecimal changes how we write the number, not its value.
 
-They were the exact same two bytes written using different notation.
+Once I understood that, comparing my application’s logs with the firmware documentation became much easier. A decimal value in one place and a hexadecimal value in another didn’t mean the data had changed.
 
-## `int8`, `uint16`, `int32` — What Do Those Actually Mean?
+## `int8`, `uint16`, `int32`: What Do Those Mean?
 
-Once I started reading hardware specifications, I ran into types with names like:
+The next unfamiliar terms were the integer types in the protocol documentation.
 
-```
-uint8
-int16
-uint32
-```
+In most of my JavaScript code, I could work with `Number` without specifying how many bytes a value occupied. A hardware protocol needs both sides to agree on that layout.
 
-Coming from JavaScript, this wasn't terminology I had to think about.
+The type names describe the size and whether the value can be negative:
 
-JavaScript mostly lets us work with `Number` without constantly specifying how many bits should be used to represent that number.
-
-Hardware protocols don't have that luxury.
-
-Every field takes up a specific amount of space, so the protocol has to define exactly how large a number is and whether it can be negative.
-
-The names actually tell you both.
-
-Take:
-
-```
+```text
 uint16
-```
+│ │  └── 16 bits = 2 bytes
+│ └───── Integer
+└─────── Unsigned
 
-Break it apart:
-
-```
-u     → unsigned
-int   → integer
-16    → 16 bits
-```
-
-Likewise:
-
-```
 int16
+│  └──── 16 bits = 2 bytes
+└─────── Signed integer
 ```
 
-means:
+**Unsigned** integers represent zero and positive values. **Signed** integers can also represent negative values.
 
-```
-int   → signed integer
-16    → 16 bits
-```
-
-Because one byte is 8 bits:
-
-```
-8 bits  = 1 byte
-16 bits = 2 bytes
-32 bits = 4 bytes
-```
-
-So the common integer types look like this:
-
-| Type     | Bytes | Can Be Negative? | Range                           |
-| -------- | ----- | ---------------- | ------------------------------- |
-| `uint8`  | 1     | No               | 0 to 255                        |
-| `int8`   | 1     | Yes              | -128 to 127                     |
-| `uint16` | 2     | No               | 0 to 65,535                     |
-| `int16`  | 2     | Yes              | -32,768 to 32,767               |
-| `uint32` | 4     | No               | 0 to 4,294,967,295              |
-| `int32`  | 4     | Yes              | -2,147,483,648 to 2,147,483,647 |
-
-The important idea isn't memorizing those ranges.
-
-It's understanding that something like:
-
-```
-Temperature: int16
-```
-
-means that the temperature occupies **two bytes** and can represent both positive and negative values.
-
-While:
-
-```
-Battery Percentage: uint8
-```
-
-means the value occupies **one byte** and cannot be negative.
-
-A battery percentage obviously doesn't need values below zero, so an unsigned integer makes sense.
-
-### Why Does Unsigned Give You a Bigger Positive Range?
-
-An 8-bit value always has the same 256 possible bit patterns.
-
-If the value is **unsigned**, all 256 possibilities can represent positive values:
-
-```
-uint8
-0 through 255
-```
-
-If the value is **signed**, some of those patterns have to represent negative numbers:
-
-```
-int8
--128 through 127
-```
-
-You don't gain or lose bits.
-
-You're just deciding what those bit patterns mean.
-
-## What Does a Negative Number Actually Look Like?
-
-This was another concept that initially felt strange.
-
-If a byte can only contain bits—zeros and ones—how does it represent something like `-10`?
-
-Signed integers are typically represented using a system called **two's complement**.
-
-You don't usually need to perform the conversion manually, but understanding the basic idea makes debugging byte arrays much easier.
-
-Let's use an 8-bit signed integer.
-
-The positive number `10` looks like:
-
-```
-Decimal:  10
-Binary:   0000 1010
-Hex:      0x0A
-```
-
-The signed 8-bit representation of `-10` is:
-
-```
-Decimal:  -10
-Binary:   1111 0110
-Hex:      0xF6
-```
-
-So if a BLE device sends:
-
-```jsx
-;[0xf6]
-```
-
-that byte can mean very different things depending on the protocol.
-
-If you interpret it as a `uint8`:
-
-```
-0xF6 = 246
-```
-
-If you interpret the exact same byte as an `int8`:
-
-```
-0xF6 = -10
-```
-
-That's an important lesson:
-
-> **The bytes themselves don't tell you whether a number is signed or unsigned. The protocol does.**
-
-The exact same eight bits:
-
-```
-1111 0110
-```
-
-can mean either:
-
-```
-246
-```
-
-or:
-
-```
--10
-```
-
-depending on how you interpret them.
-
-### A More Realistic BLE Example
-
-Suppose the device sends these two bytes:
+The common types look like this:
 
-```
-[0xC9, 0xFF]
-```
-
-The protocol tells us that this value is:
-
-```
-Type: int16
-Byte Order: Little-endian
-Scale: 0.1°C
-```
-
-So conceptually, decoding it looks something like:
-
-```
-bytes = [0xC9, 0xFF]
-
-rawTemperature =
-    interpret bytes as signed 16-bit little-endian integer
-
-rawTemperature = -55
-
-temperature = rawTemperature / 10
-
-temperature = -5.5°C
-```
-
-If we accidentally interpreted those same bytes as an **unsigned** 16-bit integer instead:
-
-```
-interpret [0xC9, 0xFF]
-as uint16 little-endian
-
-= 65481
-```
+| Type     | Bytes | Range                           |
+| -------- | ----- | ------------------------------- |
+| `uint8`  | 1     | 0 to 255                        |
+| `int8`   | 1     | -128 to 127                     |
+| `uint16` | 2     | 0 to 65,535                     |
+| `int16`  | 2     | -32,768 to 32,767               |
+| `uint32` | 4     | 0 to 4,294,967,295              |
+| `int32`  | 4     | -2,147,483,648 to 2,147,483,647 |
 
-After applying the same scale:
+The goal isn’t to memorize every range. It’s to recognize that `int16` means a field occupies two bytes and can represent a negative number.
 
-```
-65481 / 10 = 6548.1°C
-```
-
-At that point, the problem isn't the data the device sent.
-
-It's how we interpreted it.
+For our weather station, a signed temperature makes sense because it can get below freezing. A battery percentage could use an unsigned byte, with the protocol restricting valid readings to 0 through 100.
 
-That's a recurring theme with BLE:
+The type’s range and the field’s valid range aren’t necessarily the same thing.
 
-> **The bytes only have meaning because the device's protocol tells us how to read them.**
-
-### What About Strings?
-
-A BLE device can send text, but it still sends that text as bytes.
-
-For example, the string:
-
-```
-Hello
-```
+### How Can the Same Byte Mean 246 or -10?
 
-could be encoded as UTF-8:
+Suppose the device sends a byte with the value `0xF6`. Depending on the type defined in the protocol, the app can read it two different ways:
 
-```
-[0x48, 0x65, 0x6C, 0x6C, 0x6F]
+```text
+Byte:       0xF6
+As uint8:   246
+As int8:    -10
 ```
-
-The app would then decode those bytes back into `"Hello"`.
-
-In many BLE protocols, strings are used less often than compact numeric values because they generally require more bytes to represent the same information. For battery-powered devices where bandwidth and power usage matter, it is common to send tightly packed integers, flags, and bit fields instead.
-
-But the same rule still applies:
-
-> BLE sends bytes. The protocol tells both sides whether those bytes represent text, a number, a flag, or something else.
-
-### Byte Order: Little-Endian vs. Big-Endian
-
-This one was a doozy and even created confusion on the BLE firmware teams side!
-
-Once a value requires more than one byte, another question appears:
-
-**Which byte comes first?**
 
-That's what **endianness** describes.
+The byte hasn’t changed. What changed is how the app interprets it.
 
-Take the number `1000`.
+I didn’t need to work out the conversion myself. The tools I’ll show later handle that. What I needed to know was which type the device expected me to use.
 
-In hexadecimal, `1000` is:
+> **The bytes themselves don’t tell you whether a number is signed or unsigned. The protocol does.**
 
-```
-0x03E8
-```
+## Byte Order: Which Byte Comes First?
 
-Because that value is larger than a single byte can hold, it requires two bytes:
+Once a number occupies more than one byte, we also need to know the order of those bytes. That’s what **endianness** describes.
 
-```
-0x03
-0xE8
-```
+Take the number `1000`, written in hexadecimal as `0x03E8`. It fits in two bytes: `0x03` and `0xE8`.
 
-`0x03` is the **most significant byte** because it contributes the larger portion of the value.
+The most significant byte, `0x03`, contributes `3 × 256 = 768`. The least significant byte, `0xE8`, contributes 232. Together, they make 1000.
 
-In decimal:
+Those bytes can appear in either order:
 
+```text
+Big-endian:       [0x03, 0xE8]
+Little-endian:    [0xE8, 0x03]
 ```
-0x03 = 3
-3 × 256 = 768
-```
-
-The other byte is:
 
-```
-0xE8 = 232
-```
+Big-endian puts the most significant byte first. Little-endian puts the least significant byte first. The [MDN explanation of endianness](https://developer.mozilla.org/en-US/docs/Glossary/Endianness) covers the same distinction.
 
-Together:
+If the app reads `[0xE8, 0x03]` as big-endian, it gets 59,395 instead of 1000.
 
-```
-768 + 232 = 1000
-```
+This was a source of confusion even when working with the firmware team. We needed to agree on the byte order explicitly; knowing that a field occupied two bytes wasn’t enough.
 
-But those two bytes can be stored in different orders.
+Byte order applies to the bytes within a value. It doesn’t mean reversing the entire message, and it doesn’t change a single-byte field.
 
-**Big-endian** puts the most significant byte first:
+## Turning a Raw Number Into a Measurement
 
-```
-[0x03, 0xE8]
-```
+Decoding an integer is only part of the work. The app also needs to know its unit and scale.
 
-**Little-endian** puts the least significant byte first:
+Our weather station expresses temperatures in **tenths of a degree Celsius**. A raw value of 235 means 23.5°C:
 
+```text
+Bytes:           [0xEB, 0x00]
+Signed int16 LE: 235
+Temperature:     235 / 10 = 23.5°C
 ```
-[0xE8, 0x03]
-```
-
-The numeric value is still `1000`.
-
-Only the order in which its bytes are transmitted or stored has changed.
-
-If your device sends little-endian data but your application interprets it as big-endian, you'll get a completely different number.
-
-Welcome to hardware.
-
-## Signed vs. Unsigned Numbers
-
-The protocol also has to specify whether numbers are **signed** or **unsigned**.
 
-An unsigned 8-bit integer can represent:
+This lets the protocol represent fractional temperatures using an integer.
 
-```
-0 through 255
-```
+A negative reading follows the same rules:
 
-A signed 8-bit integer can typically represent:
-
-```
--128 through 127
+```text
+Bytes:           [0xC9, 0xFF]
+Signed int16 LE: -55
+Temperature:     -55 / 10 = -5.5°C
 ```
 
-Supporting negative numbers requires using some of the possible bit patterns to represent those negative values.
+If the app mistakenly reads that second value as an unsigned integer, it gets 65,481. Dividing by ten then gives 6548.1°C.
 
-So when a hardware specification tells you a field is something like:
+The bytes can arrive correctly and still produce a completely wrong measurement. That helped me distinguish a communication problem from a decoding problem.
 
-```
-int16 little-endian
-```
+## Offsets: Where Does Each Field Begin?
 
-every piece of that description matters.
+So far, we’ve looked at a characteristic containing one value. A protocol can also pack several fields into the same characteristic value.
 
-It means:
+Suppose our weather station exposes a combined reading with this fixed four-byte layout:
 
-- integer
-- signed
-- 16 bits / 2 bytes
-- little-endian byte order
+| Byte offset | Type     | Field       | Meaning                 |
+| ----------- | -------- | ----------- | ----------------------- |
+| 0           | `int16`  | Temperature | Little-endian, 0.1°C     |
+| 2           | `uint8`  | Humidity    | Whole percent, 0–100    |
+| 3           | `uint8`  | Battery     | Whole percent, 0–100    |
 
-## Offsets, Encoding, and Serialization
+An **offset** is the position where a field begins, counting from zero. The temperature starts at offset `0` and occupies bytes `0` and `1`. Humidity starts at offset `2`.
 
-A few more terms started appearing frequently.
+A reading might look like this:
 
-An **offset** is simply where a value begins in the byte array, usually starting from zero.
-
-For example:
-
-```
-Byte 0       → Status
-Bytes 1-2    → Temperature
-Bytes 3-4    → Pressure
+```text
+[0xEB, 0x00, 0x30, 0x64]
+ └────┬────┘  │     │
+   23.5°C    48%   100%
 ```
 
-The temperature has an offset of `1`.
+This is where the protocol starts to look like a schema: it describes where each field lives and how to interpret it.
 
-**Encoding** describes the rules used to represent information as bytes. Text, for example, might use UTF-8.
+Converting those fields into bytes is often called **serialization**. Reconstructing the values from the bytes is **deserialization**. Encoding describes the representation rules used in that process.
 
-**Serialization** means converting structured information into bytes.
+The terminology was unfamiliar, but the goal was familiar: turn a message into data the app can work with.
 
-**Deserialization** means taking those bytes and reconstructing meaningful values.
+## Buffer Made the Conversion Easier
 
-Once I understood those concepts, BLE data started feeling much less mysterious.
+I initially worked directly with byte arrays, combining bytes and handling the conversions myself. That helped me learn, but it also left a lot of manual byte manipulation in my code.
 
-But I was still doing far too much manual byte manipulation.
+Then I started using `Buffer`.
 
-Then I discovered `Buffer`.
+`Buffer` is a Node.js API, rather than a built-in JavaScript global on every platform. In React Native, I used the [`buffer` package](https://github.com/feross/buffer) to access that functionality.
 
-## Buffer Made Binary Data Click for Me
+Here’s our temperature example:
 
-While I initially worked directly on byte arrays, which was a great way to learn the concepts, I discovered `Buffer` as part of javascript. Instead of manually shifting bits, reordering arrays, and combining bytes, I could use a `Buffer` to explicitly describe how the bytes should be interpreted.
-
-In React Native, Node-style Buffer functionality is available through the `buffer` package.
-
-Suppose my hardware protocol defines temperature as:
-
-> A signed 16-bit little-endian integer representing tenths of a degree Celsius.
-
-If the device sends:
-
-```
-[0xEB, 0x00]
-```
-
-I can decode it with:
-
-```
+```js
 import { Buffer } from 'buffer';
 
 const received = Buffer.from([0xEB, 0x00]);
-
 const temperature = received.readInt16LE(0) / 10;
 
-// 235 / 10
-// 23.5°C
+// 23.5
 ```
 
-That one method name contains almost the entire protocol description:
+The method name captures the decoding rules: `Int16` reads a signed 16-bit integer, `LE` specifies little-endian, and `0` is the byte offset. The division applies our protocol’s scale. The [Node.js Buffer documentation](https://nodejs.org/api/buffer.html#bufreadint16leoffset) describes the method and its bounds requirements.
 
-```
-readInt16LE(0)
+For the combined reading, we can put the layout in one function:
+
+```js
+import { Buffer } from 'buffer';
+
+function decodeWeatherReading(bytes) {
+  const data = Buffer.from(bytes);
+
+  if (data.length !== 4) {
+    throw new Error('Expected a four-byte weather reading');
+  }
+
+  const temperature = data.readInt16LE(0) / 10;
+  const humidity = data.readUInt8(2);
+  const battery = data.readUInt8(3);
+
+  if (humidity > 100 || battery > 100) {
+    throw new Error('Weather reading contains an invalid percentage');
+  }
+
+  return { temperature, humidity, battery };
+}
+
+const reading = decodeWeatherReading([0xEB, 0x00, 0x30, 0x64]);
+
+// { temperature: 23.5, humidity: 48, battery: 100 }
 ```
 
-Breaking that apart:
+Now the rest of the app has the kind of object I was used to working with. The byte layout stays inside the decoder.
 
-```
-Int     → signed integer
-16      → 16 bits / 2 bytes
-LE      → little-endian
-0       → begin reading at byte offset 0
-```
+The length check follows our fictional fixed-length protocol. A different protocol might allow optional fields or reserve particular values to mean “measurement unavailable.” Those rules belong in its decoder too.
 
-Encoding the value to send in the other direction is just as straightforward:
+## Sending Data Works in the Other Direction
 
-```
+Reading values means following the device’s decoding rules. Writing values means producing the bytes the device expects.
+
+Suppose the weather station’s measurement interval characteristic accepts an unsigned 16-bit little-endian integer measured in seconds. To set a ten-second interval:
+
+```js
+import { Buffer } from 'buffer';
+
 const outgoing = Buffer.alloc(2);
-
-outgoing.writeInt16LE(
-  Math.round(23.5 * 10),
-  0
-);
+outgoing.writeUInt16LE(10, 0);
 
 const bytes = Array.from(outgoing);
 
-// [235, 0]
+// [10, 0], or [0x0A, 0x00]
 ```
 
-Buffer can also handle text:
+This prepares the payload. A BLE library then writes it to the characteristic, using whatever value representation that library requires.
 
+The application should also validate the setting against the device’s permitted interval range. Fitting in two bytes doesn’t automatically make a setting valid.
+
+## What About Text or Base64?
+
+Text still needs an encoding. For example, UTF-8 represents `Hello` with these bytes:
+
+```text
+[0x48, 0x65, 0x6C, 0x6C, 0x6F]
 ```
-const encoded = Buffer.from('Hello', 'utf8');
 
-const decoded = encoded.toString('utf8');
+The protocol must define the text encoding and how to identify the string’s length or end. The app can’t infer those rules just because some bytes happen to resemble letters.
+
+Some BLE libraries expose characteristic values as **Base64 strings**. That’s another representation of the bytes, used at the library boundary:
+
+```js
+const data = Buffer.from('6wA=', 'base64');
+const temperature = data.readInt16LE(0) / 10;
+
+// 23.5
 ```
 
-This eliminated a huge amount of manual binary manipulation from my code.
+Base64 decoding recovers `[0xEB, 0x00]`. The temperature protocol still determines what those bytes mean. See the [Buffer encoding reference](https://nodejs.org/api/buffer.html#buffers-and-character-encodings) for supported conversions.
 
-But there's an important distinction:
+I needed to keep two questions separate: how does the library give me the bytes, and how does the device encode its values?
 
-> **Buffer understands bytes. It does not understand your device.**
+## The Model That Finally Made Sense
 
-The hardware protocol still has to tell your application that bytes `0-1` contain a signed little-endian temperature in tenths of a degree.
+I started out thinking that receiving the data was most of the work. Understanding the protocol showed me what was still missing.
 
-Buffer simply makes following those rules much easier.
+For each field, I needed to know:
 
+- **Offset:** Where does it begin?
+- **Size:** How many bytes does it occupy?
+- **Type:** Is it signed, unsigned, text, or another representation?
+- **Byte order:** How are multi-byte values ordered?
+- **Unit and scale:** How does the decoded value become a measurement?
+- **Valid values:** Are there limits or special values the app must handle?
+
+Tools like `Buffer` made the conversions easier, but the device documentation still supplied the meaning.
+
+> **Knowing how to read bytes isn’t the same as knowing what those bytes represent.**
+
+Once I could keep the encoding and decoding in small functions, the rest of the app could work with temperatures, percentages, and settings. I didn’t need every screen to understand the device’s byte layout.
+
+That became another part of the BLE abstraction I was building: turn the protocol into an interface that felt familiar to an application developer.
+
+Next in the series, I’ll look at what happens when a payload is too large for one write, and how chunking lets the app and device exchange larger amounts of data.
+
+## Further Reading
+
+- [Node.js: Buffer](https://nodejs.org/api/buffer.html) — Reference for working with bytes, integer reads and writes, and text encodings.
+- [buffer package](https://github.com/feross/buffer) — The Node-style Buffer implementation I used in React Native.
+- [MDN: Endianness](https://developer.mozilla.org/en-US/docs/Glossary/Endianness) — An explanation of byte order with examples.
