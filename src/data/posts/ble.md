@@ -10,6 +10,8 @@ I was used to URLs, JSON, REST APIs, and WebSockets. Suddenly I was dealing with
 
 This is the introduction I wish I'd had: how an app finds a BLE device, discovers what it exposes, and exchanges data with it.
 
+This is the first article in a series about what I learned building a React Native app that communicates with BLE hardware.
+
 ## What Is BLE?
 
 Bluetooth Low Energy, or BLE, is a wireless communication technology in the Bluetooth family, designed for very low power consumption.
@@ -77,7 +79,7 @@ Weather station advertising:
 "I'm here: WeatherStation-1042."
 
 Phone scanning nearby:
-"Ok, I see you."
+"OK, I see you."
 ```
 
 The app doesn't need to display every Bluetooth device nearby, so it filters the scan results.
@@ -94,7 +96,7 @@ For my application, what I primarily cared about was establishing the BLE connec
 
 ## Once I'm Connected, What Can I Actually Do?
 
-> Finding and connecting to the weather station is only the beginning. Now the app needs to discover what it can interact with.
+Finding and connecting to the weather station is only the beginning. Now the app needs to discover what it can interact with.
 
 That’s where GATT, the Generic Attribute Profile, comes in. It defines how a device organizes its data and how another device discovers and interacts with it.
 
@@ -142,7 +144,7 @@ Think of service discovery as asking the device:
 
 > "Now that I'm connected, what interface do you expose?"
 
-Services and characteristics have UUIDs that identify their types. UUID stands for **Universally Unique Identifier**—an identifier used to distinguish one type of service or characteristic from another. These identifiers let the app select the service and characteristic it wanted to interact with.
+Services and characteristics have UUIDs that identify their types. UUID stands for **Universally Unique Identifier**—an identifier used to distinguish one type of service or characteristic from another. These identifiers let the app select the service and characteristic it wants to interact with.
 
 The names in the diagram above are labels for us as readers. The app needs to know which UUIDs correspond to the temperature reading, measurement interval, and other parts of the station’s interface.
 
@@ -180,7 +182,7 @@ App ─── Calibration command ───▶ Weather Station
 App ◀──── Write response ──────── Weather Station
 ```
 
-For a write with response, a successful response confirms that the characteristic value was written. The device can also return an error if the write fails.
+The device can also return an error if the write fails.
 
 The distinction is between completing the write and completing the work it triggered. A successful write response does **not necessarily mean the calibration has finished**.
 
@@ -236,7 +238,7 @@ For example, the weather station might send these two bytes for a temperature re
 [0xEB, 0x00]
 ```
 
-he station’s protocol defines this value as a little-endian 16-bit integer, so the app decodes these bytes as **235**. Temperatures are expressed in tenths of a degree Celsius, giving a reading of **23.5°C**.
+The station’s protocol defines this value as a little-endian 16-bit integer, so the app decodes these bytes as **235**. Temperatures are expressed in tenths of a degree Celsius, giving a reading of **23.5°C**.
 
 Sending data works in the other direction: the app encodes a setting or command into the bytes the device expects.
 
@@ -309,13 +311,13 @@ For our weather station app, opening the station’s detail screen could connect
 
 In my application, I wanted that same pattern. But I started noticing that devices sometimes stopped appearing in scan results. I discovered that they were still connected: BLE sessions were surviving when I expected them to have ended.
 
-Looking at the session lifecycle also revealed opportunities for multiple sessions to be created. I needed a clear rule: only one session could be active at a time, and there had to be a concrete way to tear it down.
+Looking at the session lifecycle also revealed places where the app could create multiple sessions. I needed a clear rule: only one session could be active at a time, and there had to be a concrete way to tear it down.
 
 That included work still in progress. What happens if the user leaves while the app is still connecting or discovering characteristics? Cleanup needed to account for both unfinished setup and whatever had already been established.
 
 Eventually I began treating the whole session as one cancellable operation, with responsibility for its setup, ongoing communication, and teardown. That gave me a way to reason about the lifetime of the connection as a whole.
 
-Session management was one of the primary reasons I built my own BLE library abstraction. I also wanted to make more complex operations, such as chunking, easier to use. The goal was to let a developer work with the device without having to learn every BLE detail I’d needed to work through.
+Session management was one of the primary reasons I built my own BLE library abstraction. I also wanted to make more complex operations, such as chunking, easier to use. The goal was to let a developer work with the device without having to learn every BLE detail I’d had to figure out along the way.
 
 I’ll explore those topics in two future articles: Managing BLE Sessions with AbortController and Building My React Native BLE Library.
 
