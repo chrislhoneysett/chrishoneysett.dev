@@ -30,7 +30,7 @@ Except it didn’t behave much like any API I’d encountered before.
 
 Before getting into the terminology, it helps to see the general sequence.
 
-Imagine a BLE weather station and an app that displays its readings and changes its settings. I’ll use this example throughout the article, though it isn’t the hardware I worked with.
+Imagine a BLE weather station and an app that displays its readings and changes its settings. I’ll use a fictional weather station throughout this article to make the concepts concrete. The hardware differs from my projects, but the learning experiences and engineering challenges I describe are my own.
 
 A typical session in the mobile workflow I used might look like this:
 
