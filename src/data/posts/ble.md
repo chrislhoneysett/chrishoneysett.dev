@@ -169,7 +169,9 @@ A write sends a value to a characteristic that supports writing. That might chan
 
 My initial instinct was to think of this like a PUT or POST request: send data and wait for a response.
 
-On web projects I’ve worked on, that response could also contain the result of the operation, such as an updated object. A successful BLE write response on the otherhand is an acknowledgment, often shortened to `ack`: confirmation that the write succeeded; it does not include the operation’s result data.
+On web projects I’ve worked on, that response could also contain the result of the operation, such as an updated object. Early on, I expected the same thing from a BLE write response and didn’t understand why I wasn’t getting a data payload back.
+
+That was my first encounter with the term acknowledgment, often shortened to `ack`. A successful BLE write response confirms that the write succeeded; it does not include the operation’s result data. I had to separate the response to the write from the result of the command I was sending.
 
 Suppose the app writes a command to the calibration characteristic to start a sensor calibration:
 
@@ -305,13 +307,15 @@ Even normal navigation introduces lifecycle decisions.
 
 For our weather station app, opening the station’s detail screen could connect to the station and subscribe to its sensor readings. Leaving that screen would stop listening for updates and disconnect.
 
-In my application, I wanted that same pattern. But what happens if the user leaves while the app is still connecting or discovering characteristics?
+In my application, I wanted that same pattern. But I started noticing that devices sometimes stopped appearing in scan results. I discovered that they were still connected: BLE sessions were surviving when I expected them to have ended.
 
-I needed a way to stop the work still in progress and clean up whatever had already been established.
+Looking at the session lifecycle also revealed opportunities for multiple sessions to be created. I needed a clear rule: only one session could be active at a time, and there had to be a concrete way to tear it down.
 
-That turned out to be substantially harder than simply learning how to call `read()` or `write()`.
+That included work still in progress. What happens if the user leaves while the app is still connecting or discovering characteristics? Cleanup needed to account for both unfinished setup and whatever had already been established.
 
-Eventually I began treating the whole session as one cancellable operation. Working through that problem also led me to build my own BLE library.
+Eventually I began treating the whole session as one cancellable operation, with responsibility for its setup, ongoing communication, and teardown. That gave me a way to reason about the lifetime of the connection as a whole.
+
+Session management was one of the primary reasons I built my own BLE library abstraction. I also wanted to make more complex operations, such as chunking, easier to use. The goal was to let a developer work with the device without having to learn every BLE detail I’d needed to work through.
 
 I’ll explore those topics in two future articles: Managing BLE Sessions with AbortController and Building My React Native BLE Library.
 
