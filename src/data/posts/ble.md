@@ -337,3 +337,9 @@ Once I understood that model, BLE stopped feeling like a mysterious hardware tec
 **an interface between two pieces of software.**
 
 It just happens that one of those pieces of software is running inside something you can hold in your hand.
+
+## Further Reading
+
+- [Bluetooth SIG: Bluetooth Low Energy Primer](https://www.bluetooth.com/bluetooth-le-primer/) — A deeper introduction to the BLE stack, including advertising, connections, ATT, and GATT.
+- [Bluetooth SIG: Assigned Numbers](https://www.bluetooth.com/specifications/assigned-numbers/) — The official reference for standardized identifiers, including service and characteristic UUIDs.
+- [Bluetooth Core Specification: Generic Attribute Profile (GATT)](https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/Core-61/out/en/host/generic-attribute-profile--gatt-.html) — The formal technical reference for discovery, reads, writes, notifications, and indications.
