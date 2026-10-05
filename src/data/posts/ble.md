@@ -12,6 +12,8 @@ This is the introduction I wish I'd had: how an app finds a BLE device, discover
 
 This is the first article in a series about what I learned building a React Native app that communicates with BLE hardware.
 
+I learned these concepts while building a mobile app, but the mental model applies to BLE clients on other platforms too. The APIs and platform restrictions differ.
+
 ## What Is BLE?
 
 Bluetooth Low Energy, or BLE, is a wireless communication technology in the Bluetooth family, designed for very low power consumption.
@@ -28,9 +30,9 @@ Except it didn’t behave much like any API I’d encountered before.
 
 Before getting into the terminology, it helps to see the general sequence.
 
-Imagine a BLE weather station and a mobile app that displays its readings and changes its settings. I’ll use this example throughout the article, though it isn’t the hardware I worked with.
+Imagine a BLE weather station and an app that displays its readings and changes its settings. I’ll use this example throughout the article, though it isn’t the hardware I worked with.
 
-A typical session might look like this:
+A typical session in the mobile workflow I used might look like this:
 
 1. Scan for nearby BLE devices.
 1. Identify the weather station.
@@ -52,7 +54,7 @@ Phone                          Weather Station
 Central ─── Connects to ─────▶ Peripheral
 ```
 
-The phone acts as the central: it scans for nearby devices and initiates the connection.
+In this example, the app runs on a phone, which acts as the central: it scans for nearby devices and initiates the connection. A BLE client on another platform could fill the same role.
 
 The weather station acts as the peripheral: it advertises its presence and accepts the connection.
 
@@ -68,7 +70,7 @@ BLE peripherals solve this through **advertising**.
 
 A peripheral periodically broadcasts advertising packets announcing its presence and providing some information about itself.
 
-The mobile app can **scan** for those advertisements.
+In my mobile app, I could **scan** for those advertisements. The scanning and device-selection APIs available to an app depend on its platform.
 
 Conceptually:
 
@@ -90,7 +92,7 @@ Once the user selects a station, the app can initiate a connection.
 
 One terminology lesson I learned here: **connecting** and **pairing** aren't necessarily the same thing.
 
-A BLE application can connect directly to a peripheral without asking the user to first pair with it through the phone's Bluetooth settings. Bluetooth pairing and bonding are separate concepts related to things like authentication and storing security information.
+In my mobile app, I could connect directly to a peripheral without asking the user to first pair with it through the phone's Bluetooth settings. Bluetooth pairing and bonding are separate concepts related to things like authentication and storing security information.
 
 For my application, what I primarily cared about was establishing the BLE connection from inside the app.
 
@@ -98,7 +100,7 @@ For my application, what I primarily cared about was establishing the BLE connec
 
 Finding and connecting to the weather station is only the beginning. Now the app needs to discover what it can interact with.
 
-That’s where GATT, the Generic Attribute Profile, comes in. It defines how a device organizes its data and how another device discovers and interacts with it.
+That’s where GATT, the Generic Attribute Profile, comes in. It defines how a device organizes its data into services and characteristics and how another device discovers and interacts with it. GATT uses the **Attribute Protocol (ATT)** underneath to discover that data and exchange values between devices.
 
 In our example, the weather station is the GATT server, exposing its data and functionality. The phone is the GATT client, accessing that interface.
 
@@ -200,7 +202,7 @@ Waiting for a response to each update adds overhead. If the app doesn’t need c
 App ─── Display brightness ───▶ Weather Station
 ```
 
-The missing response is at the Attribute Protocol (ATT) layer, which underpins these GATT operations. It doesn’t mean Bluetooth stops handling delivery at lower layers, but the app gets no ATT response confirming that the value was written or reporting why it failed.
+With write without response, no ATT response is requested or expected. Bluetooth still handles delivery at lower layers, but the app receives no ATT acknowledgment that the value was written and no ATT error response if the write fails.
 
 That distinction changes what the app can claim: sending a brightness value is not confirmation that the display applied it. If that matters, the device’s protocol needs another way to check the result.
 
@@ -319,8 +321,6 @@ Eventually I began treating the whole session as one cancellable operation, with
 
 Session management was one of the primary reasons I built my own BLE library abstraction. I also wanted to make more complex operations, such as chunking, easier to use. The goal was to let a developer work with the device without having to learn every BLE detail I’d had to figure out along the way.
 
-I’ll explore those topics in two future articles: Managing BLE Sessions with AbortController and Building My React Native BLE Library.
-
 ## The Mental Model I Wish I'd Started With
 
 Coming from web development, the unfamiliar terminology made it hard to know where to start.
@@ -332,7 +332,7 @@ The mental model that finally worked for me was:
 - **Connecting:** The app establishes a connection to the device.
 - **Services and characteristics:** The device exposes groups of functionality and the values the app can interact with.
 - **Reading and writing:** The app retrieves values, changes settings, or sends commands. A write response confirms the write, but doesn’t necessarily mean the work it triggered has finished.
-- **Writing without response:** The app sends a value without receiving a write response.
+- **Writing without response:** The app sends a value without receiving an `ack` response.
 - **Notifications:** The app subscribes so the device can send updates.
 - **Bytes:** The app interprets and encodes values according to the device’s protocol.
 - **Chunking:** Larger transfers may need to be divided into pieces the device knows how to handle.
