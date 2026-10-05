@@ -169,7 +169,7 @@ A write sends a value to a characteristic that supports writing. That might chan
 
 My initial instinct was to think of this like a PUT or POST request: send data and wait for a response.
 
-On web projects I’d worked on, that response could also contain the result of the operation, such as an updated object. A successful BLE write response on the otherhand is an acknowledgment, often shortened to `ack`: confirmation that the write succeeded. It does NOT include the operation’s result data.
+On web projects I’ve worked on, that response could also contain the result of the operation, such as an updated object. A successful BLE write response on the otherhand is an acknowledgment, often shortened to `ack`: confirmation that the write succeeded; it does not include the operation’s result data.
 
 Suppose the app writes a command to the calibration characteristic to start a sensor calibration:
 
@@ -234,7 +234,7 @@ For example, the weather station might send these two bytes for a temperature re
 [0xEB, 0x00]
 ```
 
-Following the station’s protocol, the app decodes those bytes as the number **235**. The protocol also specifies that temperatures are expressed in tenths of a degree Celsius, so the reading is **23.5°C**.
+he station’s protocol defines this value as a little-endian 16-bit integer, so the app decodes these bytes as **235**. Temperatures are expressed in tenths of a degree Celsius, giving a reading of **23.5°C**.
 
 Sending data works in the other direction: the app encodes a setting or command into the bytes the device expects.
 
@@ -242,7 +242,7 @@ The important lesson is:
 
 > **Knowing which characteristic to read or write isn’t enough. You also need to know how its value is encoded.**
 
-Understanding that conversion was a learning curve of its own. I cover hexadecimal, signed integers, byte order, and decoding in JavaScript in [Making Sense of BLE Byte Data](./ble-byte-data.md).
+Understanding that conversion was a learning curve of its own. In a future article, Making Sense of BLE Byte Data, I’ll cover hexadecimal, signed integers, byte order, and decoding in JavaScript.
 
 ## What Happens When the Data Is Too Large?
 
@@ -271,7 +271,7 @@ The app and station need to agree on how those pieces form a complete transfer. 
 
 Depending on the operation and library, some handling of larger values may be automatic. For a transfer like a firmware update, I still needed to understand what the device’s protocol expected.
 
-I’ll explore MTU limits and how I handled larger transfers in [Chunking BLE Data](./ble-data-chunking.md).
+In a future article, Chunking BLE Data, I’ll explore MTU limits and how I handled larger transfers.
 
 ## BLE Isn't Just a Collection of Requests
 
@@ -313,7 +313,7 @@ That turned out to be substantially harder than simply learning how to call `rea
 
 Eventually I began treating the whole session as one cancellable operation. Working through that problem also led me to build my own BLE library.
 
-I’ll explore those topics in [Managing BLE Sessions with AbortController](./ble-abort-controller.md) and [Building My React Native BLE Library](./react-native-ble-library.md).
+I’ll explore those topics in two future articles: Managing BLE Sessions with AbortController and Building My React Native BLE Library.
 
 ## The Mental Model I Wish I'd Started With
 
