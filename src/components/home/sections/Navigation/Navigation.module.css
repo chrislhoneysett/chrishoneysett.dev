@@ -177,3 +177,27 @@
     display: none;
   }
 }
+
+/* Keep the five navigation links clear of the identity and controls. */
+@media (min-width: 761px) and (max-width: 1050px) {
+  .nav {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: var(--space-4);
+  }
+  .navLinks {
+    position: static;
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: center;
+    transform: none;
+  }
+  .navEnd {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 850px) {
+  .navContact { display: none; }
+}

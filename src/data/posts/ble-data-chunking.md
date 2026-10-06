@@ -1,4 +1,13 @@
-# Chunking BLE Data: Fitting a Large Transfer Into Small Writes
+---
+title: "Chunking BLE Data: Fitting a Large Transfer Into Small Writes"
+description: "Understand payload budgets and split larger BLE transfers into ordered writes."
+author: "Chris Honeysett"
+date: "2026-10-06"
+tags: [BLE, React Native, JavaScript]
+status: published
+series: ble-for-web-developers
+seriesOrder: 3
+---
 
 When I first started working with Bluetooth Low Energy, sending a setting to a weather station felt straightforward. Encode a few bytes, write them to a characteristic, and wait for the write to finish.
 

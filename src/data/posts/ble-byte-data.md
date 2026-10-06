@@ -1,4 +1,13 @@
-# Making Sense of BLE Byte Data
+---
+title: "Making Sense of BLE Byte Data"
+description: "Decode and encode BLE values with bytes, integer types, endianness, and JavaScript."
+author: "Chris Honeysett"
+date: "2026-10-06"
+tags: [BLE, React Native, JavaScript]
+status: published
+series: ble-for-web-developers
+seriesOrder: 2
+---
 
 In my first article, BLE for Web Developers: The Mental Model I Wish I’d Had, I introduced the workflow I learned while building a React Native app that communicates with BLE hardware.
 
