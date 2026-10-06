@@ -3,14 +3,15 @@ import Link from 'next/link'
 import { getPosts, postHref } from '@/lib/posts'
 import { blogSeries } from '@/data/blogSeries'
 import { PostMeta } from '@/components/blog/PostMeta'
+import { shareImage } from '@/lib/shareMetadata'
 import styles from './blog.module.css'
 
 const title = 'Blog — Chris Honeysett'
 const description = 'Notes and lessons from building web and mobile applications.'
 export const metadata: Metadata = {
   title, description, alternates: { canonical: '/blog/' },
-  openGraph: { title, description, url: '/blog/', type: 'website' },
-  twitter: { title, description },
+  openGraph: { title, description, url: '/blog/', type: 'website', images: [shareImage] },
+  twitter: { card: 'summary_large_image', title, description, images: [shareImage] },
 }
 
 export default function BlogPage() {

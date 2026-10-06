@@ -7,6 +7,7 @@ import { getPosts, postHref } from '@/lib/posts'
 import { blogSeries } from '@/data/blogSeries'
 import { PostMeta } from '@/components/blog/PostMeta'
 import { assetPath } from '@/lib/assetPath'
+import { shareImage } from '@/lib/shareMetadata'
 import styles from '../blog.module.css'
 
 export const dynamicParams = false
@@ -25,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title, description: post.description, authors: [{ name: post.author }], keywords: post.tags,
     alternates: { canonical: `/blog/${slug}/` },
-    openGraph: { title, description: post.description, url: `/blog/${slug}/`, type: 'article', publishedTime: post.date, authors: [post.author], tags: post.tags },
-    twitter: { title, description: post.description },
+    openGraph: { title, description: post.description, url: `/blog/${slug}/`, type: 'article', publishedTime: post.date, authors: [post.author], tags: post.tags, images: [shareImage] },
+    twitter: { card: 'summary_large_image', title, description: post.description, images: [shareImage] },
   }
 }
 

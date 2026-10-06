@@ -1,6 +1,7 @@
 import Script from 'next/script'
 import type { Metadata } from 'next'
 import { profile } from '@/data/profile'
+import { shareImage } from '@/lib/shareMetadata'
 import './fonts.css'
 import './theme.css'
 import './globals.css'
@@ -16,21 +17,14 @@ export const metadata: Metadata = {
     title: `${profile.name} — ${profile.headline}`,
     description:
       'Clear vision. Crafted code. Chris Honeysett is a senior frontend engineer bringing design and engineering together for React and React Native products.',
-    images: [
-      {
-        url: '/shareImage.png',
-        width: 1200,
-        height: 630,
-        alt: 'Chris Honeysett — Clear vision. Crafted code.',
-      },
-    ],
+    images: [shareImage],
   },
   twitter: {
     card: 'summary_large_image',
     title: `${profile.name} — ${profile.title}`,
     description:
       'Clear vision. Crafted code. Chris Honeysett is a senior frontend engineer bringing design and engineering together for React and React Native products.',
-    images: ['/shareImage.png'],
+    images: [shareImage],
   },
 }
 
