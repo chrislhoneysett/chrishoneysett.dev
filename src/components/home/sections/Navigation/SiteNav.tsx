@@ -1,6 +1,8 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ThemeToggle } from './ThemeToggle'
 import { ContactDialog } from '@/components/ContactDialog'
@@ -9,6 +11,10 @@ import { assetPath } from '@/lib/assetPath'
 import styles from './Navigation.module.css'
 
 export function SiteNav() {
+  const pathname = usePathname()
+  const isHome = pathname === '/'
+  const isBlog = pathname.startsWith('/blog')
+  const homeSection = (id: string) => isHome ? `#${id}` : assetPath(`/#${id}`)
   const [activeSection, setActiveSection] = useState('')
   const [scrollMode, setScrollMode] = useState<'top' | 'scrolled'>('top')
 
@@ -52,7 +58,7 @@ export function SiteNav() {
 
     sections.forEach((section) => observer.observe(section))
     return () => observer.disconnect()
-  }, [])
+  }, [pathname])
 
   return (
     <nav
@@ -63,8 +69,8 @@ export function SiteNav() {
       <div className={styles.navIdentity}>
         <a
           className={styles.wordmark}
-          href='#top'
-          aria-label={`${profile.name}, top of page`}
+          href={homeSection('top')}
+          aria-label={`${profile.name}, home`}
         >
           <Image
             className={styles.mark}
@@ -87,35 +93,38 @@ export function SiteNav() {
       </div>
       <div className={styles.navLinks}>
         <a
-          className={activeSection === 'work' ? styles.activeLink : undefined}
-          href='#work'
-          aria-current={activeSection === 'work' ? 'location' : undefined}
+          className={isHome && activeSection === 'work' ? styles.activeLink : undefined}
+          href={homeSection('work')}
+          aria-current={isHome && activeSection === 'work' ? 'location' : undefined}
         >
           Work
         </a>
         <a
           className={
-            activeSection === 'experience' ? styles.activeLink : undefined
+            isHome && activeSection === 'experience' ? styles.activeLink : undefined
           }
-          href='#experience'
-          aria-current={activeSection === 'experience' ? 'location' : undefined}
+          href={homeSection('experience')}
+          aria-current={isHome && activeSection === 'experience' ? 'location' : undefined}
         >
           Experience
         </a>
         <a
-          className={activeSection === 'about' ? styles.activeLink : undefined}
-          href='#about'
-          aria-current={activeSection === 'about' ? 'location' : undefined}
+          className={isHome && activeSection === 'about' ? styles.activeLink : undefined}
+          href={homeSection('about')}
+          aria-current={isHome && activeSection === 'about' ? 'location' : undefined}
         >
           About
         </a>
         <a
-          className={activeSection === 'resume' ? styles.activeLink : undefined}
-          href='#resume'
-          aria-current={activeSection === 'resume' ? 'location' : undefined}
+          className={isHome && activeSection === 'resume' ? styles.activeLink : undefined}
+          href={homeSection('resume')}
+          aria-current={isHome && activeSection === 'resume' ? 'location' : undefined}
         >
           Resume
         </a>
+        <Link href='/blog/' className={isBlog ? styles.activeLink : undefined} aria-current={isBlog ? 'page' : undefined}>
+          Blog
+        </Link>
       </div>
     </nav>
   )
