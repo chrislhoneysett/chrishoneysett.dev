@@ -34,6 +34,14 @@ find_workspace() {
 pane_id() {
   h pane list --workspace "$WORKSPACE" | jq -er --arg label "$1" '[.result.panes[] | select(.label == $label)] | if length == 1 then .[0].pane_id else error("Expected one pane named " + $label) end'
 }
+is_caller_pane() {
+  # Resolve live caller context rather than the UI-focused pane or an inherited
+  # pane ID (which can change after a pane move). IDs are session-specific.
+  [[ ${HERDR_ENV:-} == 1 && (${HERDR_SOCKET_PATH:-} == */sessions/"$HERDR_SESSION"/herdr.sock || (-z ${HERDR_SOCKET_PATH:-} && $HERDR_CALLER_SESSION == "$HERDR_SESSION")) ]] || return 1
+  local current
+  current=$(h pane current --current) || return 1
+  printf '%s' "$current" | jq -e --arg target "$1" '.result.pane.pane_id == $target' >/dev/null
+}
 start_in_idle_pane() {
   local info output attempt stable=0 attempts=1
   # A newly started server restores shells before their login startup finishes.

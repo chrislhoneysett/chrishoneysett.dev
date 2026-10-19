@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
 import { blogSeries } from '@/data/blogSeries'
@@ -14,6 +14,7 @@ export type Post = {
   seriesOrder?: number
   externalUrl?: string
   publisher?: string
+  image?: { url: string; width: number; height: number; alt: string }
   content: string
 }
 
@@ -49,9 +50,13 @@ export function getPosts(): Post[] {
       if (!['https:', 'http:'].includes(url.protocol)) fail('externalUrl must use HTTP or HTTPS')
     }
     if (!externalUrl && !content.trim()) fail('Local articles must have Markdown content')
+    const imageUrl = `/blog/${slug}/banner.jpg`
+    const image = !externalUrl && existsSync(path.join(process.cwd(), 'public', imageUrl))
+      ? { url: imageUrl, width: 1600, height: 838, alt: data.imageAlt === undefined ? text('title') : text('imageAlt') }
+      : undefined
     return [{ slug, title: text('title'), description: text('description'), author: text('author'), date,
       tags: data.tags.map((tag: string) => tag.trim()), series, seriesOrder: series ? data.seriesOrder : undefined,
-      externalUrl, publisher: externalUrl ? text('publisher') : undefined, content }]
+      externalUrl, publisher: externalUrl ? text('publisher') : undefined, image, content }]
   })
   const slugs = new Set<string>()
   const positions = new Set<string>()

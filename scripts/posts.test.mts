@@ -23,6 +23,14 @@ test('published content, draft isolation, series ordering, and external links', 
     assert.equal(postHref(getPosts()[0]), 'https://example.com/article')
     assert.equal(postHref(getPosts()[1]), '/blog/first/')
     assert.equal(formatPostDate('2026-10-06'), 'October 6, 2026')
+    assert.equal(getPosts().find((post) => post.slug === 'first')?.image, undefined)
+    const imageDirectory = path.join(root, 'public/blog/first')
+    mkdirSync(imageDirectory, { recursive: true })
+    writeFileSync(path.join(imageDirectory, 'banner.jpg'), '')
+    write('first.md', entry('series: ble-for-web-developers\nseriesOrder: 1\nimageAlt: Phone connecting to a sensor\n'))
+    assert.deepEqual(getPosts().find((post) => post.slug === 'first')?.image, {
+      url: '/blog/first/banner.jpg', width: 1600, height: 838, alt: 'Phone connecting to a sensor',
+    })
     write('future/first.md', entry())
     assert.throws(getPosts, /Duplicate published post slug/)
     rmSync(path.join(directory, 'future/first.md'))

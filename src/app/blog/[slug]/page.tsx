@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -23,11 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPosts().find((post) => post.slug === slug && !post.externalUrl)
   if (!post) notFound()
   const title = `${post.title} — ${post.author}`
+  const articleImage = post.image ?? shareImage
   return {
     title, description: post.description, authors: [{ name: post.author }], keywords: post.tags,
     alternates: { canonical: `/blog/${slug}/` },
-    openGraph: { title, description: post.description, url: `/blog/${slug}/`, type: 'article', publishedTime: post.date, authors: [post.author], tags: post.tags, images: [shareImage] },
-    twitter: { card: 'summary_large_image', title, description: post.description, images: [shareImage] },
+    openGraph: { title, description: post.description, url: `/blog/${slug}/`, type: 'article', publishedTime: post.date, authors: [post.author], tags: post.tags, images: [articleImage] },
+    twitter: { card: 'summary_large_image', title, description: post.description, images: [articleImage] },
   }
 }
 
@@ -50,6 +52,14 @@ export default async function ArticlePage({ params }: Props) {
         <p className={styles.description}>{post.description}</p>
         <PostMeta post={post} />
       </header>
+      {post.image && <Image
+        className={styles.banner}
+        src={assetPath(post.image.url)}
+        alt={post.image.alt}
+        width={post.image.width}
+        height={post.image.height}
+        loading='eager'
+      />}
       {post.series && <nav className={styles.series} aria-label='Articles in this series'>
         <h2>{blogSeries[post.series].title}</h2>
         <p>{blogSeries[post.series].description}</p>

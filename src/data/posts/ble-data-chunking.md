@@ -7,6 +7,7 @@ tags: [BLE, React Native, JavaScript]
 status: published
 series: ble-for-web-developers
 seriesOrder: 3
+imageAlt: "A phone sending a Bluetooth update beside a notebook sketch of data divided into smaller chunks."
 ---
 
 When I first started working with Bluetooth Low Energy, sending a setting to a weather station felt straightforward. Encode a few bytes, write them to a characteristic, and wait for the write to finish.

@@ -35,6 +35,15 @@ GitHub-flavored Markdown. Raw HTML and executable JSX are not enabled. Relative
 article links such as `[Read part two](ble-byte-data.md)` are converted to blog
 URLs. Put images in `public/` and reference them with `/image-name.png`.
 
+For an article banner and social link preview, place a 1600 × 838 JPEG at
+`public/blog/<filename-slug>/banner.jpg`. The article automatically displays it
+below the title and metadata and uses it for Open Graph and Twitter previews.
+Keep the full composition visible rather than making a separate shallow crop.
+Add `imageAlt: "A description of the image"` to frontmatter for descriptive
+alternative text; otherwise the article title is used. Articles without a banner
+retain the site's default share image. A draft's image can be prepared in advance;
+adding its folder does not publish the article.
+
 ## Series
 
 Add a name and description to `src/data/blogSeries.ts`, then add these optional

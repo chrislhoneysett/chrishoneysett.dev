@@ -7,6 +7,7 @@ tags: [BLE, React Native, JavaScript]
 status: published
 series: ble-for-web-developers
 seriesOrder: 1
+imageAlt: "A phone discovering a Bluetooth sensor beside a laptop on a naturally lit desk."
 ---
 
 After years of building web applications, my first mobile project involved communicating directly with hardware over Bluetooth Low Energy (BLE).

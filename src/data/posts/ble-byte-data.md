@@ -7,6 +7,7 @@ tags: [BLE, React Native, JavaScript]
 status: published
 series: ble-for-web-developers
 seriesOrder: 2
+imageAlt: "A notebook decoding a hexadecimal byte into a temperature reading beside a phone and Bluetooth sensor."
 ---
 
 In my first article, BLE for Web Developers: The Mental Model I Wish I’d Had, I introduced the workflow I learned while building a React Native app that communicates with BLE hardware.

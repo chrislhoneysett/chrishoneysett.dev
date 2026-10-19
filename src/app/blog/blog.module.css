@@ -157,6 +157,13 @@
   }
 }
 
+.banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: var(--space-10);
+}
+
 .series {
   padding: var(--space-6);
   background: var(--color-surface);
