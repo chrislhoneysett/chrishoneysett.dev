@@ -50,6 +50,11 @@ Reconnect with `herdr --session knox` (bare `herdr` selects the default).
 From a regular terminal it attaches only if no client is already open; otherwise
 it focuses the Space in the existing window. Inside Herdr, changing to this
 project's folder and running `npm run dev` selects the personal Space directly.
+Run the same command from either a plain terminal or an idle Herdr pane. From
+SHELL it starts or reuses the server in DEV and returns to the prompt. From DEV
+it runs Next.js directly in that pane after setting up the workspace; Ctrl-C
+stops that server and returns to the prompt. Existing foreground applications
+in other panes are left running.
 
 ```bash
 npm run dev:stop

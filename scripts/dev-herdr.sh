@@ -95,12 +95,23 @@ else
   pane_id SHELL >/dev/null
 fi
 printf -v server_cmd '/bin/bash %q --server' "$ROOT/scripts/dev-herdr.sh"
-start_in_idle_pane "$server_pane" "$server_cmd" "$pane_readiness"
+run_server_here=false
+if is_caller_pane "$server_pane"; then
+  # npm itself is the foreground process here. Do not inject a command into
+  # our own terminal; hand off to Next.js after finishing workspace setup.
+  run_server_here=true
+else
+  start_in_idle_pane "$server_pane" "$server_cmd" "$pane_readiness"
+fi
 printf -v codex_cmd 'env PERSONAL_CODEX_HOME=%q /bin/bash %q --codex' "$PERSONAL_CODEX_HOME" "$ROOT/scripts/dev-herdr.sh"
 start_in_idle_pane "$codex_pane" "$codex_cmd" "$pane_readiness"
 h pane list --workspace "$WORKSPACE"
 rmdir "$lock"
 trap - EXIT
+if [[ $run_server_here == true ]]; then
+  h workspace focus "$WORKSPACE" >/dev/null
+  exec /bin/bash "$ROOT/scripts/dev-herdr.sh" --server
+fi
 if [[ ${1:-} == --no-attach || ! -t 0 || ! -t 1 ]]; then
   printf '%s\n' 'Attach with: herdr --session knox'
 else
