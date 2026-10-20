@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getPosts, postHref } from '@/lib/posts'
 import { blogSeries } from '@/data/blogSeries'
 import { PostMeta } from '@/components/blog/PostMeta'
 import { shareImage } from '@/lib/shareMetadata'
+import { assetPath } from '@/lib/assetPath'
 import styles from './blog.module.css'
 
 const title = 'Blog — Chris Honeysett'
@@ -24,11 +26,22 @@ export default function BlogPage() {
     </header>
     <div className={styles.posts}>
       {posts.map((post) => <article key={post.slug} className={styles.card}>
-        {post.series && <p className={styles.label}>{blogSeries[post.series].title} · Part {post.seriesOrder}</p>}
-        <h2><Link href={postHref(post)}>{post.title}{post.externalUrl && <span aria-hidden='true'> ↗</span>}</Link></h2>
-        <p className={styles.description}>{post.description}</p>
-        <PostMeta post={post} />
-        {post.publisher && <p className={styles.publisher}>Published on {post.publisher}</p>}
+        <div className={styles.cardContent}>
+          {post.image && <Image
+            className={styles.thumbnail}
+            src={assetPath(post.image.url)}
+            alt=''
+            width={post.image.width}
+            height={post.image.height}
+          />}
+          <div>
+            {post.series && <p className={styles.label}>{blogSeries[post.series].title} · Part {post.seriesOrder}</p>}
+            <h2><Link href={postHref(post)}>{post.title}{post.externalUrl && <span aria-hidden='true'> ↗</span>}</Link></h2>
+            <p className={styles.description}>{post.description}</p>
+            <PostMeta post={post} />
+            {post.publisher && <p className={styles.publisher}>Published on {post.publisher}</p>}
+          </div>
+        </div>
       </article>)}
       {!posts.length && <p>Articles are on the way.</p>}
     </div>

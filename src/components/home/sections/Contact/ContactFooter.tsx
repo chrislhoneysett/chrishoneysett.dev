@@ -10,14 +10,14 @@ export function ContactFooter() {
     <footer className={styles.footer}>
       <p className={styles.sectionLabel}>Contact</p>
       <h2>
-        Let&apos;s stay
+        Let&apos;s
         <br />
-        <em>connected.</em>
+        <em>talk!</em>
       </h2>
       <p className={styles.footerIntro}>
         Always happy to connect with people building thoughtful products and
         websites. If my experience seems like a fit for something you&apos;re
-        working on, <em>let&apos;s talk!</em>
+        working on, <em>I&apos;d love to hear about it.</em>
       </p>
       <div className={styles.footerLinks}>
         <ContactDialog

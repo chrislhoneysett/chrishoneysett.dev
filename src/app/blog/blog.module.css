@@ -64,6 +64,44 @@
   }
 }
 
+.cardContent {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+
+  & > div {
+    min-width: 0;
+  }
+
+  & h2 {
+    overflow-wrap: anywhere;
+    margin-top: 0;
+  }
+
+  & .label + h2 {
+    margin-top: var(--space-3);
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+}
+
+.thumbnail {
+  flex: none;
+  width: 12rem;
+  height: 12rem;
+  object-fit: cover;
+  object-position: center;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1600 / 838;
+  }
+}
+
 .back {
   display: inline-block;
   margin-bottom: var(--space-10);
