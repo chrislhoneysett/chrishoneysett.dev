@@ -2,7 +2,7 @@
 title: "Chunking BLE Data: Fitting a Large Transfer Into Small Writes"
 description: "Understand payload budgets and split larger BLE transfers into ordered writes."
 author: "Chris Honeysett"
-date: "2026-10-06"
+date: "2026-10-20"
 tags: [BLE, React Native, JavaScript]
 status: published
 series: ble-for-web-developers

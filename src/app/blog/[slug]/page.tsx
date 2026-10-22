@@ -27,6 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const articleImage = post.image ?? shareImage
   return {
     title, description: post.description, authors: [{ name: post.author }], keywords: post.tags,
+    ...(post.status === 'draft' ? { robots: { index: false, follow: false } } : {}),
     alternates: { canonical: `/blog/${slug}/` },
     openGraph: { title, description: post.description, url: `/blog/${slug}/`, type: 'article', publishedTime: post.date, authors: [post.author], tags: post.tags, images: [articleImage] },
     twitter: { card: 'summary_large_image', title, description: post.description, images: [articleImage] },
@@ -64,7 +65,7 @@ export default async function ArticlePage({ params }: Props) {
         <h2>{blogSeries[post.series].title}</h2>
         <p>{blogSeries[post.series].description}</p>
         <ol>{parts.map((part) => <li key={part.slug} value={part.seriesOrder}>
-          <Link href={postHref(part)} aria-current={part.slug === slug ? 'page' : undefined}>{part.title}{part.publisher && ` (Published on ${part.publisher})`}</Link>
+          <Link href={postHref(part)} aria-current={part.slug === slug ? 'page' : undefined}>{part.title}{part.status === 'draft' && ' (Draft)'}{part.publisher && ` (Published on ${part.publisher})`}</Link>
         </li>)}</ol>
       </nav>}
       <div className={styles.prose}>

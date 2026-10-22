@@ -2,7 +2,7 @@
 title: "Making Sense of BLE Byte Data"
 description: "Decode and encode BLE values with bytes, integer types, endianness, and JavaScript."
 author: "Chris Honeysett"
-date: "2026-10-06"
+date: "2026-10-13"
 tags: [BLE, React Native, JavaScript]
 status: published
 series: ble-for-web-developers

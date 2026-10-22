@@ -3,6 +3,7 @@ import styles from '@/app/blog/blog.module.css'
 
 export function PostMeta({ post }: { post: Post }) {
   return <>
+    {post.status === 'draft' && <p className={styles.draft}>Draft · Local preview</p>}
     <p className={styles.meta}>{post.author} <span aria-hidden='true'>·</span> <time dateTime={post.date}>{formatPostDate(post.date)}</time></p>
     <ul className={styles.tags} aria-label='Tags'>{post.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
   </>

@@ -1,203 +1,260 @@
 ---
-title: 'Building Auris: My React Native BLE Library'
-description: 'How I built Auris to simplify React Native BLE connections, manage sessions, and cancel ongoing work with AbortController.'
+title: 'Building AurisBLE: A React Native BLE Library'
+description: 'How I built AurisBLE to put BLE complexity behind a familiar API so app developers could focus on using the device.'
 author: 'Chris Honeysett'
-date: '2026-10-20'
+date: '2026-10-22'
 tags: [BLE, React Native, JavaScript]
-status: draft
+status: published
 series: ble-for-web-developers
 seriesOrder: 4
 imageAlt: 'A notebook sketch of BLE library architecture beside a connected phone, wireless sensor, and laptop.'
 ---
 
-## Why I built it
+I was building a React Native app that needed to work with thousands of devices in the field, but only one device at a time. I already had [react-native-ble-manager](https://github.com/innoveit/react-native-ble-manager) to handle the BLE operations. I thought I had what I needed.
 
-- react-native-ble-manager already provided the native operations you needed.
-- The repeated work was coordinating scanning, connecting, discovering services, exchanging data, and disconnecting.
-- Describe one real situation where overlapping work or stale session state caused trouble.
-- Introduce your goal: give application code a straightforward API while centralizing that coordination.
-  Avoid opening with the architecture. Let readers encounter the problem first.
+The trouble started when users moved between devices. Sometimes the app tried to write to a device that had already disconnected. Other times, a new connection failed because the previous connection hadn’t been released.
 
-2. A connection is only part of a session
-   Explain what you mean by session in this article: the connection plus the operations, state, and listeners associated with working with a device.
+I kept adding code to handle these situations, then finding another place that needed the same logic. Scanning, connecting, and reading all worked individually. Getting them to behave together was taking more effort than I’d expected.
 
-Use concrete questions to establish the responsibilities:
+That’s why I built AurisBLE, the BLE library within the larger Auris project. It’s a layer around `react-native-ble-manager` that gave me one place to manage that work and reuse it in other projects.
 
-- What happens to an active scan when a connection starts?
-- What happens if another connection attempt is already running?
-- What happens to reads, writes, and notifications when the device disconnects?
-- How does the UI learn what is happening?
-  These map directly to the task management and event systems described in your README.
+In the [first article in this series](ble-for-web-developers.md), I described why I started treating BLE communication as a session. This is how I turned that idea into a library.
 
-One wording adjustment: describe single-device usage as your original design goal, rather than an unconditional library restriction. The README documents disconnectAllFirst: true as the discovery default, but allows callers to disable it and preserve an existing connection. 3. What using AurisBLE looks like
-Show the payoff before explaining the internals.
+## A connection was only part of the problem
 
-Use one compact example covering:
+When a user opened a device screen, the app needed to connect, discover services, and start exchanging data. When they left, it needed to stop.
 
-1. Connecting to a selected peripheral.
-2. Receiving connection progress.
-3. Reading a characteristic using the returned peripheral.
-4. Disconnecting.
-   Explain that the connection workflow includes service discovery and optional MTU negotiation. The app still chooses the device and data operation; AurisBLE coordinates the steps underneath.
+That sounds simple enough until:
 
-Introduce type safety here through the actual parameters and results. Readers will understand its value more easily beside a concrete example. 4. How I organized the coordination
-Explain your three layers briefly:
-Layer Responsibility
-Public API Provides the functions the app calls, initializes the library, and delegates operations.
-Orchestration core and operation modules Coordinate tasks, state transitions, events, and cleanup.
-react-native-ble-manager Performs the native BLE operations.
+- The user leaves halfway through connecting.
+- The user starts looking for another device while a read is still running.
+- The device loses power before the app finishes what it was doing.
 
-Then follow one connect() call through those layers. That will be more readable than describing every module.
+I started thinking about this as a **session**: the connection plus the operations and listeners associated with that device. Ending the session meant cleaning up all of it, including work that hadn’t finished yet.
 
-Your points about a single index.ts entry point and separate operation files fit naturally here. Explain how that separation helps you maintain the code. 5. Managing the work that is already running
-This should be the technical heart of the article.
+I wanted the application to be able to say “connect to this device” without every screen having to work out what was already running and how to stop it. That became a broader goal for the architecture.
 
-Use the documented examples:
+## Abstraction, abstraction, abstraction
 
-- Starting a connection stops scanning.
-- Existing connection attempts to the same peripheral are cleaned up.
-- Disconnecting cleans up that peripheral’s reads, writes, and notifications.
-- Cancellation and timeouts need cleanup paths too.
-  Introduce AbortController as part of this design, with one short example of passing a signal into an operation.
+I’d spent a lot of time learning BLE to get this working. I didn’t want every developer using the library to have to go through the same process.
 
-A useful detail from your README: aborting one discovery caller does not necessarily stop the native scan, because other callers can share it. stopCurrentScan() explicitly forces scan teardown. This gives you a concrete way to explain why “cancel my work” and “stop the underlying operation” can be different responsibilities. 6. Keeping the UI informed
-Give events a short section of their own—they are a meaningful part of your design.
+I treated AurisBLE as the app’s BLE back end. The app asks it to find a device, connect, or exchange data. The library handles the BLE setup, platform differences, session state, and cleanup behind those calls. It runs inside the app, with no dependency on a particular screen or UI.
 
-- Promises provide an operation’s result.
-- Events communicate progress, discovered peripherals, and connection changes.
-- Application state can consume those events so components don’t each manage BLE subscriptions.
-  Show one progress callback or event subscription. Leave the full Zustand implementation out of this article.
+That meant an app developer could work with familiar functions, promises, callbacks, and cancellation signals. They wouldn’t need to understand [MTU sizing](ble-data-chunking.md) or the order of native BLE calls just to read a value from a device.
 
-7. What I learned
-   Close with your own observations:
+The app still needs to know the device’s interface: which value to read and [what the returned bytes mean](ble-byte-data.md). A device-specific function, like the battery-reading example later in this post, can hide those details from the screen too.
 
-- Which responsibilities became easier to follow?
-- What complexity moved into the library?
-- Which design choice proved most useful?
-- What would you approach differently now?
-  This is where the post becomes more than a shortened README.
+This also made the library useful beyond the original app. I could bring the BLE behavior into another project without bringing its screens or state store along with it.
 
-What to keep versus split out:
-Topic Recommendation
-Permissions Briefly mention the common API and automatic discovery checks. Put platform setup and version differences in a separate guide.
-AbortController Keep its role in session cleanup here. Give cancellation mechanics and shared-operation behavior their own follow-up.
-Events and Zustand Keep the event model here. Save a complete React/Zustand integration walkthrough for another post.
-MTU and payload chunking Mention only when explaining the returned peripheral object. Save the details for a data-transfer article.
-File organization and type safety Keep alongside the design and examples; neither needs a standalone section.
+To make that separation work, the library needed to own the coordination the app was giving up. The first step was keeping track of the work.
 
-One detail to verify before writing code examples: the README describes overlapping scans in different places as stopped, queued, or coalesced. Use the behavior confirmed by the implementation, and avoid broad claims such as “all conflicting operations are queued.”
+## Keeping track of the work
 
-For this post, I’d aim for two main code examples: consuming the API and cancelling an operation, supported by a short walkthrough of what happens internally.
+I split the library into two main areas: **operations** for the individual workflows, and **core managers** for the things they share.
 
-- react-native-ble-manager gave my the operations I needed
-- Found myself repeatedly managing connections and losing track of sessions
+A shortened view looks like this:
 
-## Permissions
+```text
+AurisBle/
+├── index.ts
+├── core/
+│   ├── eventManager.ts
+│   ├── stateManager.ts
+│   └── tasks/taskManager.ts
+└── operations/
+    ├── connection/
+    ├── discovery/
+    ├── read/
+    ├── write/
+    └── notify/
+```
 
-- Requirements for iOS vs Android (plus Android differences between old and new)
+The operation modules handle workflows such as connecting or reading. The state and event managers track what’s happening and share updates with the app. The task manager records which work belongs to each device and how to clean it up.
 
-## Repeated Session Management
+With that information shared across the workflows, I could apply rules before starting more work:
 
-### Manage Single Session
+- Stop scanning before connecting.
+- Clean up an existing connection attempt before starting another one for the same device.
+- Clean up a device’s registered reads, writes, and notifications before disconnecting it.
 
-- Only allow a single connection
-- App can make calls without worrying about the session
-- Library handled state management
+For example, the important order in the disconnect workflow is:
 
-## How its used
+```typescript
+// Stop registered work and release its resources first.
+await OperationManager.cleanupPeripheralOperations(peripheralId)
 
-- Using a single index for consumption by other
+// Then ask the native BLE manager to disconnect.
+await aurisBleManager.disconnect(peripheralId)
+```
 
-- Passing in peripheral and event handler
-- Type safety
-- code exmaples
+There’s logging and error handling around this in the implementation, but those two lines show the decision: deal with the work attached to the device before requesting the native disconnect.
 
-## AbortController
+Cleanup includes listeners, timers, and task registrations. I had to think about successful operations too—an old timeout or listener could still cause trouble after its original job was done.
 
-- A key difficulty in managing the single session was stopping any current work.
-- AbortControllers became the right solution
+My app only needed to control one device at a time, so discovery disconnects existing devices by default. I made that configurable so other apps could keep a connection open while scanning.
 
-- Maintainability by segmenting each operation into its own file
+That gave me a place to find active work and run its cleanup. The next question was how the screen that started it could say it was time to stop.
 
-AurisBLE takes the coordination of BLE operations out of your application code. Session management is the motivation; state, tasks, events, and cleanup are how you addressed it.
+## Giving the caller a way to cancel
 
-I’d keep the title “Building AurisBLE: Managing BLE Sessions in React Native.” Here’s the refined outline I’d write from.
+A user leaving the device screen was one of the reasons I needed cleanup in the first place. I wanted that screen to be able to cancel its work without knowing which timers, listeners, or native operations were involved. I used an `AbortController` for that.
 
-1. Why I built it
+If you’ve used it with `fetch()`, the shape is familiar: pass a signal into an operation, then call the controller’s `abort()` method when the work is no longer needed.
 
-- react-native-ble-manager already provided the native operations you needed.
-- The repeated work was coordinating scanning, connecting, discovering services, exchanging data, and disconnecting.
-- Describe one real situation where overlapping work or stale session state caused trouble.
-- Introduce your goal: give application code a straightforward API while centralizing that coordination.
-  Avoid opening with the architecture. Let readers encounter the problem first.
+For a discovery screen, that can fit into a React effect:
 
-2. A connection is only part of a session
-   Explain what you mean by session in this article: the connection plus the operations, state, and listeners associated with working with a device.
+```typescript
+import { useEffect } from 'react'
+import { AurisBle } from '@auris/modules/AurisBle'
 
-Use concrete questions to establish the responsibilities:
+// Inside a discovery screen:
+useEffect(() => {
+  // Give this screen’s search its own cancellation signal.
+  const controller = new AbortController()
 
-- What happens to an active scan when a connection starts?
-- What happens if another connection attempt is already running?
-- What happens to reads, writes, and notifications when the device disconnects?
-- How does the UI learn what is happening?
-  These map directly to the task management and event systems described in your README.
+  AurisBle.startDiscovery({
+    options: { scanDurationMs: 10000 },
+    signal: controller.signal,
+  })
+    .then((peripherals) => {
+      // Ignore results if this screen no longer needs them.
+      if (!controller.signal.aborted) {
+        console.log('Discovered devices:', peripherals)
+      }
+    })
+    .catch((error) => {
+      if (!controller.signal.aborted) {
+        console.error('Discovery failed:', error)
+      }
+    })
 
-One wording adjustment: describe single-device usage as your original design goal, rather than an unconditional library restriction. The README documents disconnectAllFirst: true as the discovery default, but allows callers to disable it and preserve an existing connection. 3. What using AurisBLE looks like
-Show the payoff before explaining the internals.
+  // Cancel this search when the effect ends.
+  return () => controller.abort()
+}, [])
+```
 
-Use one compact example covering:
+The console calls stand in for updating the screen. When the effect ends, its cleanup cancels that search. The signal check keeps the caller from using results it no longer needs.
 
-1. Connecting to a selected peripheral.
-2. Receiving connection progress.
-3. Reading a characteristic using the returned peripheral.
-4. Disconnecting.
-   Explain that the connection workflow includes service discovery and optional MTU negotiation. The app still chooses the device and data operation; AurisBLE coordinates the steps underneath.
+`AbortController` provides the signal; the library still has to do the cleanup. Calling `abort()` doesn’t automatically stop native BLE work or undo a command already sent to a device.
 
-Introduce type safety here through the actual parameters and results. Readers will understand its value more easily beside a concrete example. 4. How I organized the coordination
-Explain your three layers briefly:
-Layer Responsibility
-Public API Provides the functions the app calls, initializes the library, and delegates operations.
-Orchestration core and operation modules Coordinate tasks, state transitions, events, and cleanup.
-react-native-ble-manager Performs the native BLE operations.
+One decision took a little more thought: compatible discovery calls can share a native scan. Cancelling one caller should let the others continue. The library removes that caller and stops the native scan when nobody needs it anymore.
 
-Then follow one connect() call through those layers. That will be more readable than describing every module.
+The caller could now control how long it needed the work, while the library handled the resources underneath. But while that work was running, the screen still needed to show the user what was happening.
 
-Your points about a single index.ts entry point and separate operation files fit naturally here. Explain how that separation helps you maintain the code. 5. Managing the work that is already running
-This should be the technical heart of the article.
+## Keeping the UI in the loop
 
-Use the documented examples:
+Tracking operations and handling cancellation gave the library a better picture of the session. I needed to share that picture with the UI: was the app still connecting, ready to exchange data, or disconnected because the device had lost power? Waiting for a promise to finish wouldn’t cover all of those changes.
 
-- Starting a connection stops scanning.
-- Existing connection attempts to the same peripheral are cleaned up.
-- Disconnecting cleans up that peripheral’s reads, writes, and notifications.
-- Cancellation and timeouts need cleanup paths too.
-  Introduce AbortController as part of this design, with one short example of passing a signal into an operation.
+I added callbacks for updates tied to a particular call, such as connection progress, and a predefined set of typed events for code observing the session more broadly:
 
-A useful detail from your README: aborting one discovery caller does not necessarily stop the native scan, because other callers can share it. stopCurrentScan() explicitly forces scan teardown. This gives you a concrete way to explain why “cancel my work” and “stop the underlying operation” can be different responsibilities. 6. Keeping the UI informed
-Give events a short section of their own—they are a meaningful part of your design.
+- `stateChanged` reports state transitions, such as connecting, connected, or disconnected.
+- `scanProgress` reports elapsed time and how many devices have been found.
+- `connectionProgress` reports the connection stage and percentage.
 
-- Promises provide an operation’s result.
-- Events communicate progress, discovered peripherals, and connection changes.
-- Application state can consume those events so components don’t each manage BLE subscriptions.
-  Show one progress callback or event subscription. Leave the full Zustand implementation out of this article.
+These names are defined by the library’s `AurisBleEventType` type. Choosing an event also gives the listener the right payload type, so the editor can suggest available fields and TypeScript can catch a misspelled event name.
 
-7. What I learned
-   Close with your own observations:
+The states inside `stateChanged` are predefined too, through `BleEvents`. For example, the app can react to a connection change and show scan progress without interpreting native BLE events:
 
-- Which responsibilities became easier to follow?
-- What complexity moved into the library?
-- Which design choice proved most useful?
-- What would you approach differently now?
-  This is where the post becomes more than a shortened README.
+```typescript
+import { AurisBle, BleEvents } from '@auris/modules/AurisBle'
 
-What to keep versus split out:
-Topic Recommendation
-Permissions Briefly mention the common API and automatic discovery checks. Put platform setup and version differences in a separate guide.
-AbortController Keep its role in session cleanup here. Give cancellation mechanics and shared-operation behavior their own follow-up.
-Events and Zustand Keep the event model here. Save a complete React/Zustand integration walkthrough for another post.
-MTU and payload chunking Mention only when explaining the returned peripheral object. Save the details for a data-transfer article.
-File organization and type safety Keep alongside the design and examples; neither needs a standalone section.
+// The state is typed; use the library’s constants to react to changes.
+const stateSubscription = AurisBle.addEventListener(
+  'stateChanged',
+  ({ state, peripheralId }) => {
+    if (state === BleEvents.CONNECTED) {
+      console.log('Device connected:', peripheralId)
+    } else if (state === BleEvents.DISCONNECTED) {
+      console.log('Device disconnected:', peripheralId)
+    }
+  },
+)
 
-One detail to verify before writing code examples: the README describes overlapping scans in different places as stopped, queued, or coalesced. Use the behavior confirmed by the implementation, and avoid broad claims such as “all conflicting operations are queued.”
+// Choosing scanProgress gives this callback a typed scan progress payload.
+const scanSubscription = AurisBle.addEventListener(
+  'scanProgress',
+  ({ progress }) => {
+    console.log(`Found ${progress.peripheralsFound} devices`)
+  },
+)
 
-For this post, I’d aim for two main code examples: consuming the API and cancelling an operation, supported by a short walkthrough of what happens internally.
+// Later, during the observer’s cleanup:
+stateSubscription.remove()
+scanSubscription.remove()
+```
+
+That lets the app turn BLE updates into loading indicators, device status, and error messages. If several components need the same information, a shared store such as Zustand can subscribe and expose it to them.
+
+With those updates in place, the app could follow the session without managing the BLE listeners itself. That left one last piece: putting these decisions behind the API I wanted to use from a screen.
+
+## Putting it together in the app
+
+Those pieces form the BLE back end I wanted the app to use. Here’s a device-specific function that brings them together: scan, choose a device, connect, read its battery level, and disconnect.
+
+The shared `AurisBle` object lives in the library’s `index.ts`. JavaScript evaluates that module once, so screens and hooks importing it get the same object. I keep device information and UI status in application state; the library object stays in its module.
+
+The first operation initializes the native BLE manager automatically. This example looks for our fictional weather station by name and assumes it supports the standard Battery Service:
+
+```typescript
+// Import the shared object; each screen or hook uses the same export.
+import { AurisBle } from '@auris/modules/AurisBle'
+
+async function readWeatherStationBattery(name = 'WeatherStation-1042') {
+  // Scan for ten seconds. AurisBle initializes itself and checks permissions.
+  const devices = await AurisBle.startDiscovery({
+    options: { scanDurationMs: 10000 },
+  })
+
+  // A real screen could let the user choose from these results.
+  const selectedDevice = devices.find((device) => device.name === name)
+
+  if (!selectedDevice) {
+    throw new Error('Weather station not found')
+  }
+
+  try {
+    // Connect and report progress while the library handles setup.
+    const { peripheral } = await AurisBle.connect({
+      peripheralId: selectedDevice.id,
+      onConnectionProgress: ({ stage, percentage }) => {
+        console.log(`${stage}: ${percentage}%`)
+      },
+    })
+
+    if (!peripheral) {
+      throw new Error('Connection did not complete')
+    }
+
+    // Use the returned peripheral to read the Battery Level characteristic.
+    const batteryLevel = await AurisBle.read({
+      peripheral,
+      serviceUUID: '180F',
+      characteristicUUID: '2A19',
+    })
+
+    // This standard characteristic stores its percentage in the first byte.
+    return batteryLevel.readUInt8(0)
+  } finally {
+    // Clean up this device’s registered work and request a disconnect,
+    // even if connecting or reading failed.
+    await AurisBle.disconnect({ peripheralId: selectedDevice.id })
+  }
+}
+
+// A screen action could call this and display the result.
+readWeatherStationBattery()
+  .then((level) => console.log(`Battery: ${level}%`))
+  .catch((error) => console.error('Could not read battery:', error))
+```
+
+This is where the earlier decisions come together. Connecting stops scanning, the progress callback keeps the UI informed, and disconnecting cleans up the work registered for that device. The returned `peripheral` carries connection information into the read, and the read returns a `Buffer` for the app to interpret. I cover [decoding byte arrays with `Buffer`](ble-byte-data.md) in more detail in the byte-data article.
+
+The screen can await `readWeatherStationBattery()` and get a number back. That function knows the weather station’s interface; AurisBLE handles the BLE workflow underneath. Each layer gives the next one less to think about.
+
+## What I’d take into the next project
+
+The biggest change was having one place to answer “what is still running for this device?” Before that, the answer was spread across screens and callbacks.
+
+The difficult cases still existed. A device could disconnect, a connection could time out, and a user could leave halfway through an operation. But I could handle those cases alongside the work they affected, rather than asking every caller to remember the same cleanup steps.
+
+I built AurisBLE because I kept solving the same session problems in different places. Keeping those decisions behind a shared API meant the next developer could use the device without first learning everything I’d learned about BLE. That was the benefit I wanted to carry into the next project.

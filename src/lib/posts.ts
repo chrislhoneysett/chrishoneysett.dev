@@ -4,6 +4,7 @@ import matter from 'gray-matter'
 import { blogSeries } from '@/data/blogSeries'
 
 export type Post = {
+  status: 'draft' | 'published'
   slug: string
   title: string
   description: string
@@ -28,10 +29,10 @@ function markdownFiles(directory: string): string[] {
 export function getPosts(): Post[] {
   const posts = markdownFiles(path.join(process.cwd(), 'src/data/posts')).flatMap((filename): Post[] => {
     const source = readFileSync(filename, 'utf8')
-    // Unmarked notes and drafts never enter the public content pipeline.
+    // Only local development includes drafts; production exports exclude them.
     if (!matter.test(source)) return []
     const { data, content } = matter(source)
-    if (data.status !== 'published') return []
+    if (data.status !== 'published' && !(data.status === 'draft' && process.env.NODE_ENV === 'development')) return []
     const fail = (message: string): never => { throw new Error(`${filename}: ${message}`) }
     const text = (key: string): string => typeof data[key] === 'string' && data[key].trim() ? data[key].trim() : fail(`Missing or invalid ${key}`)
     const date = text('date')
@@ -54,14 +55,14 @@ export function getPosts(): Post[] {
     const image = !externalUrl && existsSync(path.join(process.cwd(), 'public', imageUrl))
       ? { url: imageUrl, width: 1600, height: 838, alt: data.imageAlt === undefined ? text('title') : text('imageAlt') }
       : undefined
-    return [{ slug, title: text('title'), description: text('description'), author: text('author'), date,
+    return [{ status: data.status, slug, title: text('title'), description: text('description'), author: text('author'), date,
       tags: data.tags.map((tag: string) => tag.trim()), series, seriesOrder: series ? data.seriesOrder : undefined,
       externalUrl, publisher: externalUrl ? text('publisher') : undefined, image, content }]
   })
   const slugs = new Set<string>()
   const positions = new Set<string>()
   for (const post of posts) {
-    if (slugs.has(post.slug)) throw new Error(`Duplicate published post slug: ${post.slug}`)
+    if (slugs.has(post.slug)) throw new Error(`Duplicate post slug: ${post.slug}`)
     slugs.add(post.slug)
     if (post.series) {
       const position = `${post.series}:${post.seriesOrder}`
