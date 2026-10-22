@@ -24,7 +24,7 @@ One distinction mattered early: a successful write response doesn’t necessaril
 
 I also needed to think about the whole session: setup, ongoing communication, and cleanup when the user leaves or the connection ends.
 
-[Read Part 1: BLE for Web Developers: The Mental Model I Wish I’d Had](https://chrishoneysett.dev/blog/ble-for-web-developers/)
+[Read Part 1: BLE for Web Developers: The Mental Model I Wish I’d Had](https://chrishoneysett.dev/blog/ble-for-web-developers/?utm_source=linkedin&utm_medium=social&utm_campaign=ble-series-overview&utm_content=part-1)
 
 ## Parte 2 – Giving the bytes meaning
 
@@ -36,7 +36,7 @@ The bytes don’t explain any of that themselves.
 
 Integer types, hexadecimal, byte order, offsets, and scaling were all new to me. This part follows how I learned those concepts and started using JavaScript’s Node-style `Buffer` API to encode and decode values. Keeping those rules in small functions lets the rest of the app work with temperatures, percentages, and settings.
 
-[Read Part 2: Making Sense of BLE Byte Data](https://chrishoneysett.dev/blog/ble-byte-data/)
+[Read Part 2: Making Sense of BLE Byte Data](https://chrishoneysett.dev/blog/ble-byte-data/?utm_source=linkedin&utm_medium=social&utm_campaign=ble-series-overview&utm_content=part-2)
 
 ## Part 3 – Making larger transfers fit
 
@@ -48,7 +48,7 @@ The slicing loop was straightforward. The harder questions were what the reporte
 
 Progress also needed a clear meaning. Writing 100% of the bytes doesn’t establish that the device has validated or installed a firmware update. Those outcomes need their own confirmation.
 
-[Read Part 3: Chunking BLE Data: Fitting a Large Transfer Into Small Writes](https://chrishoneysett.dev/blog/ble-data-chunking/)
+[Read Part 3: Chunking BLE Data: Fitting a Large Transfer Into Small Writes](https://chrishoneysett.dev/blog/ble-data-chunking/?utm_source=linkedin&utm_medium=social&utm_campaign=ble-series-overview&utm_content=part-3)
 
 ## Part 4 – Turning the lessons into a reusable library
 
@@ -60,7 +60,7 @@ I wanted one place to manage operations, session state, cancellation, and cleanu
 
 The goal was to let the next developer use the device without having to repeat every part of my learning process.
 
-[Read Part 4: Building BLEBridge: A React Native BLE Library](https://chrishoneysett.dev/blog/react-native-ble-library/)
+[Read Part 4: Building BLEBridge: A React Native BLE Library](https://chrishoneysett.dev/blog/react-native-ble-library/?utm_source=linkedin&utm_medium=social&utm_campaign=ble-series-overview&utm_content=part-4)
 
 ## What I’m taking forward
 
@@ -70,4 +70,4 @@ A connection gives me a way to communicate. The device’s protocol tells me wha
 
 Understanding those responsibilities helped me build an interface the rest of the app could use with confidence.
 
-If you’re coming from web development and starting a BLE project, I wrote this series to give you the starting point I wish I’d had. [Begin with the mental model](https://chrishoneysett.dev/blog/ble-for-web-developers/), or follow the links above to the part you’re working through now.
+If you’re coming from web development and starting a BLE project, I wrote this series to give you the starting point I wish I’d had. [Begin with the mental model](https://chrishoneysett.dev/blog/ble-for-web-developers/?utm_source=linkedin&utm_medium=social&utm_campaign=ble-series-overview&utm_content=closing-link), or follow the links above to the part you’re working through now.
