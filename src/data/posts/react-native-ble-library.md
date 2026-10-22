@@ -1,6 +1,6 @@
 ---
-title: 'Building AurisBLE: A React Native BLE Library'
-description: 'How I built AurisBLE to put BLE complexity behind a familiar API so app developers could focus on using the device.'
+title: 'Building BLEBridge: A React Native BLE Library'
+description: 'How I built BLEBridge to put BLE complexity behind a familiar API so app developers could focus on using the device.'
 author: 'Chris Honeysett'
 date: '2026-10-22'
 tags: [BLE, React Native, JavaScript]
@@ -16,7 +16,7 @@ The trouble started when users moved between devices. Sometimes the app tried to
 
 I kept adding code to handle these situations, then finding another place that needed the same logic. Scanning, connecting, and reading all worked individually. Getting them to behave together was taking more effort than I’d expected.
 
-That’s why I built AurisBLE, the BLE library within the larger Auris project. It’s a layer around `react-native-ble-manager` that gave me one place to manage that work and reuse it in other projects.
+That’s why I built BLEBridge, a layer around `react-native-ble-manager` that gave me one place to manage that work and reuse it in other projects.
 
 In the [first article in this series](ble-for-web-developers.md), I described why I started treating BLE communication as a session. This is how I turned that idea into a library.
 
@@ -38,7 +38,7 @@ I wanted the application to be able to say “connect to this device” without 
 
 I’d spent a lot of time learning BLE to get this working. I didn’t want every developer using the library to have to go through the same process.
 
-I treated AurisBLE as the app’s BLE back end. The app asks it to find a device, connect, or exchange data. The library handles the BLE setup, platform differences, session state, and cleanup behind those calls. It runs inside the app, with no dependency on a particular screen or UI.
+I treated BLEBridge as the app’s BLE back end. The app asks it to find a device, connect, or exchange data. The library handles the BLE setup, platform differences, session state, and cleanup behind those calls. It runs inside the app, with no dependency on a particular screen or UI.
 
 That meant an app developer could work with familiar functions, promises, callbacks, and cancellation signals. They wouldn’t need to understand [MTU sizing](ble-data-chunking.md) or the order of native BLE calls just to read a value from a device.
 
@@ -55,7 +55,7 @@ I split the library into two main areas: **operations** for the individual workf
 A shortened view looks like this:
 
 ```text
-AurisBle/
+BLEBridge/
 ├── index.ts
 ├── core/
 │   ├── eventManager.ts
@@ -84,7 +84,7 @@ For example, the important order in the disconnect workflow is:
 await OperationManager.cleanupPeripheralOperations(peripheralId)
 
 // Then ask the native BLE manager to disconnect.
-await aurisBleManager.disconnect(peripheralId)
+await nativeBleManager.disconnect(peripheralId)
 ```
 
 There’s logging and error handling around this in the implementation, but those two lines show the decision: deal with the work attached to the device before requesting the native disconnect.
@@ -105,14 +105,14 @@ For a discovery screen, that can fit into a React effect:
 
 ```typescript
 import { useEffect } from 'react'
-import { AurisBle } from '@auris/modules/AurisBle'
+import { BLEBridge } from '@/lib/BLEBridge'
 
 // Inside a discovery screen:
 useEffect(() => {
   // Give this screen’s search its own cancellation signal.
   const controller = new AbortController()
 
-  AurisBle.startDiscovery({
+  BLEBridge.startDiscovery({
     options: { scanDurationMs: 10000 },
     signal: controller.signal,
   })
@@ -151,15 +151,15 @@ I added callbacks for updates tied to a particular call, such as connection prog
 - `scanProgress` reports elapsed time and how many devices have been found.
 - `connectionProgress` reports the connection stage and percentage.
 
-These names are defined by the library’s `AurisBleEventType` type. Choosing an event also gives the listener the right payload type, so the editor can suggest available fields and TypeScript can catch a misspelled event name.
+These names are defined by the library’s `BLEBridgeEventType` type. Choosing an event also gives the listener the right payload type, so the editor can suggest available fields and TypeScript can catch a misspelled event name.
 
 The states inside `stateChanged` are predefined too, through `BleEvents`. For example, the app can react to a connection change and show scan progress without interpreting native BLE events:
 
 ```typescript
-import { AurisBle, BleEvents } from '@auris/modules/AurisBle'
+import { BLEBridge, BleEvents } from '@/lib/BLEBridge'
 
 // The state is typed; use the library’s constants to react to changes.
-const stateSubscription = AurisBle.addEventListener(
+const stateSubscription = BLEBridge.addEventListener(
   'stateChanged',
   ({ state, peripheralId }) => {
     if (state === BleEvents.CONNECTED) {
@@ -171,7 +171,7 @@ const stateSubscription = AurisBle.addEventListener(
 )
 
 // Choosing scanProgress gives this callback a typed scan progress payload.
-const scanSubscription = AurisBle.addEventListener(
+const scanSubscription = BLEBridge.addEventListener(
   'scanProgress',
   ({ progress }) => {
     console.log(`Found ${progress.peripheralsFound} devices`)
@@ -191,17 +191,17 @@ With those updates in place, the app could follow the session without managing t
 
 Those pieces form the BLE back end I wanted the app to use. Here’s a device-specific function that brings them together: scan, choose a device, connect, read its battery level, and disconnect.
 
-The shared `AurisBle` object lives in the library’s `index.ts`. JavaScript evaluates that module once, so screens and hooks importing it get the same object. I keep device information and UI status in application state; the library object stays in its module.
+The shared `BLEBridge` object lives in the library’s `index.ts`. JavaScript evaluates that module once, so screens and hooks importing it get the same object. I keep device information and UI status in application state; the library object stays in its module.
 
 The first operation initializes the native BLE manager automatically. This example looks for our fictional weather station by name and assumes it supports the standard Battery Service:
 
 ```typescript
 // Import the shared object; each screen or hook uses the same export.
-import { AurisBle } from '@auris/modules/AurisBle'
+import { BLEBridge } from '@/lib/BLEBridge'
 
 async function readWeatherStationBattery(name = 'WeatherStation-1042') {
-  // Scan for ten seconds. AurisBle initializes itself and checks permissions.
-  const devices = await AurisBle.startDiscovery({
+  // Scan for ten seconds. BLEBridge initializes itself and checks permissions.
+  const devices = await BLEBridge.startDiscovery({
     options: { scanDurationMs: 10000 },
   })
 
@@ -214,7 +214,7 @@ async function readWeatherStationBattery(name = 'WeatherStation-1042') {
 
   try {
     // Connect and report progress while the library handles setup.
-    const { peripheral } = await AurisBle.connect({
+    const { peripheral } = await BLEBridge.connect({
       peripheralId: selectedDevice.id,
       onConnectionProgress: ({ stage, percentage }) => {
         console.log(`${stage}: ${percentage}%`)
@@ -226,7 +226,7 @@ async function readWeatherStationBattery(name = 'WeatherStation-1042') {
     }
 
     // Use the returned peripheral to read the Battery Level characteristic.
-    const batteryLevel = await AurisBle.read({
+    const batteryLevel = await BLEBridge.read({
       peripheral,
       serviceUUID: '180F',
       characteristicUUID: '2A19',
@@ -237,7 +237,7 @@ async function readWeatherStationBattery(name = 'WeatherStation-1042') {
   } finally {
     // Clean up this device’s registered work and request a disconnect,
     // even if connecting or reading failed.
-    await AurisBle.disconnect({ peripheralId: selectedDevice.id })
+    await BLEBridge.disconnect({ peripheralId: selectedDevice.id })
   }
 }
 
@@ -249,7 +249,7 @@ readWeatherStationBattery()
 
 This is where the earlier decisions come together. Connecting stops scanning, the progress callback keeps the UI informed, and disconnecting cleans up the work registered for that device. The returned `peripheral` carries connection information into the read, and the read returns a `Buffer` for the app to interpret. I cover [decoding byte arrays with `Buffer`](ble-byte-data.md) in more detail in the byte-data article.
 
-The screen can await `readWeatherStationBattery()` and get a number back. That function knows the weather station’s interface; AurisBLE handles the BLE workflow underneath. Each layer gives the next one less to think about.
+The screen can await `readWeatherStationBattery()` and get a number back. That function knows the weather station’s interface; BLEBridge handles the BLE workflow underneath. Each layer gives the next one less to think about.
 
 ## What I’d take into the next project
 
@@ -257,4 +257,4 @@ The biggest change was having one place to answer “what is still running for t
 
 The difficult cases still existed. A device could disconnect, a connection could time out, and a user could leave halfway through an operation. But I could handle those cases alongside the work they affected, rather than asking every caller to remember the same cleanup steps.
 
-I built AurisBLE because I kept solving the same session problems in different places. Keeping those decisions behind a shared API meant the next developer could use the device without first learning everything I’d learned about BLE. That was the benefit I wanted to carry into the next project.
+I built BLEBridge because I kept solving the same session problems in different places. Keeping those decisions behind a shared API meant the next developer could use the device without first learning everything I’d learned about BLE. That was the benefit I wanted to carry into the next project.
