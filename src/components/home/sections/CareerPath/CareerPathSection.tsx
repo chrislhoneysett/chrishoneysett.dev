@@ -3,20 +3,20 @@ import styles from './CareerPath.module.css'
 export function CareerPathSection() {
   return (
     <section className={styles.statement} aria-labelledby='statement-title'>
-      <p className={styles.sectionLabel}>02 / Career path</p>
+      <p className={styles.sectionLabel} data-reveal>02 / Career path</p>
       <div>
-        <h2 id='statement-title'>
+        <h2 data-reveal id='statement-title'>
           Each step <em>builds</em>
           <br />
           on the last.
         </h2>
-        <p className={styles.statementIntro}>
+        <p className={styles.statementIntro} data-reveal>
           My path from print design to software has been shaped by changing
           tools and the needs of the people using them. Each transition adds to
           how I approach the next.
         </p>
-        <div className={styles.principles}>
-          <article>
+        <div className={styles.principles} data-reveal-group>
+          <article data-reveal='right'>
             <span>01</span>
             <h3>Print</h3>
             <p>
@@ -25,7 +25,7 @@ export function CareerPathSection() {
               business declined, I looked toward digital work.
             </p>
           </article>
-          <article>
+          <article data-reveal='right'>
             <span>02</span>
             <h3>Flash</h3>
             <p>
@@ -34,7 +34,7 @@ export function CareerPathSection() {
               explore and use.
             </p>
           </article>
-          <article>
+          <article data-reveal='right'>
             <span>03</span>
             <h3>Web</h3>
             <p>
@@ -43,7 +43,7 @@ export function CareerPathSection() {
               built with React and Vue.
             </p>
           </article>
-          <article>
+          <article data-reveal='right'>
             <span>04</span>
             <h3>Mobile</h3>
             <p>
@@ -52,7 +52,7 @@ export function CareerPathSection() {
               coordinate work across hardware, cloud services, and design.
             </p>
           </article>
-          <article>
+          <article data-reveal='right'>
             <span>05</span>
             <h3>AI</h3>
             <p>

@@ -8,9 +8,9 @@ export function AboutSection() {
   return (
     <section className={styles.about} id='about' aria-labelledby='about-title'>
       <div>
-        <p className={styles.sectionLabel}>05 / What carries through</p>
+        <p className={styles.sectionLabel} data-reveal>05 / What carries through</p>
       </div>
-      <div className={styles.aboutMain}>
+      <div className={styles.aboutMain} data-reveal>
         <h2 id='about-title'>
           A designer&apos;s eye.
           <br />
@@ -18,6 +18,7 @@ export function AboutSection() {
         </h2>
         <p>{profile.summary}</p>
         <div className={styles.education}>
+          <div className={styles.educationRule} data-reveal='line-x' aria-hidden='true' />
           <span>Foundation</span>
           <p>
             <strong>{foundation.degree}</strong>

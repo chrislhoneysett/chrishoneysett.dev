@@ -87,7 +87,8 @@
     0 0 0 4.4rem rgba(255, 255, 255, 0.07);
   --focus-width: 3px;
   --focus-offset: 4px;
-  --motion-slow: 450ms;
+  /* Shared duration; stagger delays scale with this value too. */
+  --motion-slow: 750ms;
   --motion-ease: ease;
 
   /* Theme colors: light and dark values share each semantic role. */

@@ -28,6 +28,9 @@ export function ResumeDownload({
         </Heading>
       </div>
       <div className={styles.details}>
+        {twoColumns ? (
+          <div className={styles.divider} data-reveal='line-y' aria-hidden='true' />
+        ) : null}
         <p className={styles.headline}>{profile.headline}</p>
         <p className={styles.description}>
           My experience, capabilities, education, and selected project

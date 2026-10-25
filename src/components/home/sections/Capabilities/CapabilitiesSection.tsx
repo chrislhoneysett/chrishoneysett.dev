@@ -7,8 +7,8 @@ export function CapabilitiesSection() {
       className={styles.capabilities}
       aria-labelledby='capabilities-title'
     >
-      <p className={styles.sectionLabel}>04 / Capabilities</p>
-      <div>
+      <p className={styles.sectionLabel} data-reveal>04 / Capabilities</p>
+      <div data-reveal>
         <h2 id='capabilities-title'>
           Technical
           <br />
@@ -21,9 +21,9 @@ export function CapabilitiesSection() {
           supports the structure behind them.
         </p>
       </div>
-      <div className={styles.skillList}>
+      <div className={styles.skillList} data-reveal-group>
         {skills.map((group) => (
-          <div key={group.id}>
+          <div key={group.id} data-reveal='expand'>
             <h3>{group.label}</h3>
             <p>{group.items.join(' · ')}</p>
           </div>

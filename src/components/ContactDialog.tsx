@@ -7,16 +7,20 @@ import styles from './ContactDialog.module.css'
 
 const accessKey = '1bb07ad5-702b-489a-951b-dfe12c94290a'
 const captchaSiteKey = '50b2fe65-b00b-4b9e-ad62-3ba471098be2'
-const captchaScript = 'https://js.hcaptcha.com/1/api.js?onload=contactCaptchaReady&render=explicit&recaptchacompat=off'
+const captchaScript =
+  'https://js.hcaptcha.com/1/api.js?onload=contactCaptchaReady&render=explicit&recaptchacompat=off'
 
 type CaptchaApi = {
-  render: (element: HTMLElement, options: {
-    sitekey: string
-    size: 'invisible'
-    callback: (token: string) => void
-    'error-callback': () => void
-    'expired-callback': () => void
-  }) => string | number
+  render: (
+    element: HTMLElement,
+    options: {
+      sitekey: string
+      size: 'invisible'
+      callback: (token: string) => void
+      'error-callback': () => void
+      'expired-callback': () => void
+    },
+  ) => string | number
   execute: (widgetId: string | number) => void
   reset: (widgetId: string | number) => void
 }
@@ -43,7 +47,9 @@ export function ContactDialog({ id, className, label }: ContactDialogProps) {
   const pendingFormRef = useRef<HTMLFormElement | null>(null)
   const [isOpen, setIsOpen] = useState(false)
   const [captchaReady, setCaptchaReady] = useState(false)
-  const [status, setStatus] = useState<'idle' | 'verifying' | 'sending' | 'success' | 'error'>('idle')
+  const [status, setStatus] = useState<
+    'idle' | 'verifying' | 'sending' | 'success' | 'error'
+  >('idle')
   const [captchaError, setCaptchaError] = useState(false)
 
   useEffect(() => {
@@ -67,7 +73,13 @@ export function ContactDialog({ id, className, label }: ContactDialogProps) {
 
     let cancelled = false
     const renderCaptcha = () => {
-      if (cancelled || !window.hcaptcha || !captchaRef.current || widgetRef.current !== null) return
+      if (
+        cancelled ||
+        !window.hcaptcha ||
+        !captchaRef.current ||
+        widgetRef.current !== null
+      )
+        return
       widgetRef.current = window.hcaptcha.render(captchaRef.current, {
         sitekey: captchaSiteKey,
         size: 'invisible',
@@ -89,7 +101,9 @@ export function ContactDialog({ id, className, label }: ContactDialogProps) {
       setCaptchaReady(true)
     }
 
-    let script = document.querySelector<HTMLScriptElement>(`script[src="${captchaScript}"]`)
+    let script = document.querySelector<HTMLScriptElement>(
+      `script[src="${captchaScript}"]`,
+    )
     if (script?.dataset.ready === 'true') {
       renderCaptcha()
     } else {
@@ -101,15 +115,21 @@ export function ContactDialog({ id, className, label }: ContactDialogProps) {
         script = document.createElement('script')
         script.src = captchaScript
         script.async = true
-        script.addEventListener('error', () => {
-          script?.remove()
-          setCaptchaError(true)
-        }, { once: true })
+        script.addEventListener(
+          'error',
+          () => {
+            script?.remove()
+            setCaptchaError(true)
+          },
+          { once: true },
+        )
         document.head.appendChild(script)
       }
     }
 
-    return () => { cancelled = true }
+    return () => {
+      cancelled = true
+    }
   }, [isOpen])
 
   function openDialog() {
@@ -162,8 +182,13 @@ export function ContactDialog({ id, className, label }: ContactDialogProps) {
 
   function trapTab(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key !== 'Tab' || !panelRef.current) return
-    const focusable = Array.from(panelRef.current.querySelectorAll<HTMLElement>('a[href], button:not(:disabled), input:not(:disabled), textarea:not(:disabled)'))
-      .filter((element) => element.offsetParent !== null && element.tabIndex >= 0)
+    const focusable = Array.from(
+      panelRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not(:disabled), input:not(:disabled), textarea:not(:disabled)',
+      ),
+    ).filter(
+      (element) => element.offsetParent !== null && element.tabIndex >= 0,
+    )
     if (focusable.length === 0) return
     const first = focusable[0]
     const last = focusable[focusable.length - 1]
@@ -178,11 +203,20 @@ export function ContactDialog({ id, className, label }: ContactDialogProps) {
 
   return (
     <>
-      <button ref={triggerRef} className={className} type='button' onClick={openDialog}>
+      <button
+        ref={triggerRef}
+        className={className}
+        type='button'
+        onClick={openDialog}
+      >
         {label} <Icon name='north-east' />
       </button>
       <div className={styles.overlay} hidden={!isOpen}>
-        <div className={styles.backdrop} onClick={closeDialog} aria-hidden='true' />
+        <div
+          className={styles.backdrop}
+          onClick={closeDialog}
+          aria-hidden='true'
+        />
         <div
           ref={panelRef}
           className={styles.dialog}
@@ -192,26 +226,100 @@ export function ContactDialog({ id, className, label }: ContactDialogProps) {
           onKeyDown={trapTab}
         >
           <div className={styles.content}>
-            <button className={styles.close} type='button' onClick={closeDialog} aria-label='Close contact form'><Icon name='close' /></button>
+            <button
+              className={styles.close}
+              type='button'
+              onClick={closeDialog}
+              aria-label='Close contact form'
+            >
+              <Icon name='close' />
+            </button>
             <p className={styles.eyebrow}>Contact</p>
-            <h2 id={`${id}-title`}>Let&apos;s talk.</h2>
-            <p className={styles.intro}>Tell me about your team and the role you would like to discuss.</p>
-            <p className={styles.success} role='status' hidden={status !== 'success'}>Thanks for reaching out. Your message has been sent.</p>
-            <form className={styles.form} onSubmit={onSubmit} hidden={status === 'success'}>
+            <h2 id={`${id}-title`}>Let&apos;s <em>talk.</em></h2>
+            <p
+              className={styles.success}
+              role='status'
+              hidden={status !== 'success'}
+            >
+              Thanks for reaching out. Your message has been sent.
+            </p>
+            <form
+              className={styles.form}
+              onSubmit={onSubmit}
+              hidden={status === 'success'}
+            >
               <label htmlFor={`${id}-name`}>Name</label>
-              <input ref={nameRef} id={`${id}-name`} name='name' type='text' autoComplete='name' required />
+              <input
+                ref={nameRef}
+                id={`${id}-name`}
+                name='name'
+                type='text'
+                autoComplete='name'
+                required
+              />
               <label htmlFor={`${id}-email`}>Email</label>
-              <input id={`${id}-email`} name='email' type='email' autoComplete='email' required />
+              <input
+                id={`${id}-email`}
+                name='email'
+                type='email'
+                autoComplete='email'
+                required
+              />
               <label htmlFor={`${id}-message`}>Message</label>
               <textarea id={`${id}-message`} name='message' rows={5} required />
-              <input className={styles.honeypot} type='checkbox' name='botcheck' tabIndex={-1} autoComplete='off' aria-hidden='true' />
+              <input
+                className={styles.honeypot}
+                type='checkbox'
+                name='botcheck'
+                tabIndex={-1}
+                autoComplete='off'
+                aria-hidden='true'
+              />
               <div className={styles.captcha} ref={captchaRef} />
-              {captchaError && <p className={styles.error} role='alert'>Verification could not load. Please try again later.</p>}
-              {status === 'error' && <p className={styles.error} role='alert'>Your message could not be sent. Please try again later.</p>}
-              <button className={styles.submit} type='submit' disabled={!captchaReady || status === 'verifying' || status === 'sending'}>
-                {status === 'verifying' ? 'Checking…' : status === 'sending' ? 'Sending…' : 'Send message'} <Icon name='north-east' />
+              {captchaError && (
+                <p className={styles.error} role='alert'>
+                  Verification could not load. Please try again later.
+                </p>
+              )}
+              {status === 'error' && (
+                <p className={styles.error} role='alert'>
+                  Your message could not be sent. Please try again later.
+                </p>
+              )}
+              <button
+                className={styles.submit}
+                type='submit'
+                disabled={
+                  !captchaReady ||
+                  status === 'verifying' ||
+                  status === 'sending'
+                }
+              >
+                {status === 'verifying'
+                  ? 'Checking…'
+                  : status === 'sending'
+                    ? 'Sending…'
+                    : 'Send message'}{' '}
+                <Icon name='north-east' />
               </button>
-              <p className={styles.captchaNotice}>Protected by hCaptcha. <a href='https://www.hcaptcha.com/privacy' target='_blank' rel='noopener noreferrer'>Privacy</a> · <a href='https://www.hcaptcha.com/terms' target='_blank' rel='noopener noreferrer'>Terms</a></p>
+              <p className={styles.captchaNotice}>
+                Protected by hCaptcha.{' '}
+                <a
+                  href='https://www.hcaptcha.com/privacy'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  Privacy
+                </a>{' '}
+                ·{' '}
+                <a
+                  href='https://www.hcaptcha.com/terms'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  Terms
+                </a>
+              </p>
             </form>
           </div>
         </div>

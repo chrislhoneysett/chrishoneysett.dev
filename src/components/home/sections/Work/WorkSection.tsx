@@ -5,7 +5,7 @@ import styles from './Work.module.css'
 export function WorkSection() {
   return (
     <section className={styles.work} id='work' aria-labelledby='work-title'>
-      <div className={styles.sectionHeader}>
+      <div className={styles.sectionHeader} data-reveal>
         <p className={styles.sectionLabel}>01 / Selected work</p>
         <div>
           <h2 id='work-title'>

@@ -10,8 +10,8 @@ export function ShareCardSection() {
       id='share-card'
       aria-labelledby='share-card-title'
     >
-      <p className={styles.sectionLabel}>06 / Share card</p>
-      <div className={styles.shareCard}>
+      <p className={styles.sectionLabel} data-reveal>06 / Share card</p>
+      <div className={styles.shareCard} data-reveal>
         <div className={styles.cardMain}>
           <p className={styles.cardKicker}>
             <span aria-hidden='true' /> Engineering informed by graphic design

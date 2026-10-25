@@ -53,12 +53,12 @@
 }
 
 .education {
+  position: relative;
   margin-top: var(--space-12);
   padding-top: var(--space-6);
   display: grid;
   grid-template-columns: 0.4fr 1fr;
   gap: var(--space-8);
-  border-top: var(--border-thin) solid var(--color-border);
   & span {
     color: var(--color-accent);
     font-family: var(--font-family-code);
@@ -76,4 +76,11 @@
     grid-template-columns: 1fr;
     gap: var(--space-2);
   }
+}
+
+.educationRule {
+  position: absolute;
+  inset: 0 0 auto;
+  height: var(--border-thin);
+  background: var(--color-accent);
 }

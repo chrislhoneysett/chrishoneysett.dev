@@ -9,10 +9,11 @@ import { ShareCardSection } from '@/components/home/sections/ShareCard/ShareCard
 import { ContactFooter } from '@/components/home/sections/Contact/ContactFooter'
 import { ResumeSection } from '@/components/home/sections/Resume/ResumeSection'
 import styles from '@/components/home/HomeLayout.module.css'
+import { ScrollReveals } from '@/components/home/ScrollReveals'
 
 export default function Home() {
   return (
-    <main id='top'>
+    <ScrollReveals>
       <SiteNav />
       <div className={styles.shell}>
         <HeroSection />
@@ -25,6 +26,6 @@ export default function Home() {
       <ShareCardSection />
       <ResumeSection />
       <ContactFooter />
-    </main>
+    </ScrollReveals>
   )
 }

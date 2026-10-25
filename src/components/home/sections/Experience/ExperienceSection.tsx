@@ -10,7 +10,7 @@ export function ExperienceSection() {
       id='experience'
       aria-labelledby='experience-title'
     >
-      <div className={styles.sectionHeader}>
+      <div className={styles.sectionHeader} data-reveal>
         <p className={styles.sectionLabel}>03 / Experience</p>
         <div>
           <h2 id='experience-title'>
@@ -26,9 +26,9 @@ export function ExperienceSection() {
           </p>
         </div>
       </div>
-      <div className={styles.timeline}>
+      <div className={styles.timeline} data-reveal-group>
         {[...experience, ...additionalExperience].map((role) => (
-          <article className={styles.role} key={role.id}>
+          <article className={styles.role} key={role.id} data-reveal='left'>
             <p className={styles.roleDate}>
               {formatExperienceDate(role.startDate)} — {formatExperienceDate(role.endDate)}
               <span className={styles.roleTenure}>

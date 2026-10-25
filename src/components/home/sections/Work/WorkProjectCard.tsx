@@ -16,7 +16,7 @@ export const WorkProjectCard = ({
   index: number
   onClick: () => void
 }) => (
-  <article className={styles.card} id={`project-${project.id}`}>
+  <article className={styles.card} id={`project-${project.id}`} data-reveal={index % 3}>
     <div
       className={`${styles.visual} ${styles[`visual${(index % 3) + 1}`]} ${project.heroImage?.kind === 'illustration' ? styles.withIllustration : project.heroImage ? styles.withScreenshot : ''}`}
       aria-hidden='true'

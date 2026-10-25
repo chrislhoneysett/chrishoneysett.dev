@@ -40,11 +40,26 @@
 
 .footerLinks {
   margin-top: var(--space-20);
+  display: grid;
+  grid-template-rows: 1fr;
+  border-block: var(--border-thin) solid var(--color-hero-border);
+}
+
+.footerLinksContent {
+  min-height: 0;
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .footerLinks:is([data-reveal-state='pending'], [data-reveal-state='entering']) > .footerLinksContent {
+    overflow: hidden;
+  }
+}
+
+.footerLinksInner {
   padding-block: var(--space-6);
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-8) var(--space-12);
-  border-block: var(--border-thin) solid var(--color-hero-border);
   & a {
     display: flex;
     align-items: center;
