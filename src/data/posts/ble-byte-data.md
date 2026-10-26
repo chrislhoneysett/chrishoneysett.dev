@@ -3,7 +3,7 @@ title: "Making Sense of BLE Byte Data"
 description: "Decode and encode BLE values with bytes, integer types, endianness, and JavaScript."
 author: "Chris Honeysett"
 date: "2026-10-13"
-tags: [BLE, React Native, JavaScript]
+tags: [BLE, React Native, JavaScript, Computing Fundamentals]
 status: published
 series: ble-for-web-developers
 seriesOrder: 2
@@ -172,7 +172,9 @@ Big-endian puts the most significant byte first. Little-endian puts the least si
 
 If the app reads `[0xE8, 0x03]` as big-endian, it gets 59,395 instead of 1000.
 
-This was a source of confusion even when working with the firmware team. We needed to agree on the byte order explicitly; knowing that a field occupied two bytes wasn’t enough.
+This was a source of confusion even when working with the firmware team. We needed to agree on the byte order explicitly.
+
+> **Knowing that a field occupies two bytes doesn’t tell you which byte comes first.**
 
 Byte order applies to the bytes within a value. It doesn’t mean reversing the entire message, and it doesn’t change a single-byte field.
 

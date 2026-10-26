@@ -70,6 +70,15 @@ export default async function ArticlePage({ params }: Props) {
       </nav>}
       <div className={styles.prose}>
         <Markdown remarkPlugins={[remarkGfm]} components={{
+          p: ({ node, children }) => {
+            const image = node?.children.length === 1 ? node.children[0] : undefined
+            if (image?.type === 'element' && image.tagName === 'img' && image.properties.title === 'aside' && typeof image.properties.src === 'string') {
+              return <figure className={styles.asideImage}>
+                <Image src={assetPath(image.properties.src)} alt={String(image.properties.alt ?? '')} width={1024} height={1024} sizes='(max-width: 600px) 320px, 300px' />
+              </figure>
+            }
+            return <p>{children}</p>
+          },
           table: ({ children }) => <div className={styles.tableScroll} tabIndex={0} role='region' aria-label='Scrollable table'><table>{children}</table></div>,
           a: ({ href, children }) => {
             const localPost = href?.match(/^(?:\.\/)?([a-z0-9-]+)\.md(#[\w-]+)?$/)

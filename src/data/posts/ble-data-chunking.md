@@ -110,7 +110,9 @@ For the weather station, I build the complete transfer frame first: the firmware
 
 Then I slice that frame into chunks.
 
-This keeps two decisions separate: the protocol defines the message, and the connection’s size determines how much of that message I send at a time.
+That keeps two decisions separate:
+
+> **The protocol defines the message. The connection’s payload budget determines how much I send at a time.**
 
 The chunks aren’t necessarily meaningful on their own. A chunk boundary can fall inside the image or inside another field. The receiving firmware has to interpret the incoming bytes according to its transfer protocol.
 
@@ -184,7 +186,9 @@ The transfer reports chunk counts and transfer speed as well. For this example, 
 
 But there’s an important distinction from the first article: a successful write response does not necessarily mean the work triggered by that write has finished.
 
-When this transfer reaches 100%, it means all of the frame’s chunks have been written successfully. It doesn’t establish that the device has validated the image, installed it, or rebooted into the new firmware.
+> **A transfer reaching 100% doesn’t mean the firmware update is finished.**
+
+For this transfer, it means all of the frame’s chunks have been written successfully. It doesn’t establish that the device has validated the image, installed it, or rebooted into the new firmware.
 
 Those outcomes need their own confirmation from the device’s protocol.
 

@@ -30,7 +30,9 @@ That sounds simple enough until:
 - The user starts looking for another device while a read is still running.
 - The device loses power before the app finishes what it was doing.
 
-I started thinking about this as a **session**: the connection plus the operations and listeners associated with that device. Ending the session meant cleaning up all of it, including work that hadn’t finished yet.
+I started thinking about this as a **session**: the connection plus the operations and listeners associated with that device.
+
+> **Ending the session meant cleaning up all of it, including work that hadn’t finished yet.**
 
 I wanted the application to be able to say “connect to this device” without every screen having to work out what was already running and how to stop it. That became a broader goal for the architecture.
 
@@ -135,7 +137,9 @@ useEffect(() => {
 
 The console calls stand in for updating the screen. When the effect ends, its cleanup cancels that search. The signal check keeps the caller from using results it no longer needs.
 
-`AbortController` provides the signal; the library still has to do the cleanup. Calling `abort()` doesn’t automatically stop native BLE work or undo a command already sent to a device.
+> **The caller signals cancellation. The library still has to do the cleanup.**
+
+Calling `abort()` doesn’t automatically stop native BLE work or undo a command already sent to a device.
 
 One decision took a little more thought: compatible discovery calls can share a native scan. Cancelling one caller should let the others continue. The library removes that caller and stops the native scan when nobody needs it anymore.
 

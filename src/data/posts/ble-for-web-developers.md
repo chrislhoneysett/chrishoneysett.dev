@@ -327,7 +327,11 @@ Looking at the session lifecycle also revealed places where the app could create
 
 That included work still in progress. What happens if the user leaves while the app is still connecting or discovering characteristics? Cleanup needed to account for both unfinished setup and whatever had already been established.
 
-Eventually I began treating the whole session as one cancellable operation, with responsibility for its setup, ongoing communication, and teardown. That gave me a way to reason about the lifetime of the connection as a whole.
+Eventually I began treating the whole session as one cancellable operation:
+
+> **A session owns its setup, ongoing communication, and teardown.**
+
+That gave me a way to reason about the lifetime of the connection as a whole.
 
 Session management was one of the primary reasons I built my own BLE library abstraction. I also wanted to make more complex operations, such as chunking, easier to use. The goal was to let a developer work with the device without having to learn every BLE detail I’d had to figure out along the way.
 
