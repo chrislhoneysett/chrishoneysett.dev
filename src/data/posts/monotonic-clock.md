@@ -1,6 +1,6 @@
 ---
-title: 'Defending Against User Clock Changes in React Native'
-description: 'How I combined server time with native monotonic clocks to keep user clock changes from disrupting session countdowns and client timestamps.'
+title: 'Keeping Time Offline in React Native When the Device Clock Changes'
+description: 'How I combined server time with native monotonic clocks to support up to 24 hours offline without relying on the phone’s date and time settings.'
 author: 'Chris Honeysett'
 date: '2026-10-26'
 tags: [React Native, Expo, JavaScript, Computing Fundamentals]
@@ -10,9 +10,11 @@ imageAlt: 'A hand holding a phone with manual time settings open in front of ser
 
 While working on a React Native app, I needed to protect its time calculations from users changing their phone’s clock. The app used timestamps for session lengths, lockout expirations, and audit events. I wanted those calculations to follow the server’s time even when the device clock changed.
 
+The app also had to work offline for up to 24 hours. I couldn’t ask the server for the current time before every time-sensitive task. I needed to establish a time reference while connected, then keep track of elapsed time locally while the server was unavailable.
+
 At first, this seemed simple enough: get the server time when the session starts, then use `Date.now()` to work out how much time has passed.
 
-The problem was that `Date.now()` reads the device’s clock. If a user moved that clock forward by 30 minutes, a countdown based on it could decide that a 30-minute lockout had already ended. The server should still reject the login, but the app would be showing the wrong state. Client timestamps in an audit trail could be wrong for the same reason.
+The problem was that `Date.now()` reads the device’s clock. If a user moved that clock forward by 30 minutes, a countdown based on it could decide that a 30-minute lockout had already ended. While connected, the server could reject an invalid request. Offline, the app needed to evaluate time-sensitive conditions using its saved server reference, without letting a change to the phone’s clock alter the result. Client timestamps in an audit trail could be wrong for the same reason.
 
 My first thought was to detect whether the user had set their clock manually and require them to enable automatic time before using the app. That requirement felt unnecessary. Someone could have a valid reason for changing their phone’s time.
 
@@ -121,15 +123,15 @@ This also means a countdown doesn’t need to depend on every timer callback run
 
 ## What this approach can and can’t tell me
 
-The result is an estimate of server time. It still has some uncertainty from the response’s travel time, and the local clock can drift relative to the server. I’d refresh the saved pair periodically and after a long background period.
+The result is an estimate of server time. It still has some uncertainty from the response’s travel time, and the local clock can drift relative to the server. The requirement was to support up to 24 hours offline, so a fresh server response couldn’t be a prerequisite for every time-sensitive task. I’d refresh the saved pair when connectivity allowed, including after a long background period when online.
 
 Those native readings also belong to the current device boot. I keep the saved pair in memory and get a fresh server timestamp when the app launches, rather than assuming a persisted reading will remain valid after a reboot. Starting offline without that reference needs an explicit app decision; silently falling back to `Date.now()` would bring back the original problem.
 
 This approach also doesn’t protect against someone who can modify the app itself. On a rooted or jailbroken device, an attacker could hook the native call, replace its result, or skip the check entirely.
 
-> **The app estimates the remaining time. The server enforces the lockout.**
+> **The app carries the server’s time reference forward while offline. That estimate remains subject to the app’s offline policy and the integrity of the device.**
 
-Reaching zero on the countdown is a reason to ask the server again. For audit events, I’d keep the server’s receipt time alongside any client-reported occurrence time. An offline event’s estimated timestamp is useful context, but it isn’t proof of when that action happened.
+While connected, the server can enforce its own time checks. While offline, the app has to evaluate time-sensitive conditions locally within the permitted offline window. A monotonic clock keeps ordinary changes to the device’s date setting out of that calculation; it doesn’t make local enforcement tamper-proof. For audit events, I’d keep the server’s receipt time alongside any client-reported occurrence time. An offline event’s estimated timestamp is useful context, but it isn’t proof of when that action happened.
 
 ## What about the browser?
 
