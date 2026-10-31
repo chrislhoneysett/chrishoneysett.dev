@@ -40,12 +40,13 @@ export interface ResumeProject {
     alt: string
     kind?: 'illustration'
   }
-  /** Product-focused prose for website project cards. */
+  /** Contribution-focused prose for website project cards. */
   description: string
   /** Quiet disclosure shown after the project details in the modal. */
   confidentialityNote?: string
   /** Expanded project story for the website's project detail modal. */
   modal?: {
+    articles?: { label: string; url: string }[]
     overview: string
     contribution: string
     highlights: string[]
@@ -78,7 +79,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       client: 'Twisthink',
       type: 'Component Library',
       description:
-        'A reusable React frontend foundation built from scratch to give new client applications a shared starting point, with composable components, a CSS theme, and Storybook documentation.',
+        'I identified the need for a shared frontend starting point and created Auris: composable React components, a CSS theme, Storybook documentation, and a private npm package used in client work.',
       modal: {
         overview:
           'Twisthink had no shared starter for frontend projects. I created Auris to bring common interface patterns, styling, and application setup into a reusable React foundation. Drawing on Material Design, it gave designers and developers a shared vocabulary while leaving room for each client application to have its own identity.',
@@ -88,7 +89,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
           'Organized small interface primitives into composed components and larger patterns, with shared conventions for props, styling, and behavior.',
           'Built a CSS theme with shared tokens for color, typography, and spacing, providing a consistent visual foundation that could be adapted for client applications.',
           'Integrated selected third-party tools behind reusable components for forms, tables, charts, and floating interfaces, adapting them to the shared design language.',
-          'Used Auris to scaffold a new project within an hour, including user authentication, a full theme, and the component library.',
+          'In one project setup, used Auris to scaffold authentication, theming, and the component library within an hour; subsequently applied the foundation to the Charity Water dashboard.',
           'Created Storybook examples for component variants and states, and configured library builds with JavaScript module outputs and TypeScript declarations for consuming projects.',
         ],
         screenshots: [
@@ -126,10 +127,10 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       client: 'Charity Water',
       type: 'Web Application',
       description:
-        'A well-monitoring dashboard that brings sensor readings and reported failures together so technicians can identify problems affecting water access in remote African communities.',
+        'I inherited a Vue well-monitoring dashboard, advocated for a React rebuild, and implemented it using my Auris foundation, with sensor tables, maps, charts, and exports.',
       modal: {
         overview:
-          'A well-monitoring dashboard that brings sensor readings and reported failures together so technicians can identify problems affecting water access in remote African communities.',
+          'I inherited a Vue well-monitoring dashboard, advocated for a React rebuild, and implemented it using my Auris foundation, with sensor tables, maps, charts, and exports.',
         contribution:
           'This was the first project I inherited at Twisthink. I first finalized the existing Vue dashboard and got it running. Its structure made changes difficult and risky, so I made the case for rebuilding the frontend in React using the Auris component foundation I had created. I organized the rebuild into focused views, components, hooks, and data providers, applying shared interface patterns while keeping sensor-specific behavior in the application. The work included filtered and sortable tables, map-based navigation, historical charts, data exports, and AWS-backed account and data integration.',
         highlights: [
@@ -168,7 +169,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       },
       resumeHighlight:
         'Rebuilt a fragile Vue dashboard in React with Auris components and a maintainable architecture. Completed a dashboard section redesign within one week, versus an estimated month in the previous codebase.',
-      technologies: ['React', 'JavaScript', 'SCSS', 'TanStack Query', 'TanStack Table', 'AWS Amplify', 'Amazon Cognito', 'Google Maps', 'ApexCharts'],
+      technologies: ['React (rebuild)', 'Vue (inherited)', 'JavaScript', 'SCSS', 'TanStack Query', 'TanStack Table', 'AWS Amplify', 'Amazon Cognito', 'Google Maps', 'ApexCharts'],
       tags: ['web', 'ui'],
     },
     {
@@ -202,17 +203,19 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       type: 'Mobile Application',
       platforms: ['iOS', 'Android'],
       description:
-        'React Native application for managing physical access through connected hardware.',
+        'I lead application development for a released React Native access-control app, coordinating device sessions, offline data, and UI with specialist security contributions.',
       modal: {
+        articles: [{ label: 'Keeping Time Offline in React Native', url: '/blog/monotonic-clock/' }, { label: 'Building BLEBridge', url: '/blog/react-native-ble-library/' }],
         overview:
           'A released iOS and Android app for limited commercial use in secure physical access. Authorized users can operate and program connected locks over Bluetooth, with authentication, PIN entry, permission checks, and device audit logs. An NFC-based hardware version is in development.',
         contribution:
-          'I own the app’s product behavior and nearly all application engineering, working with backend, BLE firmware, and NFC engineers. I built a portable BLE abstraction for discovery, connection, session handling, and communication, and am developing a reusable NFC library with the same architecture.',
+          'I lead application development and implement interaction behavior and requirements, working with backend, BLE firmware, and NFC engineers. Specialists provide the security implementations that I integrate into the application. I built a portable BLE abstraction for discovery, connection, session handling, and communication, and am developing a reusable NFC library with the same architecture.',
         highlights: [
           'Replaced an in-memory JSON object with SQLite after testing showed poor performance with data for more than 10,000 locks. Populating the database in stages kept the larger data set manageable.',
           'Drove backend documentation efforts and authored consistently structured BLE firmware documentation, consolidating scattered information into a reference for application integration.',
           'Anchored the app’s clock to a server timestamp received during bootstrap, then advanced it using the device’s monotonic uptime clock. This keeps access decisions independent of changes to the phone’s wall clock.',
-          'Verified a user-entered PIN by using it to seed decryption of an encrypted wrapper supplied by the backend. Successful decryption confirms the PIN without the app needing to know or store the expected value.',
+          'Handled interrupted and competing device operations, prevented duplicate work, and cleaned up subscriptions and pending tasks as sessions ended.',
+          'Preserved pending data after failures so a failed transfer did not discard work, and wrote behavioral and asynchronous failure-path tests.',
           'Chunked larger data transfers, including firmware images, to work within the bandwidth limits of BLE and NFC.',
           'Developed a UI that helps users find the NFC reader on the back of their phone during NFC interactions.',
           'Designed charging feedback on the charging target itself, where users are already focused. Segments fill as charging progresses, with a split marking when the command begins.',
@@ -222,7 +225,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       confidentialityNote:
         'Project name and imagery are generalized, and identifying client and product details are omitted, to respect client confidentiality.',
       resumeHighlight:
-        'Own product behavior and nearly all application engineering, collaborating across backend and firmware teams. Built a portable BLE library and am developing a reusable NFC library. Replaced in-memory lock-code storage with SQLite after testing exposed performance issues with data for more than 10,000 locks. Drove backend documentation efforts and authored consistently structured BLE firmware documentation.',
+        'Lead application development with backend, firmware, and security specialists. Built a portable BLE library and am developing a reusable NFC library. Replaced in-memory storage with SQLite after testing exposed issues with 10,000+ locks. Authored structured firmware integration documentation.',
       technologies: [
         'React Native',
         'TypeScript',
@@ -244,12 +247,13 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       type: 'Mobile Application',
       platforms: ['iOS', 'Android'],
       description:
-        'React Native application for monitoring and controlling connected battery-powered equipment through BLE and cloud services.',
+        'As primary React Native developer for BLE connectivity and UI, I built the battery-control interface and collaborated on a shared API for local and cloud control.',
       modal: {
+        articles: [{ label: 'Building BLEBridge', url: '/blog/react-native-ble-library/' }],
         overview:
           'A released iOS and Android app for upcoming consumer portable battery packs, from charging phones to powering a campsite. Users can manage a pack locally over Bluetooth or remotely when it connects over Wi-Fi, with AWS supporting user and device authentication.',
         contribution:
-          'I own nearly all application engineering for the React Native app. I architected a shared TypeScript control API with the cloud-controls engineer, routing requests through the BLE library I created for Connected Access Control or the cloud implementation. The common API let me advance the app’s BLE functionality while another developer built the cloud implementation in parallel.',
+          'I am the primary React Native developer responsible for BLE connectivity and UI, with additional contributions to account and cloud integration. I architected a shared TypeScript control API with the cloud-controls engineer, routing requests through the BLE library I created for Connected Access Control or the cloud implementation. The common API let me advance the app’s BLE functionality while another developer built the cloud implementation in parallel.',
         highlights: [
           'Designed the app interface to mirror the product’s physical display, giving users a familiar way to understand and control the battery pack.',
           'With limited budget for dedicated UI/UX design, used familiar iOS and Android interface conventions and native components wherever possible to give users recognizable controls and interactions.',
@@ -261,7 +265,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       confidentialityNote:
         'Project name and imagery are generalized, and identifying client and product details are omitted, to respect client confidentiality.',
       resumeHighlight:
-        'Own nearly all application engineering for a released iOS and Android React Native battery app. Reused a BLE library, saving an estimated 1-2 weeks of development. Architected a shared TypeScript control API enabling BLE app work and cloud development to proceed in parallel. Used familiar OS interface conventions to deliver the UI within a limited design budget.',
+        'Primary React Native developer for BLE connectivity and UI, with account and cloud integration contributions. Reused my BLE library and collaborated on a shared TypeScript control API so BLE and cloud development could proceed in parallel.',
       technologies: ['React Native', 'TypeScript', 'Bluetooth', 'Wi-Fi', 'AWS'],
       tags: ['mobile', 'bluetooth', 'ui'],
     },
@@ -298,7 +302,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       client: 'University of California Irvine School of Medicine',
       type: 'Website',
       description:
-        'A shared website structure for UC Irvine’s School of Medicine and its departments, bringing education, research, healthcare, and community resources together while supporting each site’s distinct content and audiences.',
+        'I led frontend implementation, responsive CSS, and shared content structure for UC Irvine’s School of Medicine and department sites, building on Drupal, React, and an existing component library.',
       modal: {
         overview:
           'The UC Irvine School of Medicine website serves a broad community of prospective and current students, residents, researchers, faculty, alumni, and the public. The experience pairs the school’s “Discover. Teach. Heal.” identity with direct pathways into its programs, clinical resources, research, news, events, and community information.',
@@ -473,7 +477,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       client: 'WMU Miller Auditorium',
       type: 'Website',
       description:
-        'A performing arts destination for discovering Broadway tours, concerts, family shows, and community events at Western Michigan University’s Miller Auditorium.',
+        'I led the Drupal frontend and React integration with Tessitura ticketing data, building responsive performance listings and show pages for Miller Auditorium.',
       modal: {
         overview:
           'Miller Auditorium’s site helps audiences discover upcoming performances and plan a visit. Featured shows and a broader event calendar sit alongside ticketing, box office, accessibility, parking, dining, group sales, and support information.',
@@ -664,7 +668,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       client: 'Michigan Senate',
       type: 'Web Application',
       description:
-        'An internal financial portal that lets authorized staff review office budgets. Access rules determine which offices each person can see.',
+        'I implemented authenticated React views within Drupal for an internal budget portal, applying office-level permissions to the financial data each staff member could access.',
       resumeHighlight:
         'Implemented authenticated React views within Drupal and applied office-level permissions to the budget data each user could access.',
       technologies: ['React', 'Drupal'],
@@ -838,7 +842,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       client: 'Farmers Alley Theatre',
       type: 'Website',
       description:
-        'A regional theatre website where audiences can explore productions and follow a path to online ticket purchases.',
+        'I designed and built the Drupal website for Farmers Alley Theatre, integrated Ludus ticketing, and maintained the experience over time.',
       resumeHighlight:
         'Designed and built the Drupal site, integrated Ludus ticketing, and maintained the experience over time.',
       technologies: ['Drupal', 'CSS', 'Ludus'],

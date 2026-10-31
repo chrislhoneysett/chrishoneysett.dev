@@ -3,7 +3,7 @@ import styles from './CareerPath.module.css'
 export function CareerPathSection() {
   return (
     <section className={styles.statement} aria-labelledby='statement-title'>
-      <p className={styles.sectionLabel} data-reveal>02 / Career path</p>
+      <p className={styles.sectionLabel} data-reveal>03 / Career path</p>
       <div>
         <h2 data-reveal id='statement-title'>
           Each step <em>builds</em>
@@ -48,7 +48,7 @@ export function CareerPathSection() {
             <h3>Mobile</h3>
             <p>
               The same frontend skills now carry into React Native apps for
-              connected products. At Twisthink, I own the mobile experience and
+              connected products. At Twisthink, I build mobile interfaces and
               coordinate work across hardware, cloud services, and design.
             </p>
           </article>
@@ -56,7 +56,7 @@ export function CareerPathSection() {
             <span>05</span>
             <h3>AI</h3>
             <p>
-              AI is the newest tool I have added to that foundation. I use it to
+              AI is the next chapter in that progression. I use it to
               explore options, prototype, and implement features while I remain
               responsible for the decisions, review, and quality of what ships.
             </p>

@@ -1,3 +1,4 @@
+import { WritingSection } from '@/components/home/sections/Writing/WritingSection'
 import { SiteNav } from '@/components/home/sections/Navigation/SiteNav'
 import { HeroSection } from '@/components/home/sections/Hero/HeroSection'
 import { WorkSection } from '@/components/home/sections/Work/WorkSection'
@@ -17,11 +18,12 @@ export default function Home() {
       <SiteNav />
       <div className={styles.shell}>
         <HeroSection />
+        <WritingSection />
       </div>
       <WorkSection />
+      <CapabilitiesSection />
       <CareerPathSection />
       <ExperienceSection />
-      <CapabilitiesSection />
       <AboutSection />
       <ShareCardSection />
       <ResumeSection />

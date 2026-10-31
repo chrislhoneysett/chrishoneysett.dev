@@ -32,12 +32,11 @@ export function HeroSection() {
           </div>
           <div className={styles.heroSupport}>
             <p className={styles.heroLead}>
-              I work with clients, designers, and engineers to understand what a
-              product needs to achieve, then build the web and mobile
-              experiences that bring it to life. With React and React Native, I
-              carry that work from early planning through release, paying close
-              attention to usability, implementation, and the improvements that
-              follow.
+              I build reusable React foundations and take complex web and mobile
+              interfaces from architecture through release. My work connects
+              component systems, data-rich dashboards, and React Native apps
+              with asynchronous device and cloud behavior. A graphic design
+              background helps me make those systems clear to use.
             </p>
             <div className={styles.heroActions}>
               <a className={styles.primaryLink} href='#work'>
@@ -49,35 +48,6 @@ export function HeroSection() {
             </div>
           </div>
         </div>
-      </div>
-      <div className={styles.heroFooter}>
-        <div>
-          <strong>
-            28<span>+</span>
-          </strong>
-          <small>years across graphic design &amp; software development</small>
-        </div>
-        <div>
-          <strong>
-            17<span>+</span>
-          </strong>
-          <small>
-            years guiding
-            <br />
-            frontend projects
-          </small>
-        </div>
-        <div>
-          <strong>Web / Mobile</strong>
-          <small>
-            from interface systems
-            <br />
-            to connected devices
-          </small>
-        </div>
-        <a href='#work'>
-          Scroll to explore <span aria-hidden='true'>↓</span>
-        </a>
       </div>
     </header>
   )

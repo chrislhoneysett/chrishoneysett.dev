@@ -35,7 +35,7 @@ export const experience: Experience[] = [
     startDate: '2023-04',
     endDate: null,
     summary:
-      'As the sole frontend engineer, I own web interfaces and nearly all application engineering for two released React Native apps. I continue to iterate on both, contribute to their design, and collaborate with teammates responsible for specialized BLE and NFC security layers. I also build TypeScript APIs that let app developers work with connected devices without handling device-specific message formats directly.',
+      'I build reusable React foundations and web interfaces, and contribute to two released React Native apps. I lead application development for connected access control and serve as the primary React Native developer for battery-app BLE connectivity and UI. I collaborate with cloud engineers and specialists responsible for BLE and NFC security implementations. I also build TypeScript APIs that let app developers work with connected devices without handling device-specific message formats directly.',
     projects: projectsByRole['twisthink'],
   },
   {

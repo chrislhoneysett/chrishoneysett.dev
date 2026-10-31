@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { Icon } from '@/components/Icon'
 import type { ProjectScreenshot, ResumeProject } from '@/data/projects'
@@ -30,6 +31,28 @@ export function WorkProjectGallery({
     : -1
 
   useEffect(() => {
+    function syncProject() {
+      const id = new URLSearchParams(window.location.hash.slice(1)).get('project')
+      const project = [...projects, ...moreProjects].find((item) => item.id === id) ?? null
+      if (project && moreProjects.some((item) => item.id === project.id)) setShowMore(true)
+      setActiveScreenshot(null)
+      setActiveProject(project)
+    }
+    syncProject()
+    window.addEventListener('hashchange', syncProject)
+    window.addEventListener('popstate', syncProject)
+    return () => {
+      window.removeEventListener('hashchange', syncProject)
+      window.removeEventListener('popstate', syncProject)
+    }
+  }, [projects, moreProjects])
+
+  function openProject(project: WorkProjectGalleryItem) {
+    window.history.pushState(null, '', `#project=${project.id}`)
+    setActiveProject(project)
+  }
+
+  useEffect(() => {
     const dialog = dialogRef.current
     if (!dialog) return
 
@@ -55,6 +78,7 @@ export function WorkProjectGallery({
 
   function closeDialog() {
     setActiveScreenshot(null)
+    window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#work`)
     dialogRef.current?.close()
     setActiveProject(null)
   }
@@ -62,7 +86,7 @@ export function WorkProjectGallery({
   function showRelativeProject(offset: number) {
     if (activeIndex < 0 || visibleProjects.length < 2) return
     setActiveScreenshot(null)
-    setActiveProject(
+    openProject(
       visibleProjects[(activeIndex + offset + visibleProjects.length) % visibleProjects.length],
     )
   }
@@ -75,7 +99,7 @@ export function WorkProjectGallery({
             key={project.id}
             project={project}
             index={index}
-            onClick={() => setActiveProject(project)}
+            onClick={() => openProject(project)}
           />
         ))}
       </div>
@@ -108,7 +132,7 @@ export function WorkProjectGallery({
                     key={project.id}
                     project={project}
                     index={projects.length + index}
-                    onClick={() => setActiveProject(project)}
+                    onClick={() => openProject(project)}
                   />
                 ))}
               </div>
@@ -121,7 +145,7 @@ export function WorkProjectGallery({
         className={styles.dialog}
         ref={dialogRef}
         aria-labelledby='project-dialog-title'
-        onClose={() => setActiveProject(null)}
+        onCancel={(event) => { event.preventDefault(); closeDialog() }}
         onClick={(event) => {
           if (event.target === event.currentTarget) closeDialog()
         }}
@@ -225,6 +249,17 @@ export function WorkProjectGallery({
                 </ul>
               </section>
             ) : null}
+            <section className={styles.highlights}>
+              <a href={`#project=${activeProject.id}`}>Link to this project</a>
+              {activeProject.modal?.articles?.length ? (
+                <>
+                  <h3>Related writing</h3>
+                  <ul>{activeProject.modal.articles.map((article) => (
+                    <li key={article.url}><Link href={article.url}>{article.label}</Link></li>
+                  ))}</ul>
+                </>
+              ) : null}
+            </section>
             {activeProject.modal?.relatedSites ? (
               <section className={styles.highlights}>
                 <h3>Additional sites</h3>

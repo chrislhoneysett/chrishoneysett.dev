@@ -16,7 +16,7 @@ export interface Profile {
 
 export const profile: Profile = {
   name: 'Chris Honeysett',
-  headline: 'Senior Frontend Engineer | React & Connected Mobile Apps',
+  headline: 'Senior Frontend Engineer | React, React Native & UI Systems',
   location: 'Kalamazoo, MI',
   title: 'Frontend & Mobile Engineer.',
   links: [

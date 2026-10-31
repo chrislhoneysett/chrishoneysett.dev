@@ -29,6 +29,7 @@ export function WorkSection() {
         projects={selectedProjects}
         moreProjects={moreProjects}
       />
+
     </section>
   )
 }

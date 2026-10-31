@@ -11,7 +11,7 @@ export function ExperienceSection() {
       aria-labelledby='experience-title'
     >
       <div className={styles.sectionHeader} data-reveal>
-        <p className={styles.sectionLabel}>03 / Experience</p>
+        <p className={styles.sectionLabel}>04 / Experience</p>
         <div>
           <h2 id='experience-title'>
             One career.
@@ -19,10 +19,9 @@ export function ExperienceSection() {
             Several <em>chapters.</em>
           </h2>
           <p>
-            Across these roles, I&apos;ve carried earlier skills into new
-            responsibilities. I have stayed with teams long enough to see
-            projects through and take on new kinds of work, bringing earlier
-            skills into each new responsibility.
+            I have led frontend delivery for consumer brands, public institutions,
+            and connected products, supporting applications through release
+            and continued development.
           </p>
         </div>
       </div>

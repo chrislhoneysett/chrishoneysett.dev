@@ -7,7 +7,7 @@ export function CapabilitiesSection() {
       className={styles.capabilities}
       aria-labelledby='capabilities-title'
     >
-      <p className={styles.sectionLabel} data-reveal>04 / Capabilities</p>
+      <p className={styles.sectionLabel} data-reveal>02 / Capabilities</p>
       <div data-reveal>
         <h2 id='capabilities-title'>
           Technical
