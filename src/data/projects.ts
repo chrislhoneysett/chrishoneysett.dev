@@ -78,18 +78,18 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       client: 'Twisthink',
       type: 'Component Library',
       description:
-        'A Material Design-based component and theme library that helps teams start custom client applications quickly and gives designers and developers a shared vocabulary.',
+        'A reusable React frontend foundation built from scratch to give new client applications a shared starting point, with composable components, a CSS theme, and Storybook documentation.',
       modal: {
         overview:
-          'Auris is an internal component library built as a starter for custom client applications. It draws on Material Design and gives designers and developers a shared vocabulary for interface decisions.',
+          'Twisthink had no shared starter for frontend projects. I created Auris to bring common interface patterns, styling, and application setup into a reusable React foundation. Drawing on Material Design, it gave designers and developers a shared vocabulary while leaving room for each client application to have its own identity.',
         contribution:
-          'I built the React component system and its CSS theme library, organized the components using Atomic Design, set up Storybook for discovery, and packaged the library for private npm distribution.',
+          'I designed and built the foundation by hand, before I used AI in development. I organized components using Atomic Design, established shared styling conventions, and designed component APIs for reuse and composition. I set up Storybook so the system could be explored through live examples and documentation, and packaged it for private npm distribution. The work included deciding what belonged in the shared foundation and what needed to remain specific to a consuming application.',
         highlights: [
-          'Built small atomic components that combine into larger, reusable interface components.',
-          'Developed the theme library to give components a consistent visual foundation across client applications.',
-          'Wrapped selected third-party components so developers could fully customize them through Auris’s design language without needing to work with the underlying components directly.',
+          'Organized small interface primitives into composed components and larger patterns, with shared conventions for props, styling, and behavior.',
+          'Built a CSS theme with shared tokens for color, typography, and spacing, providing a consistent visual foundation that could be adapted for client applications.',
+          'Integrated selected third-party tools behind reusable components for forms, tables, charts, and floating interfaces, adapting them to the shared design language.',
           'Used Auris to scaffold a new project within an hour, including user authentication, a full theme, and the component library.',
-          'Used a common component language to keep design and development aligned.',
+          'Created Storybook examples for component variants and states, and configured library builds with JavaScript module outputs and TypeScript declarations for consuming projects.',
         ],
         screenshots: [
           {
@@ -112,8 +112,8 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         ],
       },
       resumeHighlight:
-        'Built a Material Design-based React component and CSS theme library with Atomic Design, Storybook, and private npm distribution. Used it to scaffold a new project within an hour, including user authentication and a full theme.',
-      technologies: ['React', 'CSS', 'Storybook', 'npm'],
+        'Created a reusable React frontend foundation from scratch before using AI in development, combining Atomic Design, a CSS theme, Storybook, and private npm distribution. Used it to scaffold a new project within an hour, including authentication and theming.',
+      technologies: ['React', 'TypeScript', 'SCSS', 'Storybook', 'Rollup', 'npm'],
       tags: ['web', 'ui', 'design-system'],
     },
     {
@@ -131,13 +131,14 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         overview:
           'A well-monitoring dashboard that brings sensor readings and reported failures together so technicians can identify problems affecting water access in remote African communities.',
         contribution:
-          'This was the first project I inherited at Twisthink. I first finalized the existing dashboard and got it running. The codebase was fragile enough that changes and additions carried substantial risk, so I made the case for rebuilding it from Vue in React with the Auris Component Library I had created. The rebuild established a more maintainable architecture that made ongoing changes easier.',
+          'This was the first project I inherited at Twisthink. I first finalized the existing Vue dashboard and got it running. Its structure made changes difficult and risky, so I made the case for rebuilding the frontend in React using the Auris component foundation I had created. I organized the rebuild into focused views, components, hooks, and data providers, applying shared interface patterns while keeping sensor-specific behavior in the application. The work included filtered and sortable tables, map-based navigation, historical charts, data exports, and AWS-backed account and data integration.',
         highlights: [
           'Prioritized getting the inherited dashboard finalized and operational before undertaking the rebuild.',
-          'Rebuilt the interface in React using Auris components and a more maintainable architecture, making changes and additions easier and less risky.',
+          'Applied the Auris foundation I had created to a separate client application, combining shared components and styling with focused dashboard modules.',
           'Completed a redesign of part of the dashboard within one week; I estimate the same work would have taken roughly a month in the previous codebase.',
-          'Broke up oversized files that handled too many responsibilities into smaller, focused components and modules, making the project easier to navigate.',
-          'Connected AWS sensor data to the technician-facing interface.',
+          'Separated page composition, data retrieval, filtering, and presentation into components, hooks, and providers to make ongoing changes easier to navigate.',
+          'Integrated AWS Amplify and Cognito account flows and authenticated API requests with the technician-facing interface.',
+          'Built a virtualized sensor table with filtering and sorting, alongside map selection, time-series charts, and configurable CSV exports.',
         ],
         screenshots: [
           {
@@ -167,7 +168,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       },
       resumeHighlight:
         'Rebuilt a fragile Vue dashboard in React with Auris components and a maintainable architecture. Completed a dashboard section redesign within one week, versus an estimated month in the previous codebase.',
-      technologies: ['React', 'Vue', 'CSS', 'AWS'],
+      technologies: ['React', 'JavaScript', 'SCSS', 'TanStack Query', 'TanStack Table', 'AWS Amplify', 'Amazon Cognito', 'Google Maps', 'ApexCharts'],
       tags: ['web', 'ui'],
     },
     {
@@ -197,11 +198,11 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         alt: 'Illustration of a secure door access system',
         kind: 'illustration',
       },
-      name: 'Wireless Secure Physical Access',
+      name: 'Connected Access Control',
       type: 'Mobile Application',
       platforms: ['iOS', 'Android'],
       description:
-        'A released iOS and Android app for limited commercial use in secure physical access. Authorized users can operate and program connected locks through Bluetooth, with authentication, PIN entry, and permission checks. Device audit logs record lock operations so activity is traceable. An NFC-based hardware version is in development.',
+        'React Native application for managing physical access through connected hardware.',
       modal: {
         overview:
           'A released iOS and Android app for limited commercial use in secure physical access. Authorized users can operate and program connected locks over Bluetooth, with authentication, PIN entry, permission checks, and device audit logs. An NFC-based hardware version is in development.',
@@ -239,20 +240,20 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
         alt: 'Illustration of a connected battery with sensor indicators',
         kind: 'illustration',
       },
-      name: 'Connected Battery Management',
+      name: 'Connected Power Management',
       type: 'Mobile Application',
       platforms: ['iOS', 'Android'],
       description:
-        'A released iOS and Android app for upcoming consumer portable battery packs, from charging phones to powering a campsite. It is designed to let users manage a pack locally over Bluetooth or remotely when it connects over Wi-Fi, with AWS supporting user and device authentication.',
+        'React Native application for monitoring and controlling connected battery-powered equipment through BLE and cloud services.',
       modal: {
         overview:
           'A released iOS and Android app for upcoming consumer portable battery packs, from charging phones to powering a campsite. Users can manage a pack locally over Bluetooth or remotely when it connects over Wi-Fi, with AWS supporting user and device authentication.',
         contribution:
-          'I own nearly all application engineering for the React Native app. I architected a shared TypeScript control API with the cloud-controls engineer, routing requests through the BLE library I created for Secure Physical Access or the cloud implementation. The common API let me advance the app’s BLE functionality while another developer built the cloud implementation in parallel.',
+          'I own nearly all application engineering for the React Native app. I architected a shared TypeScript control API with the cloud-controls engineer, routing requests through the BLE library I created for Connected Access Control or the cloud implementation. The common API let me advance the app’s BLE functionality while another developer built the cloud implementation in parallel.',
         highlights: [
           'Designed the app interface to mirror the product’s physical display, giving users a familiar way to understand and control the battery pack.',
           'With limited budget for dedicated UI/UX design, used familiar iOS and Android interface conventions and native components wherever possible to give users recognizable controls and interactions.',
-          'Reused the BLE library I had created for Secure Physical Access, saving an estimated 1–2 weeks of development and carrying forward solutions to scanning and connection issues from earlier projects.',
+          'Reused the BLE library I had created for Connected Access Control, saving an estimated 1–2 weeks of development and carrying forward solutions to scanning and connection issues from earlier projects.',
           'Used a common TypeScript control API so BLE app development and cloud implementation could proceed in parallel without requiring separate UI integrations.',
         ],
         screenshots: [],
