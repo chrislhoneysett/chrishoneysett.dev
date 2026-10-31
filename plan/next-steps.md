@@ -48,7 +48,7 @@ The first variant is **frontend developer focused**, with a balanced mix of web 
 - [ ] Have the HTML and print renderers read the introduction resolved by the variant selector, rather than using `resume.summary` directly.
 - [ ] Keep filtering rules and selected project IDs out of React components.
 
-Potential starting examples from the existing data are Auris, Charity Water Dashboard, and NorthernTrust.com for React web work; Connected Battery Management and Industrial Motor Control for React Native work. These are candidates to evaluate against available page space, not a fixed selection.
+Potential starting examples from the existing data are Auris, Charity Water Dashboard, and NorthernTrust.com for React web work; Connected Power Management and Industrial Motor Control for React Native work. These are candidates to evaluate against available page space, not a fixed selection.
 
 The freelance work at Honeysett Design and the theatre background should remain visible even if the PDF gives them less space than the engineering roles. The website can expand on how those experiences shaped client communication, design judgment, and project planning. Across variants, keep this differentiator consistent while changing the opening emphasis to suit the role.
 
