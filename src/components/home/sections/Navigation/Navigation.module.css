@@ -17,6 +17,9 @@
   background: var(--color-hero);
 
   @media (max-width: 760px) {
+    /* Let the identity row scroll out of view without resizing the document.
+       Changing the header height can feed scroll anchoring back into scrollMode. */
+    top: calc(-46px - var(--space-2));
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: 46px 24px;
@@ -24,16 +27,6 @@
     min-height: 0;
     padding-top: var(--space-2);
     padding-bottom: var(--space-4);
-    transition:
-      grid-template-rows var(--motion-slow) var(--motion-ease),
-      padding-top var(--motion-slow) var(--motion-ease);
-  }
-
-  &[data-scroll-mode='scrolled'] {
-    @media (max-width: 760px) {
-      grid-template-rows: 0px 24px;
-      padding-top: 0;
-    }
   }
 
   & a:hover {
