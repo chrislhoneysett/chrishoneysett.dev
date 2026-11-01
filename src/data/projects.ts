@@ -266,7 +266,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       id: 'connected-battery-management',
       projectOrigin: 'Greenfield',
       heroImage: {
-        src: '/projects/connected-battery.png',
+        src: '/projects/connected-battery-management.jpg',
         alt: 'Illustration of a connected battery with sensor indicators',
         kind: 'illustration',
       },
