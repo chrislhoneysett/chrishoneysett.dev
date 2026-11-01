@@ -16,54 +16,49 @@ export function SiteNav() {
   const isBlog = pathname.startsWith('/blog')
   const homeSection = (id: string) => isHome ? `#${id}` : assetPath(`/#${id}`)
   const [activeSection, setActiveSection] = useState('')
-  const [scrollMode, setScrollMode] = useState<'top' | 'scrolled'>('top')
-
   useEffect(() => {
-    const updateScrollMode = () => {
-      setScrollMode(window.scrollY <= 20 ? 'top' : 'scrolled')
-    }
-
-    updateScrollMode()
-    window.addEventListener('scroll', updateScrollMode, { passive: true })
-    return () => window.removeEventListener('scroll', updateScrollMode)
-  }, [])
-
-  useEffect(() => {
-    const sections = ['work', 'experience', 'about', 'resume']
+    const sections = ['work', 'background', 'resume']
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null)
-    const navHeight =
-      document
-        .querySelector('nav[aria-label="Main navigation"]')
-        ?.getBoundingClientRect().height ?? 0
-    const activeOffset = window.innerWidth <= 760 ? 24 : Math.ceil(navHeight)
+    const nav = document.querySelector('nav[aria-label="Main navigation"]')
+    if (!nav || !sections.length) return
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleSections = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
-
-        if (visibleSections.length > 0) {
-          setActiveSection(visibleSections[0].target.id)
+    let frame = 0
+    const updateActiveSection = () => {
+      frame = 0
+      // Read every section, rather than only the entries that changed visibility.
+      // The extra space covers anchor padding and gives headings room below nav.
+      const activationLine = nav.getBoundingClientRect().bottom + 48
+      let current = ''
+      for (const section of sections) {
+        const bounds = section.getBoundingClientRect()
+        if (bounds.top <= activationLine && bounds.bottom > activationLine) {
+          current = section.id
         }
-      },
-      {
-        // IntersectionObserver resolves percentage margins against width.
-        // Use viewport height so the active region stays usable on wide screens.
-        rootMargin: `-${activeOffset}px 0px -${Math.round(window.innerHeight * 0.68)}px 0px`,
-        threshold: 0,
-      },
-    )
+      }
+      setActiveSection(current)
+    }
+    const scheduleUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateActiveSection)
+    }
+    const resizeObserver = new ResizeObserver(scheduleUpdate)
+    resizeObserver.observe(document.body)
+    resizeObserver.observe(nav)
+    window.addEventListener('scroll', scheduleUpdate, { passive: true })
+    window.addEventListener('resize', scheduleUpdate)
+    scheduleUpdate()
 
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
+    return () => {
+      window.cancelAnimationFrame(frame)
+      resizeObserver.disconnect()
+      window.removeEventListener('scroll', scheduleUpdate)
+      window.removeEventListener('resize', scheduleUpdate)
+    }
   }, [pathname])
 
   return (
     <nav
       className={styles.nav}
-      data-scroll-mode={scrollMode}
       aria-label='Main navigation'
     >
       <div className={styles.navIdentity}>
@@ -100,20 +95,11 @@ export function SiteNav() {
           Work
         </a>
         <a
-          className={
-            isHome && activeSection === 'experience' ? styles.activeLink : undefined
-          }
-          href={homeSection('experience')}
-          aria-current={isHome && activeSection === 'experience' ? 'location' : undefined}
+          className={isHome && activeSection === 'background' ? styles.activeLink : undefined}
+          href={homeSection('background')}
+          aria-current={isHome && activeSection === 'background' ? 'location' : undefined}
         >
-          Experience
-        </a>
-        <a
-          className={isHome && activeSection === 'about' ? styles.activeLink : undefined}
-          href={homeSection('about')}
-          aria-current={isHome && activeSection === 'about' ? 'location' : undefined}
-        >
-          About
+          Background
         </a>
         <a
           className={isHome && activeSection === 'resume' ? styles.activeLink : undefined}
@@ -122,6 +108,7 @@ export function SiteNav() {
         >
           Resume
         </a>
+        <span className={styles.pageDivider} aria-hidden='true' />
         <Link href='/blog/' className={isBlog ? styles.activeLink : undefined} aria-current={isBlog ? 'page' : undefined}>
           Blog
         </Link>

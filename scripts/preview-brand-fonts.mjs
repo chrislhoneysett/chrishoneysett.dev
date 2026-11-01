@@ -22,15 +22,18 @@ try {
   await page.setViewportSize({ width: 1200, height: 800 })
   await page.goto('http://localhost:3000')
   await page.evaluate(() => document.fonts.ready)
-  await page.addStyleTag({ content: 'nextjs-portal { display: none !important; }' })
+  await page.addStyleTag({ content: 'nextjs-portal { display: none !important; } #share-card, #share-card * { animation: none !important; transition: none !important; transform: none !important; opacity: 1 !important; }' })
   await page.evaluate(() => {
     document.documentElement.dataset.theme = 'light'
     const section = document.querySelector('#share-card')
     Object.assign(section.style, { display: 'block', padding: '0' })
     section.querySelector(':scope > p').style.display = 'none'
-    Object.assign(section.querySelector(':scope > div').style, { width: '1200px', height: '630px', minHeight: '0', border: 'none' })
+    Object.assign(section.querySelector(':scope > div').style, { position: 'fixed', top: '0', left: '0', zIndex: '9999', margin: '0', width: '1200px', height: '630px', minHeight: '0', border: 'none' })
   })
-  await page.locator('#share-card > div').screenshot({ path: 'public/shareImage.png' })
+  await page.screenshot({
+    path: 'public/shareImage.png',
+    clip: { x: 0, y: 0, width: 1200, height: 630 },
+  })
   await page.setViewportSize({ width: 1584, height: 396 })
   await page.goto(pathToFileURL(resolve('output/branding/linkedin-banner.html')).href)
   await page.evaluate(() => document.fonts.ready)

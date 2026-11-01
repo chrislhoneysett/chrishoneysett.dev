@@ -1,25 +1,6 @@
 .hero {
   width: min(calc(100% - 2 * var(--layout-gutter)), var(--layout-max-width));
   margin-inline: auto;
-  & h1 {
-    width: fit-content;
-    max-width: 100%;
-    margin-top: 0;
-    font-family: var(--font-family-display);
-    font-size: clamp(2rem, 15cqw, 7rem);
-    font-weight: var(--font-weight-regular);
-    letter-spacing: var(--tracking-hero);
-    line-height: 1;
-
-    @media (max-width: 760px) {
-      margin-inline: auto;
-    }
-
-    & em {
-      color: var(--color-highlight-strong);
-      font-weight: var(--font-weight-regular);
-    }
-  }
 }
 
 .heroTopline {
@@ -68,6 +49,10 @@
 }
 
 @media (max-width: 1050px) {
+  .heroTopline {
+    display: none;
+  }
+
   .mobileHeadlineBreak {
     display: block;
   }
@@ -103,21 +88,119 @@
   z-index: 1;
   padding-block: var(--space-8);
   @media (max-width: 760px) {
-    padding-block: var(--space-8);
+    padding-block: var(--space-6);
   }
 }
 
-.taglineLine {
-  display: block;
+.identity {
+  display: grid;
+  grid-template-columns: 30% minmax(0, 1fr);
+  align-items: center;
+  gap: 5%;
+  padding-block: var(--space-8);
+}
+
+.name {
+  margin: 0;
+  color: var(--color-hero-text);
+  font-family: var(--font-family-display);
+  font-size: 12cqw;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+
+  & span {
+    display: block;
+  }
+}
+
+.lastName {
+  color: var(--color-highlight-strong);
+}
+
+.identity > svg {
+  width: 100%;
+  margin: 0;
+}
+
+.identity > svg, .name {
+  min-width: 0;
   white-space: nowrap;
+}
 
-  &:last-child {
-    transform: translateX(0.6em);
+.identityCopy {
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+}
 
-    @media (max-width: 760px) {
-      transform: none;
-      padding-inline-start: 0.6em;
+.identityLocation {
+  display: none;
+  margin: var(--space-3) 0 0;
+  color: var(--color-hero-muted);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xs);
+  line-height: 1.4;
+  text-align: center;
+
+  @media (max-width: 1050px) {
+    display: block;
+  }
+}
+
+.role {
+  display: block;
+  margin: -0.8em 0 0;
+  padding-inline-start: 64%;
+  text-align: right;
+  max-width: 100%;
+  color: var(--color-hero-muted);
+  font-family: var(--font-family-body);
+  font-size: clamp(0.625rem, 2.4cqw, 0.9375rem);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: normal;
+  line-height: 1.4;
+
+  & span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  @container (max-width: 46rem) {
+    margin-top: 0.75rem;
+    padding-inline-start: 0;
+    font-size: clamp(0.75rem, 2.9cqw, 0.875rem);
+    text-align: center;
+    white-space: nowrap;
+
+    & span {
+      display: inline;
     }
+
+    & span + span::before {
+      content: ' ';
+    }
+  }
+}
+
+@container (max-width: 36rem) {
+  .identity {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: var(--space-6);
+    padding-block: var(--space-6);
+  }
+
+  .identity > svg {
+    width: clamp(6rem, 28cqw, 9rem);
+  }
+
+  .identityCopy {
+    text-align: center;
+  }
+
+  .name {
+    font-size: clamp(2.5rem, 18cqw, 5rem);
   }
 }
 
@@ -142,27 +225,6 @@
       content: none;
     }
   }
-}
-
-.kicker {
-  font-family: var(--font-family-code);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--tracking-label);
-  line-height: var(--line-height-compact);
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  color: var(--color-highlight-strong);
-}
-
-.kickerDot {
-  width: 0.45rem;
-  height: 0.45rem;
-  display: inline-block;
-  border-radius: var(--radius-round);
-  background: currentColor;
 }
 
 .period {
@@ -209,11 +271,23 @@
 }
 
 .secondaryLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   padding-block: var(--space-3);
+  padding-inline: 0;
+  border: 0;
   border-bottom: var(--border-thin) solid var(--color-hero-border);
+  background: transparent;
   color: var(--color-hero-text);
+  font-family: inherit;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-highlight-strong);
+  }
   & span {
     margin-left: var(--space-3);
   }

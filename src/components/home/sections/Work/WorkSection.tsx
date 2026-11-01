@@ -16,8 +16,8 @@ export function WorkSection() {
           <p>
             Across public websites, internal tools, and connected mobile apps, I
             turn project goals into practical interface decisions. These
-            projects show how I bring design, reusable code, and the details of
-            implementation together.
+            projects show how I translate requirements and designs into reusable
+            components, working interfaces, and released applications.
           </p>
           <p className={styles.workNote}>
             Some project names, imagery, and details are kept general to respect

@@ -17,16 +17,12 @@
   background: var(--color-hero);
 
   @media (max-width: 760px) {
-    /* Let the identity row scroll out of view without resizing the document.
-       Changing the header height can feed scroll anchoring back into scrollMode. */
-    top: calc(-46px - var(--space-2));
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: 46px 24px;
-    row-gap: var(--space-4);
+    top: 0;
+    display: flex;
+    gap: clamp(0.5rem, 1.2vw, 1.5rem);
     min-height: 0;
     padding-top: var(--space-2);
-    padding-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
   }
 
   & a:hover {
@@ -41,10 +37,32 @@
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   white-space: nowrap;
+
+  @media (max-width: 760px) {
+    display: flex;
+    width: 32px;
+    min-height: 44px;
+    flex: 0 0 32px;
+
+    & span {
+      display: none;
+    }
+
+    & .mark {
+      width: 32px;
+      height: 32px;
+    }
+  }
 }
 
 .navIdentity {
   display: contents;
+}
+
+.pageDivider {
+  height: 1em;
+  flex: 0 0 auto;
+  border-inline-start: var(--border-thin) solid var(--color-hero-border);
 }
 
 .mark {
@@ -101,50 +119,41 @@
 
   @media (max-width: 760px) {
     position: static;
-    display: flex;
+    display: contents;
     min-height: 0;
     overflow: hidden;
     width: 100%;
     visibility: visible;
-    justify-content: center;
-    gap: clamp(var(--space-3), 4vw, var(--space-5));
+    order: 1;
+    flex: 1 1 auto;
+    justify-content: space-between;
+    gap: clamp(0.25rem, 1.2vw, 1.25rem);
     padding: 0;
-    font-size: 0.6875rem;
+    font-size: clamp(0.6875rem, 3.2vw, 0.875rem);
+    letter-spacing: 0.01em;
     transform: none;
 
     & a {
-      padding-block: 2px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding-block: var(--space-2);
     }
   }
 }
 
 .navIdentity {
   @media (max-width: 760px) {
-    display: flex;
-    min-height: 0;
-    overflow: hidden;
-    align-items: center;
-    justify-content: space-between;
-    transition:
-      opacity var(--motion-slow) var(--motion-ease),
-      transform var(--motion-slow) var(--motion-ease),
-      visibility 0s linear;
-  }
-}
-
-.nav[data-scroll-mode='scrolled'] {
-  & .navIdentity {
-    @media (max-width: 760px) {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-0.5rem);
-      transition-delay: 0s, 0s, var(--motion-slow);
-    }
+    display: contents;
   }
 }
 
 .navEnd {
   gap: var(--space-4);
+
+  @media (max-width: 760px) {
+    display: contents;
+  }
 }
 
 .navContact {
@@ -171,7 +180,7 @@
   }
 }
 
-/* Keep the five navigation links clear of the identity and controls. */
+/* Keep navigation links clear of the identity and controls. */
 @media (min-width: 761px) and (max-width: 1050px) {
   .nav {
     display: grid;

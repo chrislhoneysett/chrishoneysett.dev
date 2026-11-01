@@ -11,19 +11,19 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://chrishoneysett.dev'),
   title: `${profile.name} — ${profile.headline}`,
   description:
-    'Clear vision. Crafted code. Chris Honeysett is a senior frontend engineer bringing design and engineering together for React and React Native products.',
+    'Chris Honeysett is a senior frontend engineer building reusable React foundations, web interfaces, and connected React Native apps.',
   authors: [{ name: profile.name }],
   openGraph: {
     title: `${profile.name} — ${profile.headline}`,
     description:
-      'Clear vision. Crafted code. Chris Honeysett is a senior frontend engineer bringing design and engineering together for React and React Native products.',
+      'Chris Honeysett is a senior frontend engineer building reusable React foundations, web interfaces, and connected React Native apps.',
     images: [shareImage],
   },
   twitter: {
     card: 'summary_large_image',
     title: `${profile.name} — ${profile.title}`,
     description:
-      'Clear vision. Crafted code. Chris Honeysett is a senior frontend engineer bringing design and engineering together for React and React Native products.',
+      'Chris Honeysett is a senior frontend engineer building reusable React foundations, web interfaces, and connected React Native apps.',
     images: [shareImage],
   },
 }

@@ -3,5 +3,5 @@ export const shareImage = {
   url: '/shareImage.png',
   width: 1200,
   height: 630,
-  alt: 'Chris Honeysett — Clear vision. Crafted code.',
+  alt: 'Chris Honeysett — Frontend & Mobile Engineer',
 }

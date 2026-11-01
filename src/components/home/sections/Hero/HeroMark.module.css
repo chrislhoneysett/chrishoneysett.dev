@@ -1,0 +1,100 @@
+.mark {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.background {
+  animation: monitor-background 3.8s 1.2s both;
+}
+
+.ink {
+  animation: monitor-ink 3.8s 1.2s both;
+}
+
+@keyframes monitor-background {
+  0%, 37% { fill: #080c09; }
+  100% { fill: #234b52; }
+}
+
+@keyframes monitor-ink {
+  0%, 37% { fill: #9bc58c; }
+  100% { fill: #e3b448; }
+}
+
+.openingBrace {
+  animation: opening-brace 3.8s 1.2s both;
+}
+
+.braceShape {
+  /* Thin the actual silhouette without painting a blue seam over its neighbor. */
+  filter: url(#hero-brace-thinning);
+}
+
+.solid {
+  animation: solidify 3.8s 1.2s both;
+}
+
+.matrix {
+  opacity: 0;
+  animation: dissolve-dots 3.8s 1.2s both;
+}
+
+@keyframes solidify {
+  0%, 37% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes dissolve-dots {
+  0%, 37% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.openingBrace {
+  transform: translateX(-31.27px);
+}
+
+.closingBrace {
+  transform: translateX(31.27px);
+  animation: closing-brace 3.8s 1.2s both;
+}
+
+.cursor {
+  opacity: 0;
+  animation: cursor 5s steps(1, end) both;
+}
+
+.cursorFade {
+  opacity: 0;
+  animation: dissolve-dots 3.8s 1.2s both;
+}
+
+@keyframes opening-brace {
+  0%, 19% { opacity: 0; transform: translateX(-300px); }
+  20%, 37% { opacity: 1; transform: translateX(-300px); }
+  100% { opacity: 1; transform: translateX(-31.27px); }
+}
+
+@keyframes closing-brace {
+  0%, 26% { opacity: 0; transform: translateX(300px); }
+  27%, 37% { opacity: 1; transform: translateX(300px); }
+  100% { opacity: 1; transform: translateX(31.27px); }
+}
+
+@keyframes cursor {
+  0% { opacity: 1; transform: translateX(0); }
+  7% { opacity: 0; }
+  14% { opacity: 1; }
+  21% { opacity: 0; }
+  28% { opacity: 1; }
+  35% { opacity: 0; }
+  39.2% { opacity: 1; transform: translateX(110px); }
+  44.52% { opacity: 1; transform: translateX(400px); }
+  100% { opacity: 1; transform: translateX(400px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .openingBrace, .closingBrace, .cursor, .cursorFade, .solid, .matrix,
+  .background, .ink { animation: none; }
+}

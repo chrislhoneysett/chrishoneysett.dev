@@ -21,10 +21,12 @@ export default function Home() {
         <WritingSection />
       </div>
       <WorkSection />
-      <CapabilitiesSection />
-      <CareerPathSection />
-      <ExperienceSection />
-      <AboutSection />
+      <div id='background'>
+        <CapabilitiesSection />
+        <CareerPathSection />
+        <ExperienceSection />
+        <AboutSection />
+      </div>
       <ShareCardSection />
       <ResumeSection />
       <ContactFooter />

@@ -14,12 +14,16 @@ export function ShareCardSection() {
       <div className={styles.shareCard} data-reveal>
         <div className={styles.cardMain}>
           <p className={styles.cardKicker}>
-            <span aria-hidden='true' /> Engineering informed by graphic design
+            <span aria-hidden='true' /> Frontend &amp; mobile engineering
           </p>
-          <h2 id='share-card-title'>
-            <span className={styles.taglineLine}>Clear vision.</span>
-            <span className={styles.taglineLine}>Crafted <em>code.</em></span>
-          </h2>
+          <div className={styles.cardIdentity}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className={styles.cardMark} src='/ch.svg' alt='' width='180' height='180' />
+            <h2 id='share-card-title'>
+              <span className={styles.taglineLine}>Chris</span>
+              <span className={styles.taglineLine}>Honeysett</span>
+            </h2>
+          </div>
         </div>
         <div className={styles.cardDetails}>
           <p className={styles.cardName}>{profile.name}</p>

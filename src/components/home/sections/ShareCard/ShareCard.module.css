@@ -60,9 +60,9 @@
 }
 
 .cardMain h2 {
-  margin-top: var(--space-8);
+  margin: 0;
   font-family: var(--font-family-display);
-  font-size: clamp(3rem, 8vw, 7rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   font-weight: var(--font-weight-regular);
   letter-spacing: var(--tracking-hero);
   line-height: 1;
@@ -78,9 +78,10 @@
   display: block;
   white-space: nowrap;
 
-  &:last-child {
-    padding-inline-start: 0.6em;
-  }
+}
+
+.taglineLine:last-child {
+  color: var(--color-highlight-strong);
 }
 
 .cardDetails {
@@ -169,7 +170,7 @@
   }
 
   .cardMain h2 {
-    font-size: clamp(3rem, 14vw, 5rem);
+    font-size: clamp(1.5rem, 7vw, 3rem);
   }
 
   .cardDetails {
@@ -186,4 +187,17 @@
   .cardUrl {
     margin-top: var(--space-6);
   }
+}
+
+.cardIdentity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+.cardMark {
+  width: 28%;
+  height: auto;
+  flex-shrink: 0;
 }
