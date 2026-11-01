@@ -114,7 +114,14 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       },
       resumeHighlight:
         'Created a reusable React frontend foundation from scratch before using AI in development, combining Atomic Design, a CSS theme, Storybook, and private npm distribution. Used it to scaffold a new project within an hour, including authentication and theming.',
-      technologies: ['React', 'TypeScript', 'SCSS', 'Storybook', 'Rollup', 'npm'],
+      technologies: [
+        'React',
+        'TypeScript',
+        'SCSS',
+        'Storybook',
+        'Rollup',
+        'npm',
+      ],
       tags: ['web', 'ui', 'design-system'],
     },
     {
@@ -169,7 +176,18 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       },
       resumeHighlight:
         'Rebuilt a fragile Vue dashboard in React with Auris components and a maintainable architecture. Completed a dashboard section redesign within one week, versus an estimated month in the previous codebase.',
-      technologies: ['React (rebuild)', 'Vue (inherited)', 'JavaScript', 'SCSS', 'TanStack Query', 'TanStack Table', 'AWS Amplify', 'Amazon Cognito', 'Google Maps', 'ApexCharts'],
+      technologies: [
+        'React (rebuild)',
+        'Vue (inherited)',
+        'JavaScript',
+        'SCSS',
+        'TanStack Query',
+        'TanStack Table',
+        'AWS Amplify',
+        'Amazon Cognito',
+        'Google Maps',
+        'ApexCharts',
+      ],
       tags: ['web', 'ui'],
     },
     {
@@ -195,7 +213,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       id: 'secure-physical-access',
       projectOrigin: 'Greenfield',
       heroImage: {
-        src: '/projects/secure-physical-access-card.webp',
+        src: '/projects/connected-access-control.jpg',
         alt: 'Illustration of a secure door access system',
         kind: 'illustration',
       },
@@ -205,7 +223,16 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       description:
         'I lead application development for a released React Native access-control app, coordinating device sessions, offline data, and UI with specialist security contributions.',
       modal: {
-        articles: [{ label: 'Keeping Time Offline in React Native', url: '/blog/monotonic-clock/' }, { label: 'Building BLEBridge', url: '/blog/react-native-ble-library/' }],
+        articles: [
+          {
+            label: 'Keeping Time Offline in React Native',
+            url: '/blog/monotonic-clock/',
+          },
+          {
+            label: 'Building BLEBridge',
+            url: '/blog/react-native-ble-library/',
+          },
+        ],
         overview:
           'A released iOS and Android app for limited commercial use in secure physical access. Authorized users can operate and program connected locks over Bluetooth, with authentication, PIN entry, permission checks, and device audit logs. An NFC-based hardware version is in development.',
         contribution:
@@ -249,7 +276,12 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       description:
         'As primary React Native developer for BLE connectivity and UI, I built the battery-control interface and collaborated on a shared API for local and cloud control.',
       modal: {
-        articles: [{ label: 'Building BLEBridge', url: '/blog/react-native-ble-library/' }],
+        articles: [
+          {
+            label: 'Building BLEBridge',
+            url: '/blog/react-native-ble-library/',
+          },
+        ],
         overview:
           'A released iOS and Android app for upcoming consumer portable battery packs, from charging phones to powering a campsite. Users can manage a pack locally over Bluetooth or remotely when it connects over Wi-Fi, with AWS supporting user and device authentication.',
         contribution:

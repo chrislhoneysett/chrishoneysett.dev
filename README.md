@@ -5,9 +5,14 @@ A personal site built with Next.js, React, TypeScript, and CSS Modules. The rout
 ## Run locally
 
 ```bash
+source "$HOME/.nvm/nvm.sh"
+nvm use --silent
 npm install
 npm run dev
 ```
+
+For the optional terminal layout, run `npm run herdr`, then run `npm run dev`
+in its DEV pane. See [local development](docs/local-development.md) for setup.
 
 Open [localhost:3000](http://localhost:3000). Before sharing changes, run `npm run lint` and `npm run build`.
 

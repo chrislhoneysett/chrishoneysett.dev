@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
 cd "$ROOT"
 HERDR_CALLER_SESSION=${HERDR_SESSION:-}
-HERDR_SESSION=knox
+HERDR_SESSION=default
 PERSONAL_CODEX_HOME=${PERSONAL_CODEX_HOME:-$HOME/.codex-personal}
 export PATH="$HOME/.local/bin:$PATH"
 fail() { printf '%s\n' "$*" >&2; exit 1; }
@@ -22,14 +22,17 @@ project_node() {
   [[ $(node --version) == "$(tr -d '[:space:]' < .nvmrc)" ]] || fail 'Select the Node version in .nvmrc first.'
 }
 find_workspace() {
-  local workspaces panes
+  local workspaces panes pane_cwd
   workspaces=$(h workspace list) || return 1
   WORKSPACE=$(printf '%s' "$workspaces" | jq -er '[.result.workspaces[] | select(.label == "chrishoneysett.dev")] | if length == 0 then "" elif length == 1 then .[0].workspace_id else error("Multiple chrishoneysett.dev workspaces; inspect before continuing") end') || return 1
   [[ -n $WORKSPACE ]] || return 0
   # Display metadata tokens are not saved across Herdr server restarts. Pane
   # creation cwd is retained; do not use foreground_cwd (a shell can cd anywhere).
   panes=$(h pane list --workspace "$WORKSPACE") || return 1
-  printf '%s' "$panes" | jq -e --arg root "$ROOT" '.result.panes | length > 0 and all(.[]; .cwd == $root)' >/dev/null || fail "chrishoneysett.dev has panes outside $ROOT (or unknown paths). Inspect it before switching checkouts."
+  printf '%s' "$panes" | jq -e '.result.panes | length > 0 and all(.[]; (.cwd | type) == "string" and .cwd != "")' >/dev/null || fail "chrishoneysett.dev has unknown pane paths. Inspect it before switching checkouts."
+  while IFS= read -r pane_cwd; do
+    [[ $pane_cwd -ef $ROOT ]] || fail "chrishoneysett.dev has panes outside $ROOT. Inspect it before switching checkouts."
+  done < <(printf '%s' "$panes" | jq -r '.result.panes[].cwd')
 }
 pane_id() {
   h pane list --workspace "$WORKSPACE" | jq -er --arg label "$1" '[.result.panes[] | select(.label == $label)] | if length == 1 then .[0].pane_id else error("Expected one pane named " + $label) end'
@@ -37,7 +40,7 @@ pane_id() {
 is_caller_pane() {
   # Resolve live caller context rather than the UI-focused pane or an inherited
   # pane ID (which can change after a pane move). IDs are session-specific.
-  [[ ${HERDR_ENV:-} == 1 && (${HERDR_SOCKET_PATH:-} == */sessions/"$HERDR_SESSION"/herdr.sock || (-z ${HERDR_SOCKET_PATH:-} && $HERDR_CALLER_SESSION == "$HERDR_SESSION")) ]] || return 1
+  [[ ${HERDR_ENV:-} == 1 && (${HERDR_SOCKET_PATH:-} == "${XDG_CONFIG_HOME:-$HOME/.config}/herdr/herdr.sock" || (-z ${HERDR_SOCKET_PATH:-} && $HERDR_CALLER_SESSION == "$HERDR_SESSION")) ]] || return 1
   local current
   current=$(h pane current --current) || return 1
   printf '%s' "$current" | jq -e --arg target "$1" '.result.pane.pane_id == $target' >/dev/null
@@ -73,13 +76,12 @@ start_in_idle_pane() {
 
 attach_workspace() {
   h workspace focus "$WORKSPACE" >/dev/null
-  # A shared session hosts a Space per project. Reuse its attached client
-  # even when this launcher was invoked from a regular terminal.
-  if [[ ${HERDR_ENV:-} == 1 && (${HERDR_SOCKET_PATH:-} == */sessions/"$HERDR_SESSION"/herdr.sock || (-z ${HERDR_SOCKET_PATH:-} && $HERDR_CALLER_SESSION == "$HERDR_SESSION")) ]] ||
-     pgrep -u "$UID" -f "^([^[:space:]]*/)?herdr (--session ${HERDR_SESSION}|session attach ${HERDR_SESSION})$" >/dev/null; then
-    printf 'Selected this project Space in the existing Herdr window.\n'
-  elif [[ ${HERDR_ENV:-} == 1 ]]; then
-    fail "The shared window is detached. From an outer terminal, run: herdr --session $HERDR_SESSION"
+  # An in-Herdr setup only focuses the workspace and returns. Socket paths
+  # and session variables are not reliable indicators of client attachment.
+  if [[ ${HERDR_ENV:-} == 1 ]]; then
+    printf '%s\n' 'Selected this project Space in the existing Herdr window.'
+  elif pgrep -u "$UID" -f "^([^[:space:]]*/)?herdr( (--session ${HERDR_SESSION}|session attach ${HERDR_SESSION}))?$" >/dev/null; then
+    printf '%s\n' 'Selected this project Space in the existing Herdr window.'
   else
     exec env -u HERDR_SOCKET_PATH -u HERDR_CLIENT_SOCKET_PATH herdr --session "$HERDR_SESSION"
   fi

@@ -1,6 +1,6 @@
 #!/bin/bash
 source "$(dirname "$0")/herdr-common.sh"
-[[ $# == 0 ]] || fail 'Usage: npm run dev:stop'
+[[ $# == 0 ]] || fail 'Usage: npm run herdr:stop'
 require_tools
 find_workspace
 [[ -n $WORKSPACE ]] || { printf '%s\n' 'chrishoneysett.dev is already stopped.'; exit 0; }

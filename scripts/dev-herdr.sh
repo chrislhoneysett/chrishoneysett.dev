@@ -1,42 +1,29 @@
 #!/bin/bash
-# Personal-account Codex and Next.js, using one persistent three-pane workspace.
+# Set up the persistent three-pane workspace and personal-account Codex.
 source "$(dirname "$0")/herdr-common.sh"
 
 case ${1:-} in
   --codex)
     [[ $# == 1 ]] || fail 'Unexpected arguments.'
     project_node
-    exec env -u OPENAI_API_KEY -u CODEX_API_KEY -u CODEX_ACCESS_TOKEN CODEX_HOME="$PERSONAL_CODEX_HOME" codex -c 'cli_auth_credentials_store="file"' --no-alt-screen -C "$ROOT"
-    ;;
-  --server)
-    [[ $# == 1 ]] || fail 'Unexpected arguments.'
-    project_node
-    [[ -d node_modules/next ]] || fail 'Dependencies missing: run npm ci first.'
-    if lsof -nP -iTCP:3000 -sTCP:LISTEN >/dev/null 2>&1; then
-      fail 'Port 3000 is occupied. Inspect the existing server before starting another.'
-    fi
-    mkdir -p .herdr
-    : > .herdr/next.log
-    npm run dev:server -- --port 3000 2>&1 | tee .herdr/next.log
-    exit
+    exec env -u OPENAI_API_KEY -u CODEX_API_KEY -u CODEX_ACCESS_TOKEN CODEX_HOME="$PERSONAL_CODEX_HOME" codex-personal -c 'cli_auth_credentials_store="file"' --no-alt-screen -C "$ROOT"
     ;;
   --login)
     [[ $# == 1 ]] || fail 'Unexpected arguments.'
     project_node
-    command -v codex >/dev/null || fail 'Install Codex CLI first.'
+    command -v codex-personal >/dev/null || fail 'Install the codex-personal launcher first.'
     mkdir -p "$PERSONAL_CODEX_HOME"
     chmod 700 "$PERSONAL_CODEX_HOME"
     printf 'Sign in with your PERSONAL account. Codex home: %s\n' "$PERSONAL_CODEX_HOME"
-    exec env -u OPENAI_API_KEY -u CODEX_API_KEY -u CODEX_ACCESS_TOKEN CODEX_HOME="$PERSONAL_CODEX_HOME" codex -c 'cli_auth_credentials_store="file"' login
+    exec env -u OPENAI_API_KEY -u CODEX_API_KEY -u CODEX_ACCESS_TOKEN CODEX_HOME="$PERSONAL_CODEX_HOME" codex-personal -c 'cli_auth_credentials_store="file"' login
     ;;
 esac
-[[ $# == 0 || ($# == 1 && $1 == --no-attach) ]] || fail 'Usage: npm run dev -- [--no-attach]'
+[[ $# == 0 || ($# == 1 && $1 == --no-attach) ]] || fail 'Usage: npm run herdr -- [--no-attach]'
 require_tools
 project_node
-command -v codex >/dev/null || fail 'Install Codex CLI first.'
-[[ -d node_modules/next ]] || fail 'Dependencies missing: run npm ci first.'
-[[ -d $PERSONAL_CODEX_HOME ]] || fail 'Personal login missing. Run npm run dev:login with your personal account first.'
-env -u OPENAI_API_KEY -u CODEX_API_KEY -u CODEX_ACCESS_TOKEN CODEX_HOME="$PERSONAL_CODEX_HOME" codex -c 'cli_auth_credentials_store="file"' login status || fail 'Run npm run dev:login with your personal account first.'
+command -v codex-personal >/dev/null || fail 'Install the codex-personal launcher first.'
+[[ -d $PERSONAL_CODEX_HOME ]] || fail 'Personal login missing. Run npm run herdr:login with your personal account first.'
+env -u OPENAI_API_KEY -u CODEX_API_KEY -u CODEX_ACCESS_TOKEN CODEX_HOME="$PERSONAL_CODEX_HOME" codex-personal -c 'cli_auth_credentials_store="file"' login status || fail 'Run npm run herdr:login with your personal account first.'
 
 lock="${TMPDIR:-/tmp}/chrishoneysett.dev-herdr-${UID}.lock"
 mkdir "$lock" 2>/dev/null || fail "Another launcher is running. If it crashed, inspect and remove $lock."
@@ -58,14 +45,10 @@ seed_pane=
 if [[ -n $WORKSPACE ]]; then
   panes=$(h pane list --workspace "$WORKSPACE")
   # A manually opened project workspace begins with one unlabeled terminal.
-  # Keep it as SHELL so launching from that terminal never starts a server
-  # in the pane that is still executing this script.
+  # Keep the calling terminal as SHELL while arranging the other panes.
   seed_pane=$(printf '%s' "$panes" | jq -r 'if (.result.panes | length) == 1 and (.result.panes[0].label // "") == "" then .result.panes[0].pane_id else "" end')
 fi
 if [[ -z $WORKSPACE || -n $seed_pane ]]; then
-  if lsof -nP -iTCP:3000 -sTCP:LISTEN >/dev/null 2>&1; then
-    fail 'Port 3000 is occupied. Inspect the old dev server before starting Herdr.'
-  fi
   if [[ -n $seed_pane ]]; then
     server_pane=$seed_pane
     tab=$(printf '%s' "$panes" | jq -er '.result.panes[0].tab_id')
@@ -94,26 +77,15 @@ else
   codex_pane=$(pane_id CODEX)
   pane_id SHELL >/dev/null
 fi
-printf -v server_cmd '/bin/bash %q --server' "$ROOT/scripts/dev-herdr.sh"
-run_server_here=false
-if is_caller_pane "$server_pane"; then
-  # npm itself is the foreground process here. Do not inject a command into
-  # our own terminal; hand off to Next.js after finishing workspace setup.
-  run_server_here=true
-else
-  start_in_idle_pane "$server_pane" "$server_cmd" "$pane_readiness"
-fi
 printf -v codex_cmd 'env PERSONAL_CODEX_HOME=%q /bin/bash %q --codex' "$PERSONAL_CODEX_HOME" "$ROOT/scripts/dev-herdr.sh"
-start_in_idle_pane "$codex_pane" "$codex_cmd" "$pane_readiness"
-h pane list --workspace "$WORKSPACE"
+if ! is_caller_pane "$codex_pane"; then
+  start_in_idle_pane "$codex_pane" "$codex_cmd" "$pane_readiness"
+fi
+printf '%s\n' 'Panes ready. Run npm run dev in DEV to start Next.js.'
 rmdir "$lock"
 trap - EXIT
-if [[ $run_server_here == true ]]; then
-  h workspace focus "$WORKSPACE" >/dev/null
-  exec /bin/bash "$ROOT/scripts/dev-herdr.sh" --server
-fi
 if [[ ${1:-} == --no-attach || ! -t 0 || ! -t 1 ]]; then
-  printf '%s\n' 'Attach with: herdr --session knox'
+  printf '%s\n' 'Attach with: herdr'
 else
   attach_workspace
 fi
