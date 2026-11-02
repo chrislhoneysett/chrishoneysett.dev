@@ -7,6 +7,7 @@ tags: [BLE, React Native, JavaScript, Computing Fundamentals]
 status: published
 series: ble-for-web-developers
 seriesOrder: 2
+image: "/blog/ble-byte-data/banner.jpg"
 imageAlt: "A notebook decoding a hexadecimal byte into a temperature reading beside a phone and Bluetooth sensor."
 ---
 

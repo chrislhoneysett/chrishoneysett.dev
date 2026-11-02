@@ -104,6 +104,10 @@
   --color-focus: light-dark(#9c5b19, #edc862);
   --color-selection: #eac45e;
   --color-selection-text: #142c31;
+  --color-code-keyword: light-dark(#823b89, #dfa5e5);
+  --color-code-string: light-dark(#276447, #a2d5ad);
+  --color-code-number: light-dark(#955018, #edbd83);
+  --color-code-function: light-dark(#245d91, #9ac9f0);
 
   /* Site sections and controls */
   --color-hero: light-dark(#e8e9df, #0a191e);

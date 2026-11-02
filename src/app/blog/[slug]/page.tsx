@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
+/* eslint-disable @next/next/no-img-element -- Responsive files are generated before static export. */
+import { blogImageProps } from '@/lib/blogImages'
 import { notFound } from 'next/navigation'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeHighlight from 'rehype-highlight'
 import { getPosts, postHref } from '@/lib/posts'
 import { blogSeries } from '@/data/blogSeries'
 import { PostMeta } from '@/components/blog/PostMeta'
@@ -53,12 +55,10 @@ export default async function ArticlePage({ params }: Props) {
         <p className={styles.description}>{post.description}</p>
         <PostMeta post={post} />
       </header>
-      {post.image && <Image
+      {post.image && <img
         className={styles.banner}
-        src={assetPath(post.image.url)}
+        {...blogImageProps(post.image.url, post.image.width, post.image.height, '(max-width: 600px) 100vw, 800px')}
         alt={post.image.alt}
-        width={post.image.width}
-        height={post.image.height}
         loading='eager'
       />}
       {post.series && <nav className={styles.series} aria-label='Articles in this series'>
@@ -69,16 +69,17 @@ export default async function ArticlePage({ params }: Props) {
         </li>)}</ol>
       </nav>}
       <div className={styles.prose}>
-        <Markdown remarkPlugins={[remarkGfm]} components={{
+        <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]} components={{
           p: ({ node, children }) => {
             const image = node?.children.length === 1 ? node.children[0] : undefined
             if (image?.type === 'element' && image.tagName === 'img' && image.properties.title === 'aside' && typeof image.properties.src === 'string') {
               return <figure className={styles.asideImage}>
-                <Image src={assetPath(image.properties.src)} alt={String(image.properties.alt ?? '')} width={1024} height={1024} sizes='(max-width: 600px) 320px, 300px' />
+                <img {...blogImageProps(image.properties.src, 1024, 1024, '(max-width: 600px) 320px, 300px')} alt={String(image.properties.alt ?? '')} />
               </figure>
             }
             return <p>{children}</p>
           },
+          img: ({ src, alt, title }) => typeof src === 'string' ? <img {...blogImageProps(src, 1024, 1024, '(max-width: 600px) 100vw, 448px')} alt={alt ?? ''} title={title} loading='lazy' /> : null,
           table: ({ children }) => <div className={styles.tableScroll} tabIndex={0} role='region' aria-label='Scrollable table'><table>{children}</table></div>,
           a: ({ href, children }) => {
             const localPost = href?.match(/^(?:\.\/)?([a-z0-9-]+)\.md(#[\w-]+)?$/)

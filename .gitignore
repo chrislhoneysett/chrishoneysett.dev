@@ -45,3 +45,6 @@ next-env.d.ts
 
 # Local Herdr session and development logs
 /.herdr/
+
+# Generated blog image variants
+/public/generated/blog/

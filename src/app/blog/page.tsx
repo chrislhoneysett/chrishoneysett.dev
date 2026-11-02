@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
+/* eslint-disable @next/next/no-img-element -- Responsive files are generated before static export. */
+import { blogImageProps } from '@/lib/blogImages'
 import { getPosts, postHref } from '@/lib/posts'
 import { blogSeries } from '@/data/blogSeries'
 import { PostMeta } from '@/components/blog/PostMeta'
 import { shareImage } from '@/lib/shareMetadata'
-import { assetPath } from '@/lib/assetPath'
 import styles from './blog.module.css'
 
 const title = 'Blog — Chris Honeysett'
@@ -27,12 +27,10 @@ export default function BlogPage() {
     <div className={styles.posts}>
       {posts.map((post) => <article key={post.slug} className={styles.card}>
         <div className={styles.cardContent}>
-          {post.image && <Image
+          {post.image && <img
             className={styles.thumbnail}
-            src={assetPath(post.image.url)}
+            {...blogImageProps(post.image.url, post.image.width, post.image.height, '(max-width: 600px) 100vw, 240px')}
             alt=''
-            width={post.image.width}
-            height={post.image.height}
           />}
           <div>
             {post.series && <p className={styles.label}>{blogSeries[post.series].title} · Part {post.seriesOrder}</p>}

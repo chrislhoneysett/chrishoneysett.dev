@@ -320,6 +320,42 @@
     font-size: inherit;
   }
 
+  & pre :global(.hljs-comment),
+  & pre :global(.hljs-quote) {
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  & pre :global(.hljs-keyword),
+  & pre :global(.hljs-selector-tag),
+  & pre :global(.hljs-literal) {
+    color: var(--color-code-keyword);
+  }
+
+  & pre :global(.hljs-string),
+  & pre :global(.hljs-regexp),
+  & pre :global(.hljs-template-tag),
+  & pre :global(.hljs-addition) {
+    color: var(--color-code-string);
+  }
+
+  & pre :global(.hljs-number),
+  & pre :global(.hljs-attr),
+  & pre :global(.hljs-symbol),
+  & pre :global(.hljs-meta) {
+    color: var(--color-code-number);
+  }
+
+  & pre :global(.hljs-title),
+  & pre :global(.hljs-type),
+  & pre :global(.hljs-built_in) {
+    color: var(--color-code-function);
+  }
+
+  & pre :global(.hljs-deletion) {
+    color: var(--color-accent);
+  }
+
   & blockquote {
     clear: both;
     margin: var(--space-6) 0;

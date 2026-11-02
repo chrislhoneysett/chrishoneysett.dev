@@ -7,6 +7,7 @@ tags: [BLE, React Native, JavaScript]
 status: published
 series: ble-for-web-developers
 seriesOrder: 4
+image: '/blog/react-native-ble-bridge/lego-bricks.jpg'
 imageAlt: 'A notebook sketch of BLE library architecture beside a connected phone, wireless sensor, and laptop.'
 ---
 

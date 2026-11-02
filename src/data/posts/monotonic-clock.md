@@ -5,6 +5,7 @@ author: 'Chris Honeysett'
 date: '2026-10-26'
 tags: [React Native, Expo, JavaScript, Computing Fundamentals]
 status: published
+image: '/blog/monotonic-clock/old-clock.jpg'
 imageAlt: 'A hand holding a phone with manual time settings open in front of server racks.'
 ---
 
@@ -53,7 +54,7 @@ const elapsedMs = (await Device.getUptimeAsync()) - startedAtMs
 
 I could save that first reading alongside the server timestamp, then add the elapsed duration whenever the app needed the current time.
 
-![A phone with its screen asleep on a sofa cushion, with a wall clock in the background.](/blog/monotonic-clock/sleep-timing-square.jpg "aside")
+![A phone with its screen asleep on a sofa cushion, with a wall clock in the background.](/blog/monotonic-clock/sleep-timing-square.jpg 'aside')
 
 During testing, I noticed discrepancies on iOS in particular. The app had a countdown showing how much longer a session was valid, and it was ending up far behind reality. It showed time remaining when the session should already have expired.
 
@@ -64,9 +65,9 @@ On Android, Expo uses `SystemClock.uptimeMillis()`, which excludes deep sleep. E
 Imagine starting a 30-minute countdown, using the phone for five minutes, then leaving it asleep for 20 minutes. Here’s what the countdown could show when the phone wakes up:
 
 | Clock behavior | Elapsed time counted | Time remaining |
-| --- | --- | --- |
-| Excludes sleep | 5 minutes | 25 minutes |
-| Includes sleep | 25 minutes | 5 minutes |
+| -------------- | -------------------- | -------------- |
+| Excludes sleep | 5 minutes            | 25 minutes     |
+| Includes sleep | 25 minutes           | 5 minutes      |
 
 I’d found a clock that avoided changes to the device’s date, but it wasn’t measuring all the elapsed time I needed.
 

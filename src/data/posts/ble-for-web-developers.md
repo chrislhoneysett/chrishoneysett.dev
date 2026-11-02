@@ -7,6 +7,7 @@ tags: [BLE, React Native, JavaScript]
 status: published
 series: ble-for-web-developers
 seriesOrder: 1
+image: "/blog/ble-for-web-developers/banner.jpg"
 imageAlt: "A phone discovering a Bluetooth sensor beside a laptop on a naturally lit desk."
 ---
 

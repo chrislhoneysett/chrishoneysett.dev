@@ -35,12 +35,24 @@ GitHub-flavored Markdown. Raw HTML and executable JSX are not enabled. Relative
 article links such as `[Read part two](ble-byte-data.md)` are converted to blog
 URLs. Put images in `public/` and reference them with `/image-name.png`.
 
-For an article banner and social link preview, place a 1600 × 838 JPEG at
-`public/blog/<filename-slug>/banner.jpg`. The article automatically displays it
+Label fenced code blocks with a language, such as `typescript`, `tsx`, or
+`javascript`, to enable syntax highlighting in both light and dark themes.
+Use `text` for plain output; unlabeled blocks remain plain text.
+
+For an article banner and social link preview, place an image in
+`public/` and explicitly reference it in frontmatter:
+
+```yaml
+image: "/blog/my-article/banner.jpg"
+imageAlt: "A description of the image"
+```
+
+The path is relative to `public/` and must point to an existing file. The filename
+is your choice; images are only included when `image` is set. The article displays it
 below the title and metadata and uses it for Open Graph and Twitter previews.
 Keep the full composition visible rather than making a separate shallow crop.
 Add `imageAlt: "A description of the image"` to frontmatter for descriptive
-alternative text; otherwise the article title is used. Articles without a banner
+alternative text; otherwise the article title is used. Articles without an `image` field
 retain the site's default share image. A draft's image can be prepared in advance;
 adding its folder does not publish the article.
 
@@ -81,3 +93,18 @@ Run `npm run build` to validate published metadata and generate the static site.
 Commit content changes and deploy using the site's existing deployment workflow.
 Articles are included when the site rebuilds; no database or runtime content
 service is needed.
+
+## Image optimization
+
+`npm run build` and `npm run dev` generate responsive WebP variants for JPEG, PNG,
+and WebP files under `public/blog/`. Keep originals there and reference their
+original paths in frontmatter or Markdown. Actual dimensions are read automatically;
+landscape images around 1600 × 838 work best for social previews. Variants preserve
+aspect ratio, never enlarge originals, and use widths up to 1600 pixels.
+
+Generated files live in `public/generated/blog/` and are ignored by Git. Each
+successful generation removes obsolete variants from deleted or replaced source
+images. After adding or replacing an image while the dev server is running,
+run `npm run images`.
+The browser selects an appropriate size for blog cards, banners, and inline images.
+Social previews reference the original image.

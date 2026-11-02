@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "npm run resume",
+    "prebuild": "npm run images && npm run resume",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -12,7 +12,9 @@
     "herdr": "bash scripts/dev-herdr.sh",
     "herdr:login": "bash scripts/dev-herdr.sh --login",
     "herdr:logs": "bash scripts/herdr-logs.sh",
-    "herdr:stop": "bash scripts/stop-dev-herdr.sh"
+    "herdr:stop": "bash scripts/stop-dev-herdr.sh",
+    "images": "node --import tsx scripts/generate-blog-images.mts",
+    "predev": "npm run images"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -24,7 +26,9 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1"
+    "rehype-highlight": "^7.0.2",
+    "remark-gfm": "^4.0.1",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@types/node": "^20",

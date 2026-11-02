@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
+import { blogImageMetadata } from './blogImages'
 import { blogSeries } from '@/data/blogSeries'
 
 export type Post = {
@@ -51,9 +52,14 @@ export function getPosts(): Post[] {
       if (!['https:', 'http:'].includes(url.protocol)) fail('externalUrl must use HTTP or HTTPS')
     }
     if (!externalUrl && !content.trim()) fail('Local articles must have Markdown content')
-    const imageUrl = `/blog/${slug}/banner.jpg`
-    const image = !externalUrl && existsSync(path.join(process.cwd(), 'public', imageUrl))
-      ? { url: imageUrl, width: 1600, height: 838, alt: data.imageAlt === undefined ? text('title') : text('imageAlt') }
+    const imageUrl = data.image === undefined ? undefined : text('image')
+    if (imageUrl) {
+      if (!imageUrl.startsWith('/') || imageUrl.startsWith('//') || imageUrl.includes('\\') || imageUrl.split('/').includes('..') || /[?#]/.test(imageUrl)) fail('image must be a root-relative path in public')
+      if (!existsSync(path.join(process.cwd(), 'public', imageUrl))) fail('image file does not exist in public')
+    }
+    const dimensions = imageUrl ? blogImageMetadata(imageUrl) : undefined
+    const image = imageUrl
+      ? { url: imageUrl, width: dimensions?.width ?? 1600, height: dimensions?.height ?? 838, alt: data.imageAlt === undefined ? text('title') : text('imageAlt') }
       : undefined
     return [{ status: data.status, slug, title: text('title'), description: text('description'), author: text('author'), date,
       tags: data.tags.map((tag: string) => tag.trim()), series, seriesOrder: series ? data.seriesOrder : undefined,

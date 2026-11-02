@@ -5,6 +5,7 @@ author: 'Chris Honeysett'
 date: '2026-10-26'
 tags: [React Native, Security, Computing Fundamentals]
 status: draft
+image: '/blog/validating-pin/pin-entry.jpg'
 imageAlt: 'Hands entering a masked PIN on a smartphone beside a generic charcoal steel safe.'
 ---
 

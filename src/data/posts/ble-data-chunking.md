@@ -7,6 +7,7 @@ tags: [BLE, React Native, JavaScript]
 status: published
 series: ble-for-web-developers
 seriesOrder: 3
+image: "/blog/ble-data-chunking/banner.jpg"
 imageAlt: "A phone sending a Bluetooth update beside a notebook sketch of data divided into smaller chunks."
 ---
 
