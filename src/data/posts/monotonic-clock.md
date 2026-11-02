@@ -2,7 +2,7 @@
 title: 'Keeping Time Offline in React Native When the Device Clock Changes'
 description: 'How I combined server time with native monotonic clocks to support up to 24 hours offline without relying on the phone’s date and time settings.'
 author: 'Chris Honeysett'
-date: '2026-10-26'
+date: '2026-10-29'
 tags: [React Native, Expo, JavaScript, Computing Fundamentals]
 status: published
 image: '/blog/monotonic-clock/old-clock.jpg'
