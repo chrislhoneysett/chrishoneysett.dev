@@ -6,7 +6,7 @@ date: '2026-10-26'
 tags: [React Native, Expo, JavaScript, Computing Fundamentals]
 status: published
 image: '/blog/monotonic-clock/old-clock.jpg'
-imageAlt: 'A hand holding a phone with manual time settings open in front of server racks.'
+imageAlt: 'An antique clock face surrounded by exposed brass gears.'
 ---
 
 While working on a React Native app, I needed to protect its time calculations from users changing their phone’s clock. The app used timestamps for session lengths, lockout expirations, and audit events. I wanted those calculations to follow the server’s time even when the device clock changed.

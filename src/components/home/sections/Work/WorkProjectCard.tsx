@@ -3,6 +3,7 @@ import styles from './WorkProjectGallery.module.css'
 import Image from 'next/image'
 import { Icon } from '@/components/Icon'
 import { Badge } from '@/components/Badge'
+import { TagList } from '@/components/TagList'
 import { assetPath } from '@/lib/assetPath'
 
 type WorkProject = ResumeProject & { employer: string }
@@ -63,15 +64,7 @@ export const WorkProjectCard = ({
         ) : project.name}
       </h3>
       <p>{project.description}</p>
-      {project.technologies.length > 0 ? (
-        <ul className={styles.tags} aria-label='Technologies used'>
-          {project.technologies.map((technology) => (
-            <li key={technology}>
-              <Badge>{technology}</Badge>
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <TagList tags={project.technologies} label='Technologies used' className={styles.tags} />
       <button className={styles.openButton} type='button' onClick={onClick}>
         View project <Icon name='north-east' />
       </button>

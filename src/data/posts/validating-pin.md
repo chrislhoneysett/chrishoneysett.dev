@@ -6,7 +6,7 @@ date: '2026-10-26'
 tags: [React Native, Security, Computing Fundamentals]
 status: draft
 image: '/blog/validating-pin/pin-entry.jpg'
-imageAlt: 'Hands entering a masked PIN on a smartphone beside a generic charcoal steel safe.'
+imageAlt: 'A hand pressing a button on an ATM keypad.'
 ---
 
 While working on a React Native app that communicated with connected hardware, I needed to validate a user's assigned PIN. The backend managed that PIN, but the app needed to check what the user entered before allowing them to continue.

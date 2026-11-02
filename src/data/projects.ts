@@ -195,7 +195,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       projectOrigin: 'Greenfield',
       heroImage: {
         src: '/projects/industrial-motor-control.png',
-        alt: 'Illustration of an industrial motor and controls',
+        alt: 'Illustration of an industrial motor with two control dials',
         kind: 'illustration',
       },
       name: 'Industrial Motor Control',
@@ -214,7 +214,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       projectOrigin: 'Greenfield',
       heroImage: {
         src: '/projects/connected-access-control.jpg',
-        alt: 'Illustration of a secure door access system',
+        alt: 'A hand holding a smartphone beside a smart lock mounted on a glass door',
         kind: 'illustration',
       },
       name: 'Connected Access Control',
@@ -267,7 +267,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       projectOrigin: 'Greenfield',
       heroImage: {
         src: '/projects/connected-battery-management.jpg',
-        alt: 'Illustration of a connected battery with sensor indicators',
+        alt: 'Close-up of an electricity meter displaying a kilowatt-hour reading',
         kind: 'illustration',
       },
       name: 'Connected Power Management',
@@ -328,7 +328,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       projectOrigin: 'Greenfield',
       heroImage: {
         src: '/projects/ucisom/ucisom.png',
-        alt: 'UC Irvine School of Medicine homepage',
+        alt: 'UC Irvine School of Medicine homepage with a campus sign and Discover. Teach. Heal. banner',
       },
       name: 'University of California Irvine School of Medicine',
       client: 'University of California Irvine School of Medicine',
@@ -354,11 +354,11 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
             caption: 'Homepage hero and the “Discover. Teach. Heal.” message.',
             desktop: {
               src: '/projects/ucisom/ucisom.png',
-              alt: 'Desktop UC Irvine School of Medicine homepage hero',
+              alt: 'Desktop UC Irvine School of Medicine homepage with a campus sign and Discover. Teach. Heal. banner',
             },
             mobile: {
               src: '/projects/ucisom/ucisom_mobile.png',
-              alt: 'Mobile UC Irvine School of Medicine homepage with compact navigation and stacked hero',
+              alt: 'Mobile UC Irvine School of Medicine homepage with a building facade behind the Discover. Teach. Heal. banner',
             },
           },
           {
@@ -366,11 +366,11 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
               'Office of Research page with a research-focused hero and supporting content.',
             desktop: {
               src: '/projects/ucisom/ucisom-department.png',
-              alt: 'Desktop UC Irvine School of Medicine Office of Research page',
+              alt: 'Desktop UC Irvine School of Medicine Office of Research page with a researcher using a pipette',
             },
             mobile: {
               src: '/projects/ucisom/ucisom-department_mobile.png',
-              alt: 'Mobile UC Irvine School of Medicine Office of Research page with stacked hero text',
+              alt: 'Mobile UC Irvine School of Medicine Office of Research page with a researcher using a pipette above research information',
             },
           },
           {
@@ -435,7 +435,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       projectOrigin: 'Greenfield',
       heroImage: {
         src: '/projects/ihsaa/ihsaa.png',
-        alt: 'Indiana High School Athletic Association homepage',
+        alt: 'IHSAA homepage featuring a Student-Athlete Tip of the Week banner',
       },
       name: 'Indiana High School Athletic Association',
       client: 'Indiana High School Athletic Association',
@@ -459,11 +459,11 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
               'Homepage with featured athletics news and pathways to association resources.',
             desktop: {
               src: '/projects/ihsaa/ihsaa.png',
-              alt: 'Desktop IHSAA homepage with featured athletics news',
+              alt: 'Desktop IHSAA homepage with a Student-Athlete Tip of the Week banner above Keeping Education in Front of Athletics',
             },
             mobile: {
               src: '/projects/ihsaa/ihsaa_mobile.png',
-              alt: 'Mobile IHSAA homepage with compact navigation and stacked featured content',
+              alt: 'Mobile IHSAA homepage with a Student-Athlete Tip of the Week banner above education and partner sections',
             },
           },
           {
@@ -710,7 +710,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       id: 'msu-graduate-aid',
       heroImage: {
         src: '/projects/msu.jpeg',
-        alt: 'MSU Graduate Manage Your Aid page',
+        alt: 'MSU graduate financial aid page with Billing and Payments guidance and Estimate Your Cost of Attendance resources',
       },
       name: 'MSU Graduate Financial Aid',
       hidden: true,
@@ -830,7 +830,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       id: 'ford-quicklane',
       heroImage: {
         src: '/projects/quicklane.png',
-        alt: 'Ford Quick Lane service center image',
+        alt: 'Quick Lane store locator with service-center listings, opening hours, and map pins near Kalamazoo',
       },
       name: 'Ford QuickLane',
       client: 'Ford',
@@ -850,7 +850,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       projectOrigin: 'Greenfield',
       heroImage: {
         src: '/projects/radfest.png',
-        alt: 'Midwest RAD Fest logo, designed by Chris Honeysett',
+        alt: 'Midwest RAD Fest dance festival graphic with a black-and-white dancer photograph and February 26–28, 2010 event dates',
       },
       name: 'Wellspring Cori Terry & Dancers',
       hidden: true,
@@ -868,7 +868,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
       projectOrigin: 'Greenfield',
       heroImage: {
         src: '/projects/farmersAlley.png',
-        alt: 'Farmers Alley Theatre website',
+        alt: 'Farmers Alley Theatre homepage featuring The Bridges of Madison County above show cards',
       },
       name: 'Farmers Alley Theatre',
       client: 'Farmers Alley Theatre',

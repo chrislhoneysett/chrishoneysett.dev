@@ -1,14 +1,14 @@
 ---
-title: "Chunking BLE Data: Fitting a Large Transfer Into Small Writes"
-description: "Understand payload budgets and split larger BLE transfers into ordered writes."
-author: "Chris Honeysett"
-date: "2026-10-20"
+title: 'Chunking BLE Data: Fitting a Large Transfer Into Small Writes'
+description: 'Understand payload budgets and split larger BLE transfers into ordered writes.'
+author: 'Chris Honeysett'
+date: '2026-10-20'
 tags: [BLE, React Native, JavaScript]
 status: published
 series: ble-for-web-developers
 seriesOrder: 3
-image: "/blog/ble-data-chunking/banner.jpg"
-imageAlt: "A phone sending a Bluetooth update beside a notebook sketch of data divided into smaller chunks."
+image: '/blog/ble-data-chunking/containers.jpg'
+imageAlt: 'Overhead view of colorful shipping containers arranged in rows beside a cargo crane.'
 ---
 
 When I first started working with Bluetooth Low Energy, sending a setting to a weather station felt straightforward. Encode a few bytes, write them to a characteristic, and wait for the write to finish.
@@ -21,7 +21,7 @@ The basic idea was simple: split the data into smaller pieces.
 
 The part that took more thought was deciding how small those pieces needed to be.
 
-This article follows *BLE for Web Developers: The Mental Model I Wish I’d Had*. I’ll use the same fictional weather station and its companion app throughout. The protocol details and sizing values below belong to that example.
+This article follows _BLE for Web Developers: The Mental Model I Wish I’d Had_. I’ll use the same fictional weather station and its companion app throughout. The protocol details and sizing values below belong to that example.
 
 ## The MTU Is a Budget
 

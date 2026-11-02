@@ -1,14 +1,14 @@
 ---
-title: "BLE for Web Developers: The Mental Model I Wish I’d Had"
-description: "A web developer’s introduction to finding BLE devices, discovering services, and exchanging data."
-author: "Chris Honeysett"
-date: "2026-10-06"
+title: 'BLE for Web Developers: The Mental Model I Wish I’d Had'
+description: 'A web developer’s introduction to finding BLE devices, discovering services, and exchanging data.'
+author: 'Chris Honeysett'
+date: '2026-10-06'
 tags: [BLE, React Native, JavaScript]
 status: published
 series: ble-for-web-developers
 seriesOrder: 1
-image: "/blog/ble-for-web-developers/banner.jpg"
-imageAlt: "A phone discovering a Bluetooth sensor beside a laptop on a naturally lit desk."
+image: '/blog/ble-for-web-developers/whiteboard.jpg'
+imageAlt: 'A hand drawing a diagram on a glass whiteboard with a marker.'
 ---
 
 After years of building web applications, my first mobile project involved communicating directly with hardware over Bluetooth Low Energy (BLE).

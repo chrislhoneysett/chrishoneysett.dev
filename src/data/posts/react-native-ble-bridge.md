@@ -8,7 +8,7 @@ status: published
 series: ble-for-web-developers
 seriesOrder: 4
 image: '/blog/react-native-ble-bridge/lego-bricks.jpg'
-imageAlt: 'A notebook sketch of BLE library architecture beside a connected phone, wireless sensor, and laptop.'
+imageAlt: 'A pile of colorful LEGO bricks.'
 ---
 
 I was building a React Native app that needed to work with thousands of devices in the field, but only one device at a time. I already had [react-native-ble-manager](https://github.com/innoveit/react-native-ble-manager) to handle the BLE operations. I thought I had what I needed.

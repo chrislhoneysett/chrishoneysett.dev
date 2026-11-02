@@ -1,29 +1,25 @@
 ---
-title: "Making Sense of BLE Byte Data"
-description: "Decode and encode BLE values with bytes, integer types, endianness, and JavaScript."
-author: "Chris Honeysett"
-date: "2026-10-13"
+title: 'Making Sense of BLE Byte Data'
+description: 'Decode and encode BLE values with bytes, integer types, endianness, and JavaScript.'
+author: 'Chris Honeysett'
+date: '2026-10-13'
 tags: [BLE, React Native, JavaScript, Computing Fundamentals]
 status: published
 series: ble-for-web-developers
 seriesOrder: 2
-image: "/blog/ble-byte-data/banner.jpg"
-imageAlt: "A notebook decoding a hexadecimal byte into a temperature reading beside a phone and Bluetooth sensor."
+image: '/blog/ble-byte-data/binary.jpg'
+imageAlt: 'Close-up of binary digits forming a padlock shape.'
 ---
 
-In my first article, BLE for Web Developers: The Mental Model I Wish I’d Had, I introduced the workflow I learned while building a React Native app that communicates with BLE hardware.
-
-Finding the device, connecting, and discovering its characteristics gave me a way to exchange data. But that still left another question:
-
-**What do I do with the data once I receive it?**
+You’ve read a BLE characteristic and received `[0xEB, 0x00]`. What does it mean?
 
 With the JSON APIs I was used to, my HTTP client could parse a response into a JavaScript object. With BLE, I had to understand how the device represented its values as bytes.
 
-Suddenly, terms like hexadecimal, signed integers, and endianness mattered. These weren’t concepts I’d needed to work with directly in my web projects.
+Suddenly, terms like _hexadecimal_, _signed integers_, and _endianness_ mattered. These weren’t concepts I’d needed to work with directly in my web projects.
 
-This is the second article in that series: how I learned to turn BLE byte data into values my application could use, and encode values to send back.
+This article covers how I learned to turn BLE byte data into values my application could use, and encode values to send back. It’s the second part of [BLE for Web Developers](ble-for-web-developers.md), but you can start here if you’re already exchanging data with a device.
 
-I’ll continue using the fictional weather station from the first article. Its protocol is an example for learning these concepts, rather than a standard BLE weather station format.
+The examples use a fictional weather station and its companion app. Its protocol is an example for learning these concepts, rather than a standard BLE weather station format.
 
 ## The Bytes Don’t Explain Themselves
 
@@ -33,7 +29,7 @@ Suppose the app reads the weather station’s temperature characteristic and rec
 [0xEB, 0x00]
 ```
 
-In the first article, we decoded those bytes as **23.5°C**. But nothing in that array tells us that it contains a temperature, or that the result should be divided by ten.
+Those bytes represent **23.5°C** in our example. But nothing in that array tells us that it contains a temperature, or that the result should be divided by ten.
 
 The station’s protocol supplies those rules:
 
@@ -92,8 +88,8 @@ Binary       Hexadecimal    Decimal
 That means these arrays describe the same two bytes:
 
 ```js
-const decimal = [235, 0];
-const hexadecimal = [0xEB, 0x00];
+const decimal = [235, 0]
+const hexadecimal = [0xeb, 0x00]
 ```
 
 In JavaScript, `235 === 0xEB` is `true`. Hexadecimal changes how we write the number, not its value.
@@ -211,11 +207,11 @@ So far, we’ve looked at a characteristic containing one value. A protocol can 
 
 Suppose our weather station exposes a combined reading with this fixed four-byte layout:
 
-| Byte offset | Type     | Field       | Meaning                 |
-| ----------- | -------- | ----------- | ----------------------- |
-| 0           | `int16`  | Temperature | Little-endian, 0.1°C     |
-| 2           | `uint8`  | Humidity    | Whole percent, 0–100    |
-| 3           | `uint8`  | Battery     | Whole percent, 0–100    |
+| Byte offset | Type    | Field       | Meaning              |
+| ----------- | ------- | ----------- | -------------------- |
+| 0           | `int16` | Temperature | Little-endian, 0.1°C |
+| 2           | `uint8` | Humidity    | Whole percent, 0–100 |
+| 3           | `uint8` | Battery     | Whole percent, 0–100 |
 
 An **offset** is the position where a field begins, counting from zero. The temperature starts at offset `0` and occupies bytes `0` and `1`. Humidity starts at offset `2`.
 
@@ -244,10 +240,10 @@ Then I started using `Buffer`.
 Here’s our temperature example:
 
 ```js
-import { Buffer } from 'buffer';
+import { Buffer } from 'buffer'
 
-const received = Buffer.from([0xEB, 0x00]);
-const temperature = received.readInt16LE(0) / 10;
+const received = Buffer.from([0xeb, 0x00])
+const temperature = received.readInt16LE(0) / 10
 
 // 23.5
 ```
@@ -257,27 +253,27 @@ The method name captures the decoding rules: `Int16` reads a signed 16-bit integ
 For the combined reading, we can put the layout in one function:
 
 ```js
-import { Buffer } from 'buffer';
+import { Buffer } from 'buffer'
 
 function decodeWeatherReading(bytes) {
-  const data = Buffer.from(bytes);
+  const data = Buffer.from(bytes)
 
   if (data.length !== 4) {
-    throw new Error('Expected a four-byte weather reading');
+    throw new Error('Expected a four-byte weather reading')
   }
 
-  const temperature = data.readInt16LE(0) / 10;
-  const humidity = data.readUInt8(2);
-  const battery = data.readUInt8(3);
+  const temperature = data.readInt16LE(0) / 10
+  const humidity = data.readUInt8(2)
+  const battery = data.readUInt8(3)
 
   if (humidity > 100 || battery > 100) {
-    throw new Error('Weather reading contains an invalid percentage');
+    throw new Error('Weather reading contains an invalid percentage')
   }
 
-  return { temperature, humidity, battery };
+  return { temperature, humidity, battery }
 }
 
-const reading = decodeWeatherReading([0xEB, 0x00, 0x30, 0x64]);
+const reading = decodeWeatherReading([0xeb, 0x00, 0x30, 0x64])
 
 // { temperature: 23.5, humidity: 48, battery: 100 }
 ```
@@ -293,12 +289,12 @@ Reading values means following the device’s decoding rules. Writing values mea
 Suppose the weather station’s measurement interval characteristic accepts an unsigned 16-bit little-endian integer measured in seconds. To set a ten-second interval:
 
 ```js
-import { Buffer } from 'buffer';
+import { Buffer } from 'buffer'
 
-const outgoing = Buffer.alloc(2);
-outgoing.writeUInt16LE(10, 0);
+const outgoing = Buffer.alloc(2)
+outgoing.writeUInt16LE(10, 0)
 
-const bytes = Array.from(outgoing);
+const bytes = Array.from(outgoing)
 
 // [10, 0], or [0x0A, 0x00]
 ```
@@ -320,8 +316,8 @@ The protocol must define the text encoding and how to identify the string’s le
 Some BLE libraries expose characteristic values as **Base64 strings**. That’s another representation of the bytes, used at the library boundary:
 
 ```js
-const data = Buffer.from('6wA=', 'base64');
-const temperature = data.readInt16LE(0) / 10;
+const data = Buffer.from('6wA=', 'base64')
+const temperature = data.readInt16LE(0) / 10
 
 // 23.5
 ```

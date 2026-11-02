@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { TagList } from '@/components/TagList'
 import { Icon } from '@/components/Icon'
 import type { ProjectScreenshot, ResumeProject } from '@/data/projects'
 import styles from './WorkProjectGallery.module.css'
@@ -227,11 +228,7 @@ export function WorkProjectGallery({
               </section>
               <section>
                 <h3>Technology</h3>
-                <ul className={styles.tags}>
-                  {activeProject.technologies.map((technology) => (
-                    <li key={technology}>{technology}</li>
-                  ))}
-                </ul>
+                <TagList tags={activeProject.technologies} label='Technologies used' className={styles.tags} />
                 {activeProject.platforms?.length ? (
                   <p className={styles.platforms}>
                     {activeProject.platforms.join(' · ')}
