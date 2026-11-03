@@ -1,94 +1,148 @@
-# Organizing a Growing React App Around Domains and Features
+# Organizing React Features Around What Changes
 
-Working title. Suggested outline and prompts, not a finished article.
+A useful application structure makes ownership clear. When a requirement changes, I want to know which part of the application is responsible and how far that change should reach.
 
-## Article angle
+Most of my organization centers around features: related behavior grouped with the components, hooks, and supporting code that implement it. Larger domains give related features a common home. Shared components and services support those features at the scope where they belong.
 
-Tell the story of how a growing React Native project became difficult to navigate, and how grouping related behavior made it easier to understand and change.
+That sounds straightforward when the application has one way to perform each operation. It becomes a more interesting design problem when a second product needs the same features through a different implementation.
 
-Frame the organizational lessons for React developers broadly. Be explicit early that the concrete example is a React Native app with BLE and NFC capabilities. Keep those real examples rather than inventing a web app to make the article seem more general.
+I encountered that in a React Native application built around BLE devices. The product expanded to support NFC devices with a similar feature set. Both needed the same data sent to them and returned the same data. How that exchange happened, including concerns such as connecting, differed.
 
-Central question: when a behavior needs to change, can I work out where it lives and which parts of the app it affects?
+Before getting to that boundary, a login form provides a familiar example of the structure I use. The auth examples are illustrative; the device example is the requirement that made the sharing decisions more involved.
 
-## 1. I could find the screen, but not the behavior
+## Components, features, and domains have different responsibilities
 
-- Original problem: as the project grew, code became scattered and it was difficult to find who did what where.
-- Start with one actual change or debugging task that required jumping between several folders.
-- Describe the original organization and what became awkward. Avoid assuming folders such as `components`, `hooks`, and `utils` are inherently wrong; explain why the structure stopped helping this project.
-- What logic was duplicated? Which files knew too much about each other? Include only problems that actually occurred.
+A common text input owns presentation: its label, value, error message, and disabled state. It can be used throughout the application because it does not need to understand authentication.
 
-Possible opening:
+A login form composes those inputs and gives them meaning. It collects credentials, submits them, and displays the result. When MFA is required, the login feature also presents the challenge step and handles the user's response.
 
-> As my React Native app grew, I could usually find a screen, but finding the behavior behind it took more searching. Connecting to a device could involve UI components, shared state, BLE code, and utilities scattered across the project.
+That makes login a **feature**: a related set of behavior with a clear purpose. The form is one component within it. Supporting hooks and other components can live beside it because they serve the same behavior.
 
-## 2. Start with what belongs together
+Forgot-username and forgot-password links provide entry points to other features. Their workflows belong alongside login within the **auth domain**, as does changing a password after signing in.
 
-- Introduce domains and features through the problem they solve, before showing a folder tree.
-- Explain what “domain” and “feature” mean in this project. Terminology varies; these are working definitions, not universal React rules.
-- Use the Device domain with BLE and NFC features as the main example.
-- Explain why these belong together: which device concepts, workflows, or responsibilities do they share?
-- Explain what remains specific to BLE or NFC. Do not force different behavior into a shared abstraction just because both communicate with devices.
-- Briefly connect this to web work: a payments domain might contain integrations with different payment providers. One comparison is enough.
+```text
+Auth/
+├── features/
+│   ├── Login/
+│   │   ├── CredentialsForm.tsx
+│   │   └── MfaForm.tsx
+│   ├── ForgotUsername/
+│   ├── ForgotPassword/
+│   └── ChangePassword/
+└── services/
+    └── authService.ts
+```
 
-## 3. Follow one operation through the structure
+This is a simplified layout. The important relationship is that each feature owns a workflow, while auth provides a home for their related responsibilities.
 
-- Pick a real, small workflow, such as opening a device screen and requesting device information.
-- Show where the UI interaction starts, where coordination happens, and where transport-specific work lives.
-- Explain where state is held and how results and failures reach the screen.
-- Show a small before-and-after folder tree using the actual structure, simplified for the article.
-- Include only enough code to make the boundaries visible. Avoid reproducing the BLEBridge implementation.
+The scope of reuse determines where shared code belongs. The text input can be shared across the app. An auth service used by login and change password still belongs within auth. Being imported by several features does not make it application-wide infrastructure.
 
-Possible visual: screen → feature entry point → BLE/NFC implementation, with the actual shared responsibilities shown separately.
+## Services handle operations; facades simplify coordination
 
-## 4. Give each part a clear responsibility
+An auth service provides callable operations such as submitting credentials, validating an MFA challenge, and changing a password. It owns the request details and translates responses into results the auth code can use.
 
-Use the workflow above to explain the terms that actually appear in the project:
+The login UI should not need to know endpoint paths or interpret raw transport responses. Equally, the service should not decide how a field's error message is rendered.
 
-- **Component:** what it renders and which interactions it owns.
-- **Service:** which behavior it provides and what it depends on.
-- **Facade:** whether a simpler entry point hides coordination among several pieces; show why that extra layer helped, if used.
-- **Module:** clarify whether this means a source file or a larger unit of functionality in this article.
-- **Utility:** what makes a helper broadly reusable, and when it should stay beside the feature that uses it.
+Some workflows need coordination beyond an API request. Login may require tracking an MFA challenge and updating session state once authentication completes. A **facade** can give callers a simpler interface over those collaborating pieces:
 
-Do not turn this into a glossary or imply that every feature needs all five. Show where each responsibility landed and why.
+```typescript
+// Illustrative public interface:
+auth.login(credentials)
+auth.verifyMfa(code)
+auth.signOut()
+```
 
-## 5. Decide what other parts of the app can use
+The facade can coordinate service calls and session updates without requiring each caller to repeat that sequence. If another object would only forward the same arguments unchanged, I would question whether an extra layer helps.
 
-- What is the public entry point for a feature or domain?
-- Which implementation details should callers avoid importing directly?
-- How do shared pieces avoid depending back on the features that use them?
-- What belongs in shared code, and what should remain local until another use actually appears?
-- Connect this briefly to the existing BLEBridge article: that library handles BLE coordination; this article explains where that capability fits within the larger application.
+Other parts of the app can read the current user through a public hook such as `useCurrentUser()`. That hook subscribes to session state. It is a state accessor; the coordination hidden behind the auth operations is what makes the facade useful.
 
-Use examples from the implemented architecture rather than introducing rules the project does not follow.
+These names describe responsibilities. They do not require every feature to have a service, facade, and store of its own.
 
-## 6. Move toward the structure incrementally
+## Compose features into pages
 
-- Describe one manageable extraction or move, including how callers changed.
-- Did you start with the most confusing workflow, the most duplicated logic, or a feature already being changed?
-- Explain how you checked that the behavior still worked.
-- Mention any temporary compromises or boundaries you revised after using them.
+A route brings the appropriate features together. A login route can render the login feature, including its credentials and MFA steps. A settings route can compose change password with other settings features.
 
-## 7. What improved, and what still costs effort
+The route owns that page composition. The features retain ownership of their behavior. Changing a password does not require importing code from the login form simply because both use authentication services.
 
-- Give concrete outcomes: fewer places to inspect for a change, simpler screen code, clearer ownership, or easier reuse—only where supported by experience.
-- Describe a case where another service, facade, or folder would have added navigation without enough benefit.
-- Explain when a smaller app could reasonably keep a simpler structure.
-- End with the practical question from the opening: is it easier to find the behavior and understand the effect of changing it?
+That separation addresses a problem I have encountered as projects grow: finding the screen is easy, but following its behavior can require tracing imports across many folders. Grouping only by file type tells me where hooks or components live. Grouping by feature also tells me what they are responsible for.
 
-## Material to gather before drafting
+A public entry point gives callers a clear way to use each area. Internal helpers can change without requiring every consumer to understand the new layout. An `index.ts` can express that interface, although the import conventions still have to respect it.
 
-- One real change that illustrates the original problem.
-- Simplified before-and-after folder trees.
-- One operation traced through the final structure.
-- An example of BLE and NFC sharing something, and an example of them staying separate.
-- One architectural choice you reconsidered or decided against.
+## The harder question was where to share device behavior
 
-Keep examples generic and remove client names, internal paths, credentials, and proprietary device details.
+The login example explains the basic boundaries. Supporting a second device implementation tested how useful those boundaries were.
 
-## Scope to keep focused
+The application originally worked with BLE devices. When NFC support entered the product, the new devices needed a similar set of features. The required outgoing data and the expected incoming data were the same. The communication and connection behavior differed.
 
-- Keep state ownership relevant to the example; save the full local/server/global state discussion for the state-management article.
-- Save storage selection and offline strategy for their own articles.
-- Avoid presenting the structure as a React requirement or a complete domain-driven design methodology.
-- Broad relevance should come from explaining the decisions, while retaining the concrete React Native experience.
+The question was how much of the existing feature behavior should become shared, and where the implementation-specific work should remain.
+
+There were two directions I needed to weigh. Keeping each implementation self-contained would make its behavior easy to follow locally, but duplicating common feature logic would mean maintaining the same requirement in two places. Moving everything into one implementation would centralize the code, but could spread BLE/NFC conditions through the workflow.
+
+The fact that both products did similar things was not enough to settle that decision. I needed to identify which parts actually had the same responsibility.
+
+## Separate the operation from the way data moves
+
+The matching data requirements gave me a concrete starting point.
+
+For a device operation, I could distinguish the data being sent, the transfer itself, and the data received back. The transfer depended on BLE or NFC. The common requirements around that exchange gave the shared features a reason to exist.
+
+That also clarified the scope of sharing. These features belonged to the device area, even when both implementations used them. Moving them into application-wide shared code would lose that context.
+
+The resulting organization included a device domain with BLE and NFC domains beneath it, plus a shared area:
+
+```text
+features/
+└── Devices/
+    ├── BLE/
+    ├── NFC/
+    ├── shared/
+    ├── index.ts
+    └── README.md
+```
+
+This is a shortened view of the project structure. The top-level name `features` describes the main organizing approach; it does not require every folder beneath it to represent the same size of responsibility.
+
+The higher-level `Devices` folder gives related features and implementations a common home. Within that boundary, BLE and NFC can retain the code that deals with their specific communication requirements.
+
+> **The shared feature owns the common device behavior. The implementation owns the details that differ when communicating with the device.**
+
+That is a more useful boundary than sharing code simply because it looks alike. A change to common operation data concerns both implementations. A change to BLE connection handling belongs with BLE.
+
+## Shared inputs and outputs do not make the lifecycles identical
+
+The difficult part is deciding how far that shared interface should extend.
+
+It is tempting to make both implementations fit the same sequence of calls. But a BLE connection has responsibilities that should remain visible within BLE. The NFC implementation should not inherit those steps merely to make the interfaces look symmetrical.
+
+For example, [BLEBridge](../react-native-ble-bridge.md) handles BLE operations and the cleanup associated with them. Those responsibilities still exist when the higher-level feature is shared. They need an owner inside the BLE implementation.
+
+The same applies to feedback for the user. A common feature can share its purpose and data requirements while presenting implementation-specific instructions or progress where needed. Sharing the operation does not require every screen state to be identical.
+
+This is where a service interface or facade can help, provided its contract describes behavior both implementations can actually support. A simpler entry point is valuable when it hides coordination the caller does not need to repeat. It becomes harder to use when it conceals differences the caller genuinely needs to handle.
+
+I want the common interface to make the shared responsibility clear, with the remaining differences given an explicit home.
+
+## Use the boundary to assess the next change
+
+A folder tree is only useful if it helps explain how the application changes.
+
+In the device example, a change to common feature data belongs near the shared behavior. A BLE transfer change belongs in BLE. A general input styling change belongs in the shared UI component. Those changes have different owners even when they affect the same user workflow.
+
+That is also how I assess whether something should move. A second consumer is a reason to examine the scope of reuse. It does not automatically justify a global abstraction. The code may be shared within one feature, between features in a domain, or throughout the application.
+
+My earlier difficulty was following behavior through files whose locations did not make that ownership clear. Feature-based organization gives me a better starting point. The BLE-to-NFC expansion makes the next question more demanding: which responsibilities remain common when the implementation changes?
+
+The architecture needs to support both answers. Shared behavior needs a clear home, and each implementation needs room to handle the things that genuinely differ.
+
+---
+
+## Author notes before publication
+
+- The auth example establishes the architecture; the BLE-to-NFC expansion is the main case study. Keep the opening confident and the thought process focused on ownership, scope of reuse, and implementation differences.
+- Add one concrete shared device operation using generic names and synthetic data. Show its inputs, outputs, and the responsibility that differs between BLE and NFC. This would provide stronger evidence than another abstract interface example.
+- Confirm exactly which feature logic moved into `Devices/shared` and what the public entry point coordinates. The draft does not claim a specific adapter, strategy, or facade implementation in the device code.
+- The separate-implementation and unified-implementation approaches are design tradeoffs, not claims that both were built and discarded. Add actual refactor history only where supported by your experience.
+- Add a concrete outcome from the NFC expansion: a requirement handled once in shared code, or a transfer change contained within its implementation. Avoid claiming measured improvements without evidence.
+- The lifecycle and UI discussion describes boundary considerations. Confirm which differences occurred in the project before turning them into specific first-person implementation claims.
+- Keep proprietary device details and project-specific identities out of the public examples.
+- Add publication frontmatter and an image when ready to move the article out of `future`.
