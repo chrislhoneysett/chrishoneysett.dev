@@ -22,11 +22,40 @@
     font-weight: var(--font-weight-regular);
     letter-spacing: var(--tracking-display);
     line-height: var(--line-height-display);
-    margin-top: var(--space-8);
+    margin-top: 0;
     font-size: var(--font-size-display-lg);
   }
   & .sectionLabel {
     color: var(--color-highlight-strong);
+  }
+}
+
+.footerMain {
+  max-width: 40rem;
+  margin-top: var(--space-8);
+}
+
+.footerHeading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+
+  @media (max-width: 760px) {
+    gap: var(--space-6);
+  }
+}
+
+.headshot {
+  display: block;
+  flex-shrink: 0;
+  width: 200px;
+  height: 200px;
+  border-radius: var(--radius-round);
+  object-fit: cover;
+
+  @media (max-width: 760px) {
+    width: clamp(100px, 30vw, 160px);
+    height: auto;
   }
 }
 
