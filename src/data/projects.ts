@@ -230,7 +230,7 @@ export const projectsByRole: Record<string, ResumeProject[]> = {
           },
           {
             label: 'Building BLEBridge',
-            url: '/blog/react-native-ble-library/',
+            url: '/blog/react-native-ble-bridge/',
           },
         ],
         overview:
